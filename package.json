@@ -1,0 +1,12 @@
+{
+  "name": "alpaca-integration",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "alpaca:check": "node scripts/alpaca-smoke-test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,11 @@
+numpy==2.3.5
+pandas==2.3.3
+scipy==1.16.3
+scikit-learn==1.7.2
+statsmodels==0.14.5
+matplotlib==3.10.6
+seaborn==0.13.2
+yfinance==0.2.66
+# Optional: install xgboost to include the XGBoost candidate model.
+# xgboost>=2.1
+

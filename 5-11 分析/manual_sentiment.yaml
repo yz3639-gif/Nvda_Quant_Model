@@ -1,0 +1,56 @@
+# manual_sentiment.yaml
+# 每周日晚上花 5-10 分钟更新一次
+# 所有日期格式: YYYY-MM-DD
+# 留空 (null 或不填) 表示该指标缺失,模型会在该维度上降级
+
+# =====================================
+# 1. AAII Investor Sentiment (散户情绪)
+# 来源: https://www.aaii.com/sentimentsurvey
+# 频率: 每周四更新
+# =====================================
+AAII_bull_bear_spread: null   # 单位 %, 例: 12.5 或 -8.3 (Bullish% - Bearish%)
+AAII_date: null               # 数据周期截止日期, 例: 2026-05-07
+
+# =====================================
+# 2. CFTC COT (期货持仓)
+# 来源: https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm
+# 频率: 每周五下午 3:30 ET, 数据截止上周二
+# =====================================
+CFTC_emini_spx_net: null              # 合约张数, 例: 180000 或 -75000
+CFTC_emini_spx_net_percentile: null   # 0-100, 过去 5 年分位数
+CFTC_10y_ust_net: null                # 同上, 10Y T-Note
+CFTC_10y_ust_net_percentile: null
+CFTC_date: null                       # 通常是上周二
+
+# =====================================
+# 3. CBOE Put/Call Ratio
+# 来源: https://www.cboe.com/us/options/market_statistics/daily/
+# 频率: 每日
+# =====================================
+CBOE_equity_pc_10dma: null   # 10 日均值, 例: 0.65
+CBOE_total_pc_10dma: null    # 10 日均值, 例: 0.92
+CBOE_date: null              # 最新交易日
+
+# =====================================
+# 4. NAAIM Exposure (主动管理者持仓)
+# 来源: https://www.naaim.org/programs/naaim-exposure-index/
+# 频率: 每周三晚
+# =====================================
+NAAIM_exposure: null         # 0-200, 例: 78
+NAAIM_date: null             # 通常是上周三
+
+# =====================================
+# 5. FINRA Margin Debt (杠杆余额)
+# 来源: https://www.finra.org/investors/learn-to-invest/advanced-investing/margin-statistics
+# 频率: 每月发布(滞后约 4-6 周)
+# =====================================
+FINRA_margin_debt_yoy: null  # 同比变化, 小数, 例: 0.14 表示 +14%
+FINRA_date: null
+
+# =====================================
+# 6. ICI ETF/Mutual Fund Flows
+# 来源: https://www.ici.org/research/stats/flows
+# 频率: 每周三
+# =====================================
+ICI_4w_equity_flow_b: null   # 过去 4 周累计股票基金流入, 单位 $ billion
+ICI_date: null

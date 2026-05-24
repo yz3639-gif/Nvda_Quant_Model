@@ -1,0 +1,294 @@
+as_of_date: 2026-05-10
+lookback_years: 50
+cache_dir: cache/event_market_forecast
+output_dir: output/event_market_forecast_v2
+raw_data_dir: output/event_market_forecast_v2/raw_data
+primary_symbol: SPY
+benchmark_symbol: SPY
+bootstrap_iterations: 10000
+monte_carlo_iterations: 100000
+random_seed: 20260510
+enable_auto_fetch: true
+
+windows:
+  pre_10: [-10, -1]
+  pre_5: [-5, -1]
+  pre_1_0: [-1, 0]
+  event_0_1: [0, 1]
+  post_1_5: [1, 5]
+  post_1_10: [1, 10]
+  post_1_20: [1, 20]
+  post_1_60: [1, 60]
+  post_1_120: [1, 120]
+  option_realized: [-1, 5]
+
+markets:
+  major:
+    SPX: SPY
+    NDX: QQQ
+    RUT: IWM
+    DJI: DIA
+    NYA: VTI
+    MID: MDY
+    SP100: OEF
+  sectors:
+    XLK: Technology
+    XLF: Financials
+    XLE: Energy
+    XLV: Health Care
+    XLY: Consumer Discretionary
+    XLP: Consumer Staples
+    XLI: Industrials
+    XLB: Materials
+    XLU: Utilities
+    XLRE: Real Estate
+    XLC: Communication Services
+  sub_industries:
+    SOXX: Semiconductors
+    KRE: Regional banks
+    KBE: Banks
+    XBI: Biotech
+    IHF: Healthcare providers
+    IHI: Medical devices
+    XHB: Homebuilders
+    ITB: Home construction
+    XRT: Retail
+    XTL: Telecom
+    AMLP: MLP
+    KIE: Insurance
+    XOP: Oil and gas E&P
+    OIH: Oil services
+    GDX: Gold miners
+    SIL: Silver miners
+    REMX: Rare earth / strategic metals
+    LIT: Lithium
+    URA: Uranium
+    TAN: Solar
+    ICLN: Clean energy
+    JETS: Airlines
+    IYT: Transportation
+    ITA: Defense
+  factors:
+    IWF: Growth
+    IWD: Value
+    MTUM: Momentum
+    QUAL: Quality
+    SPLV: Low volatility
+    USMV: Minimum volatility
+    SIZE: Size
+    VLUE: Value factor
+    VYM: High dividend
+  rates:
+    SHY: UST 1-3Y
+    IEI: UST 3-7Y
+    IEF: UST 7-10Y
+    TLH: UST 10-20Y
+    TLT: UST 20Y+
+    TIP: TIPS
+    VTIP: Short TIPS
+    SCHP: TIPS broad
+    LTPZ: Long TIPS
+  credit:
+    LQD: IG credit
+    VCIT: Intermediate corporate
+    VCLT: Long corporate
+    HYG: HY credit
+    JNK: HY credit alt
+    BKLN: Senior loans
+    EMB: EM sovereign USD
+    EMHY: EM high yield
+    EMLC: EM local currency bonds
+  currencies:
+    DXY: UUP
+    EURUSD: EURUSD=X
+    USDJPY: JPY=X
+    GBPUSD: GBPUSD=X
+    USDCHF: CHF=X
+    USDCAD: CAD=X
+    AUDUSD: AUDUSD=X
+    NZDUSD: NZDUSD=X
+    USDSEK: SEK=X
+    USDCNY: CNY=X
+    USDCNH: CNH=X
+    USDKRW: KRW=X
+    USDINR: INR=X
+    USDIDR: IDR=X
+    USDTHB: THB=X
+    USDMXN: MXN=X
+    USDBRL: BRL=X
+  commodities:
+    GLD: Gold
+    SLV: Silver
+    PPLT: Platinum
+    PALL: Palladium
+    USO: WTI oil
+    BNO: Brent oil
+    UNG: Natural gas
+    CPER: Copper
+    CORN: Corn
+    SOYB: Soybeans
+    WEAT: Wheat
+    CANE: Sugar
+    JO: Coffee
+    BAL: Cotton
+  crypto:
+    BTC: BTC-USD
+    ETH: ETH-USD
+    SOL: SOL-USD
+    XRP: XRP-USD
+    BNB: BNB-USD
+    COIN: COIN
+    MSTR: MSTR
+    MARA: MARA
+    RIOT: RIOT
+    HUT: HUT
+  international:
+    HSI: ^HSI
+    CSI300: 000300.SS
+    Nikkei: ^N225
+    KOSPI: ^KS11
+    FTSE: ^FTSE
+    DAX: ^GDAXI
+    CAC: ^FCHI
+    EEM: EEM
+    EFA: EFA
+    VWO: VWO
+    EWJ: EWJ
+    EWG: EWG
+    EWU: EWU
+    FXI: FXI
+    MCHI: MCHI
+    KWEB: KWEB
+  vol:
+    VIX: ^VIX
+    VIX3M: ^VIX3M
+    VIX9D: ^VIX9D
+    VXN: ^VXN
+    RVX: ^RVX
+    VVIX: ^VVIX
+    MOVE: ^MOVE
+    GVZ: ^GVZ
+    OVX: ^OVX
+
+factor_spreads:
+  Growth_minus_Value: [IWF, IWD]
+  Small_minus_Large: [IWM, SPY]
+  Momentum_minus_SPY: [MTUM, SPY]
+  Quality_minus_SPY: [QUAL, SPY]
+  LowVol_minus_SPY: [SPLV, SPY]
+  EM_minus_DM: [EEM, EFA]
+  Cyclical_minus_Defensive: [XLY, XLP]
+
+event_pre_drift_baskets:
+  PRESIDENT_CHINA_VISIT: [KWEB, FXI, MCHI, SOXX, REMX, CORN, SOYB, ITA]
+  US_CHINA_SUMMIT: [KWEB, FXI, MCHI, SOXX, REMX]
+  TRADE_DETENTE: [KWEB, FXI, SOXX, XRT, CORN, SOYB]
+  FED_CHAIR_TRANSITION: [KRE, TLT, GLD, QQQ, ARKK, XHB]
+  CPI: [TIP, VTIP, TLT, GLD]
+  PPI: [TIP, VTIP, TLT, GLD, XLB]
+  RETAIL_SALES: [XLY, XRT, XLP, IWM]
+  INITIAL_JOBLESS_CLAIMS: [IWM, KRE, TLT]
+  INDUSTRIAL_PRODUCTION: [XLI, XLB, CPER, IWM]
+  EMPIRE_MANUFACTURING: [XLI, XLB, IWM]
+  DEFAULT: [SPY, QQQ, TLT, GLD]
+
+theme_baskets:
+  PRESIDENT_CHINA_VISIT:
+    Semiconductor export controls: [SOXX, NVDA, AMD, ASML]
+    Rare earths: [REMX, MP]
+    Battery lithium: [LIT, ALB]
+    China internet: [KWEB, BABA, JD, PDD]
+    Taiwan risk: [TSM, UMC, ITA]
+    US farm exports: [CORN, SOYB, ADM, BG]
+    Defense: [ITA, LMT, RTX, NOC]
+  FED_CHAIR_TRANSITION:
+    Regional banks: [KRE, ZION, KEY]
+    Long duration: [TLT, QQQ, ARKK]
+    Gold and real rates: [GLD, TIP]
+    Housing: [XHB, ITB]
+  CPI:
+    Inflation duration: [TIP, VTIP, TLT, GLD]
+    Growth duration: [QQQ, ARKK]
+  RETAIL_SALES:
+    Consumption: [XLY, XRT, XLP, WMT, TGT]
+
+fred_series:
+  HY_OAS: BAMLH0A0HYM2
+  IG_OAS: BAMLC0A0CM
+  UST2Y_YIELD: DGS2
+  UST5Y_YIELD: DGS5
+  UST10Y_YIELD: DGS10
+  UST30Y_YIELD: DGS30
+  TB3MS: TB3MS
+  T10YIE: T10YIE
+  T5YIE: T5YIE
+  T5YIFR: T5YIFR
+  DFII10: DFII10
+  UNRATE: UNRATE
+  CPIAUCSL: CPIAUCSL
+  FEDFUNDS: FEDFUNDS
+  WALCL: WALCL
+  NFCI: NFCI
+  USEPUINDXD: USEPUINDXD
+
+historical_sample_start: 1970-01-01
+
+macro_event_policy:
+  require_true_release_calendar: true
+  no_surprise_importance_cap: 2
+  no_surprise_weight_cap: 0.05
+  categories: [CPI, PPI, RETAIL_SALES, INITIAL_JOBLESS_CLAIMS, INDUSTRIAL_PRODUCTION, EMPIRE_MANUFACTURING]
+
+options:
+  ticker: SPY
+  source: yfinance
+  expiries_days: [7, 14, 30, 90, 180, 365]
+
+sentiment:
+  manual_overrides_path: manual_sentiment.yaml
+  require_core_sentiment: false
+  min_dims_required: 3
+  nearest_fraction: 0.5
+  macro_only_features:
+    - VIX
+    - VIX_term_level
+    - MOVE
+    - HY_OAS
+    - IG_OAS
+    - UST2Y_YIELD
+    - UST10Y_YIELD
+    - UST30Y_YIELD
+    - curve_2s10s
+    - curve_5s30s
+    - T10YIE
+    - T5YIE
+    - DFII10
+    - UNRATE
+    - CPI_YOY
+    - FEDFUNDS
+    - WALCL_YOY
+    - NFCI
+    - USEPUINDXD
+    - AAII_bull_bear_spread
+    - CFTC_emini_spx_net_percentile
+    - CBOE_equity_pc_10dma
+    - NAAIM_exposure
+    - FINRA_margin_debt_yoy
+    - ICI_4w_equity_flow_b
+  momentum_features:
+    - SPY_5d_return
+    - SPY_20d_return
+    - SPY_distance_200dma
+
+weight_formula:
+  small_sample_penalty:
+    n_lt_10: 0.3
+    n_lt_30: 0.6
+  significance_metric: p_value_holm
+  economic_signal_cap: 0.05
+  macro_no_surprise_weight_cap: 0.05
+
+robustness_tests: true
+include_alt_data: true
+include_causal_channels: true
+include_correlation_shift: true

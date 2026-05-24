@@ -1,0 +1,45 @@
+.DS_Store
+Thumbs.db
+
+# Secrets and local credentials
+.env
+.env.*
+!.env.example
+data_source_credentials.yaml
+*credentials*.yaml
+!data_source_credentials.example.yaml
+*secret*
+*token*
+*.pem
+*.key
+
+# Python/runtime caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Node/runtime dependencies
+node_modules/
+
+# Generated caches and bulky market data
+cache/
+output/
+outputs/
+workbook_build/
+nvda_quant_model/cache/
+nvda_quant_model/outputs/
+5-11 分析/output/
+
+# Logs and local process state
+*.log
+*.pid
+
+# Large generated matrices/results
+signals_matrix_long.csv
+long_run_results.csv
+*.bundle

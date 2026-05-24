@@ -1,0 +1,58 @@
+periods:
+  - name: 1929 crash aftermath
+    start: 1929-10-01
+    end: 1932-12-31
+  - name: 1973-1974 oil crisis
+    start: 1973-10-01
+    end: 1974-12-31
+  - name: Black Monday 1987
+    start: 1987-10-01
+    end: 1987-11-15
+  - name: Gulf War start
+    start: 1990-08-01
+    end: 1990-09-15
+  - name: Asian financial crisis
+    start: 1997-07-01
+    end: 1997-12-31
+  - name: Russia / LTCM crisis
+    start: 1998-08-01
+    end: 1998-10-31
+  - name: Dot-com bust
+    start: 2000-03-01
+    end: 2002-10-31
+  - name: 9/11 aftermath
+    start: 2001-09-11
+    end: 2001-09-28
+  - name: Global financial crisis
+    start: 2008-09-01
+    end: 2009-06-30
+  - name: Flash crash
+    start: 2010-05-06
+    end: 2010-05-14
+  - name: US debt downgrade
+    start: 2011-08-01
+    end: 2011-08-31
+  - name: Eurozone crisis peak
+    start: 2011-09-01
+    end: 2012-07-31
+  - name: China devaluation spillover
+    start: 2015-08-01
+    end: 2015-09-15
+  - name: China growth scare
+    start: 2016-01-01
+    end: 2016-02-15
+  - name: 2018 Q4 tightening panic
+    start: 2018-10-01
+    end: 2018-12-31
+  - name: COVID shock
+    start: 2020-02-01
+    end: 2020-04-30
+  - name: Russia-Ukraine war start
+    start: 2022-02-01
+    end: 2022-03-31
+  - name: SVB / regional bank crisis
+    start: 2023-03-01
+    end: 2023-03-31
+dynamic_rules:
+  vix_above: 40
+  weekly_spx_drawdown_less_than: -0.07

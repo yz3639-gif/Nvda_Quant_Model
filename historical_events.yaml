@@ -1,0 +1,297 @@
+events:
+  - id: nixon_china_1972
+    name: Nixon China state visit
+    date: 1972-02-21
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+    notes: Strategic diplomatic opening; outside ETF sample for several assets.
+  - id: ford_china_1975
+    name: Ford China visit
+    date: 1975-12-01
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: reagan_china_1984
+    name: Reagan China state visit
+    date: 1984-04-26
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: bush_china_1989
+    name: George H. W. Bush Beijing visit
+    date: 1989-02-25
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: clinton_china_1998
+    name: Clinton China state visit
+    date: 1998-06-24
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: bush_apec_2001
+    name: George W. Bush Shanghai APEC
+    date: 2001-10-18
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: bush_china_2002
+    name: George W. Bush Beijing visit
+    date: 2002-02-21
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: bush_china_2005
+    name: George W. Bush Beijing visit
+    date: 2005-11-20
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: bush_olympics_2008
+    name: George W. Bush Beijing Olympics visit
+    date: 2008-08-07
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: obama_china_2009
+    name: Obama China visit
+    date: 2009-11-15
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: obama_apec_2014
+    name: Obama Beijing APEC
+    date: 2014-11-10
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: obama_g20_2016
+    name: Obama Hangzhou G20
+    date: 2016-09-03
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT]
+  - id: trump_china_2017
+    name: Trump China state visit
+    date: 2017-11-08
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT, TRADE_DETENTE]
+  - id: clinton_jiang_apec_1993
+    name: Clinton-Jiang Seattle APEC meeting
+    date: 1993-11-19
+    category: US_CHINA_SUMMIT
+    secondary_categories: [PRESIDENT_CHINA_VISIT]
+  - id: jiang_us_state_visit_1997
+    name: Jiang Zemin US state visit / Clinton summit
+    date: 1997-10-29
+    category: US_CHINA_SUMMIT
+  - id: clinton_jiang_auckland_1999
+    name: Clinton-Jiang Auckland APEC meeting
+    date: 1999-09-12
+    category: US_CHINA_SUMMIT
+  - id: clinton_jiang_un_2000
+    name: Clinton-Jiang UN Millennium Summit meeting
+    date: 2000-09-08
+    category: US_CHINA_SUMMIT
+  - id: hu_bush_crawford_2002
+    name: Hu Jintao and George W. Bush Crawford meeting
+    date: 2002-10-25
+    category: US_CHINA_SUMMIT
+  - id: hu_bush_chile_2004
+    name: Hu Jintao and George W. Bush APEC Chile meeting
+    date: 2004-11-20
+    category: US_CHINA_SUMMIT
+  - id: hu_bush_us_2006
+    name: Hu Jintao US visit / Bush summit
+    date: 2006-04-20
+    category: US_CHINA_SUMMIT
+  - id: hu_bush_australia_2007
+    name: Hu Jintao and George W. Bush APEC Sydney meeting
+    date: 2007-09-06
+    category: US_CHINA_SUMMIT
+  - id: hu_bush_g8_2008
+    name: Hu Jintao and George W. Bush G8 Toyako meeting
+    date: 2008-07-09
+    category: US_CHINA_SUMMIT
+  - id: xi_obama_sunnylands_2013
+    name: Xi-Obama Sunnylands summit
+    date: 2013-06-07
+    category: US_CHINA_SUMMIT
+  - id: xi_obama_state_visit_2015
+    name: Xi Jinping US state visit
+    date: 2015-09-25
+    category: US_CHINA_SUMMIT
+  - id: xi_trump_maralago_2017
+    name: Xi-Trump Mar-a-Lago summit
+    date: 2017-04-06
+    category: US_CHINA_SUMMIT
+    secondary_categories: [TRADE_DETENTE]
+  - id: xi_trump_g20_2018
+    name: Xi-Trump Buenos Aires G20 trade truce
+    date: 2018-12-01
+    category: US_CHINA_SUMMIT
+    secondary_categories: [TRADE_DETENTE]
+  - id: xi_trump_g20_2019
+    name: Xi-Trump Osaka G20 trade truce
+    date: 2019-06-29
+    category: US_CHINA_SUMMIT
+    secondary_categories: [TRADE_DETENTE]
+  - id: xi_biden_bali_2022
+    name: Xi-Biden Bali G20 meeting
+    date: 2022-11-14
+    category: US_CHINA_SUMMIT
+  - id: xi_biden_apec_2023
+    name: Xi-Biden San Francisco APEC meeting
+    date: 2023-11-15
+    category: US_CHINA_SUMMIT
+  - id: bernanke_nomination_2005
+    name: Bernanke nominated as Fed chair
+    date: 2005-10-24
+    category: FED_CHAIR_TRANSITION
+  - id: volcker_nomination_1979
+    name: Volcker nominated as Fed chair
+    date: 1979-07-25
+    category: FED_CHAIR_TRANSITION
+  - id: volcker_start_1979
+    name: Volcker takes office as Fed chair
+    date: 1979-08-06
+    category: FED_CHAIR_TRANSITION
+  - id: volcker_renomination_1983
+    name: Volcker renominated as Fed chair
+    date: 1983-06-20
+    category: FED_CHAIR_TRANSITION
+  - id: greenspan_nomination_1987
+    name: Greenspan nominated as Fed chair
+    date: 1987-06-02
+    category: FED_CHAIR_TRANSITION
+  - id: greenspan_start_1987
+    name: Greenspan takes office as Fed chair
+    date: 1987-08-11
+    category: FED_CHAIR_TRANSITION
+  - id: greenspan_renomination_1991
+    name: Greenspan renominated as Fed chair
+    date: 1991-05-17
+    category: FED_CHAIR_TRANSITION
+  - id: greenspan_renomination_1996
+    name: Greenspan renominated as Fed chair
+    date: 1996-02-22
+    category: FED_CHAIR_TRANSITION
+  - id: greenspan_renomination_2000
+    name: Greenspan renominated as Fed chair
+    date: 2000-01-04
+    category: FED_CHAIR_TRANSITION
+  - id: greenspan_renomination_2004
+    name: Greenspan renominated as Fed chair
+    date: 2004-05-18
+    category: FED_CHAIR_TRANSITION
+  - id: bernanke_confirmation_2006
+    name: Bernanke confirmed as Fed chair
+    date: 2006-01-31
+    category: FED_CHAIR_TRANSITION
+  - id: yellen_nomination_2013
+    name: Yellen nominated as Fed chair
+    date: 2013-10-09
+    category: FED_CHAIR_TRANSITION
+  - id: yellen_confirmation_2014
+    name: Yellen confirmed as Fed chair
+    date: 2014-01-06
+    category: FED_CHAIR_TRANSITION
+  - id: powell_nomination_2017
+    name: Powell nominated as Fed chair
+    date: 2017-11-02
+    category: FED_CHAIR_TRANSITION
+  - id: powell_confirmation_2018
+    name: Powell confirmed as Fed chair
+    date: 2018-01-23
+    category: FED_CHAIR_TRANSITION
+  - id: powell_renomination_2021
+    name: Powell renominated as Fed chair
+    date: 2021-11-22
+    category: FED_CHAIR_TRANSITION
+  - id: powell_reconfirmation_2022
+    name: Powell confirmed for second term
+    date: 2022-05-12
+    category: FED_CHAIR_TRANSITION
+  - id: new_york_fed_williams_2018
+    name: John Williams named New York Fed president
+    date: 2018-04-03
+    category: FED_CHAIR_TRANSITION
+    secondary_categories: [FOMC_PERSONNEL]
+  - id: clarida_nomination_2018
+    name: Richard Clarida nominated Fed vice chair
+    date: 2018-04-16
+    category: FED_CHAIR_TRANSITION
+    secondary_categories: [FOMC_PERSONNEL]
+  - id: brainard_vice_chair_nomination_2021
+    name: Lael Brainard nominated Fed vice chair
+    date: 2021-11-22
+    category: FED_CHAIR_TRANSITION
+    secondary_categories: [FOMC_PERSONNEL]
+  - id: plaza_accord_1985
+    name: Plaza Accord
+    date: 1985-09-22
+    category: TRADE_ACTION
+    secondary_categories: [USD_GLOBAL_CURRENCY]
+  - id: louvre_accord_1987
+    name: Louvre Accord
+    date: 1987-02-22
+    category: USD_GLOBAL_CURRENCY
+  - id: china_fx_reform_2005
+    name: China RMB exchange-rate reform
+    date: 2005-07-21
+    category: USD_GLOBAL_CURRENCY
+    secondary_categories: [TRADE_ACTION]
+  - id: china_devaluation_2015
+    name: China RMB devaluation
+    date: 2015-08-11
+    category: USD_GLOBAL_CURRENCY
+  - id: reagan_japan_semis_1987
+    name: Reagan Japan semiconductor tariffs
+    date: 1987-04-17
+    category: TRADE_ACTION
+  - id: bush_steel_201_2002
+    name: Bush steel safeguard tariffs
+    date: 2002-03-05
+    category: TRADE_ACTION
+  - id: obama_tire_2009
+    name: Obama China tire safeguard tariffs
+    date: 2009-09-11
+    category: TRADE_ACTION
+  - id: trump_232_steel_aluminum_2018
+    name: Trump Section 232 steel and aluminum tariffs
+    date: 2018-03-08
+    category: TRADE_ACTION
+  - id: trump_china_tariff_list1_2018
+    name: Trump China tariffs List 1
+    date: 2018-07-06
+    category: TRADE_ACTION
+  - id: trump_china_tariff_list2_2018
+    name: Trump China tariffs List 2
+    date: 2018-08-23
+    category: TRADE_ACTION
+  - id: trump_china_tariff_list3_2018
+    name: Trump China tariffs List 3
+    date: 2018-09-24
+    category: TRADE_ACTION
+  - id: us_china_phase_one_2020
+    name: US-China Phase One trade deal
+    date: 2020-01-15
+    category: TRADE_ACTION
+    secondary_categories: [TRADE_DETENTE]
+  - id: gulf_war_1990
+    name: Gulf War Iraq invades Kuwait
+    date: 1990-08-02
+    category: GEOPOLITICAL_CONFLICT
+  - id: iraq_war_2003
+    name: Iraq war begins
+    date: 2003-03-20
+    category: GEOPOLITICAL_CONFLICT
+  - id: russia_georgia_2008
+    name: Russia-Georgia war
+    date: 2008-08-08
+    category: GEOPOLITICAL_CONFLICT
+  - id: crimea_2014
+    name: Crimea annexation
+    date: 2014-03-18
+    category: GEOPOLITICAL_CONFLICT
+  - id: russia_ukraine_2022
+    name: Russia full-scale invasion of Ukraine
+    date: 2022-02-24
+    category: GEOPOLITICAL_CONFLICT
+  - id: hamas_israel_2023
+    name: Hamas attack and Israel-Hamas war
+    date: 2023-10-07
+    category: GEOPOLITICAL_CONFLICT
+  - id: iran_israel_2024
+    name: Iran direct strike on Israel
+    date: 2024-04-13
+    category: GEOPOLITICAL_CONFLICT

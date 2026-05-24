@@ -1,0 +1,59 @@
+events:
+  - id: trump_china_visit_2026_05
+    name: 特朗普访华 / Trump-Xi Beijing summit
+    date: 2026-05-14
+    end_date: 2026-05-15
+    category: PRESIDENT_CHINA_VISIT
+    secondary_categories: [US_CHINA_SUMMIT, TRADE_DETENTE]
+    importance: 5
+    geography: US/China
+    source: "AP: https://apnews.com/article/401c4c33a01b2acce72e96eb8058f8cc"
+    notes: State visit to Beijing; trade truce, tariffs, Taiwan and Iran-war spillover are the key market channels.
+    theme_tickers: [SOXX, REMX, CORN, SOYB, KWEB, FXI, TAN]
+  - id: us_cpi_2026_05_12
+    name: 美国 CPI / Core CPI
+    date: 2026-05-12
+    category: CPI
+    importance: 5
+    geography: US
+    source: "BLS CPI schedule: https://www.bls.gov/schedule/news_release/cpi.htm"
+    notes: April CPI print; inflation surprise affects Fed path, rates, equity duration and USD.
+    theme_tickers: [TLT, GLD, XLF, XLRE, XLY]
+  - id: us_ppi_2026_05_13
+    name: 美国 PPI
+    date: 2026-05-13
+    category: PPI
+    importance: 4
+    geography: US
+    source: "BLS PPI schedule: https://www.bls.gov/schedule/news_release/ppi.htm"
+    notes: April producer prices; second inflation read after CPI.
+    theme_tickers: [TLT, GLD, XLI, XLB]
+  - id: us_retail_claims_2026_05_14
+    name: 美国零售销售 + 初请失业金 + 进口价格
+    date: 2026-05-14
+    category: RETAIL_SALES
+    secondary_categories: [INITIAL_JOBLESS_CLAIMS]
+    importance: 4
+    geography: US
+    source: "Census/BLS weekly calendar: https://www.census.gov/economic-indicators/"
+    notes: Growth and labor pulse released the same morning as Trump-Xi summit start.
+    theme_tickers: [XLY, XLP, IWM, KRE]
+  - id: us_industrial_empire_2026_05_15
+    name: 美国工业产出 + 纽约联储制造业
+    date: 2026-05-15
+    category: INDUSTRIAL_PRODUCTION
+    secondary_categories: [EMPIRE_MANUFACTURING]
+    importance: 3
+    geography: US
+    source: "Federal Reserve G.17 schedule: https://www.federalreserve.gov/releases/G17/"
+    notes: Manufacturing activity and production read; cyclicals, USD and rates are the primary channels.
+    theme_tickers: [XLI, XLB, CPER, IWM]
+  - id: fed_chair_transition_2026_05
+    name: 美联储主席任期交接 / Warsh nomination risk
+    date: 2026-05-15
+    category: FED_CHAIR_TRANSITION
+    importance: 5
+    geography: US
+    source: "Federal Reserve Board biography/calendar and financial press"
+    notes: Powell's chair term ends May 15; Senate timing is uncertain, so the event is flagged as schedule-risk rather than a fixed vote.
+    theme_tickers: [TLT, KRE, XLRE, GLD, XLF]
