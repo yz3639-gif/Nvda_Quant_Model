@@ -5,6 +5,7 @@ from typing import Any, Iterable
 
 import numpy as np
 import pandas as pd
+from scipy import stats
 
 
 def probability_calibration(
@@ -167,6 +168,7 @@ def engine_rolling_calibration(
     seed: int = 42,
     volatility_mode: str = "rolling",
     ewma_span: int = 60,
+    hac_lags: int | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Calibrate the NVDA terminal-return simulation engine on rolling historical as-of dates.
 
@@ -247,22 +249,42 @@ def engine_rolling_calibration(
         raise ValueError("No engine calibration windows could be evaluated.")
 
     summary_rows: list[dict[str, Any]] = []
+    effective_hac_lags = max(0, int(hac_lags if hac_lags is not None else np.ceil(horizon_days / step)))
+    pit_values = windows["pit"].to_numpy(dtype=float)
+    pit_ks = stats.kstest(pit_values, "uniform")
+    pit_mean = float(np.mean(pit_values))
+    pit_mean_error = pit_mean - 0.5
+    pit_naive_se = float(np.std(pit_values, ddof=1) / np.sqrt(len(pit_values))) if len(pit_values) > 1 else np.nan
+    pit_hac_se = _newey_west_mean_se(pit_values, effective_hac_lags)
     for level in levels:
         key = int(round(level * 100))
-        coverage = float(windows[f"inside_{key}"].mean())
+        hits = windows[f"inside_{key}"].astype(float).to_numpy()
+        coverage = float(np.mean(hits))
+        coverage_error = coverage - level
+        naive_se = float(np.sqrt(max(level * (1.0 - level), 0.0) / len(hits)))
+        hac_se = _newey_west_mean_se(hits, effective_hac_lags)
         summary_rows.append(
             {
                 "confidence_level": level,
                 "expected_coverage": level,
                 "actual_coverage": coverage,
-                "coverage_error": coverage - level,
+                "coverage_error": coverage_error,
+                "coverage_naive_se": naive_se,
+                "coverage_hac_se": hac_se,
+                "coverage_z_hac": coverage_error / hac_se if hac_se and np.isfinite(hac_se) and hac_se > 0 else np.nan,
                 "below_rate": float(windows[f"below_{key}"].mean()),
                 "above_rate": float(windows[f"above_{key}"].mean()),
                 "avg_interval_width": float(windows[f"ci_{key}_width"].mean()),
-                "pit_mean": float(windows["pit"].mean()),
-                "pit_mean_error": float(windows["pit"].mean() - 0.5),
-                "pit_std": float(windows["pit"].std(ddof=0)),
+                "pit_mean": pit_mean,
+                "pit_mean_error": pit_mean_error,
+                "pit_naive_se": pit_naive_se,
+                "pit_hac_se": pit_hac_se,
+                "pit_z_hac": pit_mean_error / pit_hac_se if pit_hac_se and np.isfinite(pit_hac_se) and pit_hac_se > 0 else np.nan,
+                "pit_std": float(np.std(pit_values, ddof=0)),
+                "pit_ks_stat": float(pit_ks.statistic),
+                "pit_ks_pvalue": float(pit_ks.pvalue),
                 "n_windows": int(len(windows)),
+                "hac_lags": effective_hac_lags,
                 "horizon_days": int(horizon_days),
                 "train_window_years": float(train_window_years),
                 "train_window_days": int(train_window),
@@ -271,6 +293,25 @@ def engine_rolling_calibration(
             }
         )
     return pd.DataFrame(summary_rows), windows
+
+
+def _newey_west_mean_se(values: np.ndarray | pd.Series, lags: int) -> float:
+    """Estimate Newey-West standard error for a sample mean."""
+
+    array = np.asarray(values, dtype=float)
+    array = array[np.isfinite(array)]
+    n = array.size
+    if n <= 1:
+        return np.nan
+    centered = array - np.mean(array)
+    max_lag = min(max(int(lags), 0), n - 1)
+    gamma0 = float(np.dot(centered, centered) / n)
+    long_run_var = gamma0
+    for lag in range(1, max_lag + 1):
+        weight = 1.0 - lag / (max_lag + 1.0)
+        gamma = float(np.dot(centered[lag:], centered[:-lag]) / n)
+        long_run_var += 2.0 * weight * gamma
+    return float(np.sqrt(max(long_run_var, 0.0) / n))
 
 
 def _coerce_close_series(close: pd.Series | pd.DataFrame) -> pd.Series:
