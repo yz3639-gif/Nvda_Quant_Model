@@ -11,9 +11,11 @@ from nvda_quant_model.candidate_promotion import classify_candidate, select_prom
 from nvda_quant_model.config import MACRO_TICKERS, PROJECT_ROOT, SECTOR_TICKERS, StrategyConfig
 from nvda_quant_model.data.feature_engineering import build_model_frame
 from nvda_quant_model.data.load_data import load_ohlcv
+from nvda_quant_model.high_sample_optimizer import SEARCH_SPACE as HIGH_SAMPLE_SEARCH_SPACE
 from nvda_quant_model.high_sample_optimizer import high_sample_quality, high_sample_score
 from nvda_quant_model.high_sample_validation import select_high_sample_candidates
 from nvda_quant_model.live_order_flow import analyze_order_flow, bars_frame
+from nvda_quant_model.long_run_optimizer import SEARCH_SPACE as STRICT_SEARCH_SPACE
 from nvda_quant_model.meta_decision_layer import MetaPolicy, build_meta_signals
 from nvda_quant_model.models.ml_model import build_candidate_models, load_model_parameter_overrides
 from nvda_quant_model.options_volatility import analyze_options
@@ -25,6 +27,7 @@ from nvda_quant_model.optimizer_monitor import (
     optimizer_process_count,
     validation_contains_label,
 )
+from nvda_quant_model.precision_search import MOMENTUM_FEATURES
 from nvda_quant_model.pipeline import prepare_model_inputs
 from nvda_quant_model.reaction_pool import build_reaction_signals, combine_baseline_and_reaction
 from nvda_quant_model.reaction_pool_validation import _passes_validation
@@ -240,6 +243,19 @@ def test_build_model_frame_adds_bollinger_and_ema_features() -> None:
         assert np.isfinite(frame[column]).all()
 
     assert frame["boll_bandwidth_20"].gt(0).all()
+
+
+def test_optimizers_share_bollinger_and_ema_momentum_search_space() -> None:
+    expected = {
+        "ema_10_20_spread",
+        "ema_20_50_spread",
+        "boll_percent_b_20",
+        "boll_zscore_20",
+    }
+
+    assert expected.issubset(MOMENTUM_FEATURES)
+    assert STRICT_SEARCH_SPACE["momentum_feature"] == MOMENTUM_FEATURES
+    assert HIGH_SAMPLE_SEARCH_SPACE["momentum_feature"] == MOMENTUM_FEATURES
 
 
 def test_load_ohlcv_recovers_from_corrupt_cache(tmp_path, monkeypatch) -> None:
