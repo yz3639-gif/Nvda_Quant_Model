@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 from pathlib import Path
 from typing import Any
 
@@ -76,11 +77,31 @@ def _status_counts(summary: pd.DataFrame) -> dict[str, int]:
     return {str(key): int(value) for key, value in summary["status"].value_counts().items()}
 
 
+def read_live_optimizer_csv(path: str | Path, attempts: int = 5, delay_seconds: float = 0.25) -> pd.DataFrame:
+    """Read an optimizer CSV that may be actively appended by a long-running job."""
+
+    csv_path = Path(path)
+    last_error: Exception | None = None
+    for _ in range(max(1, attempts)):
+        try:
+            return pd.read_csv(csv_path)
+        except (OSError, pd.errors.ParserError) as exc:
+            last_error = exc
+            time.sleep(delay_seconds)
+
+    try:
+        return pd.read_csv(csv_path, engine="python", on_bad_lines="skip")
+    except Exception:
+        if last_error is not None:
+            raise last_error
+        raise
+
+
 def run_validation(args: argparse.Namespace) -> dict[str, Any]:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    high_sample_rows = pd.read_csv(args.high_sample_results)
-    baseline_rows = pd.read_csv(args.baseline_results)
+    high_sample_rows = read_live_optimizer_csv(args.high_sample_results)
+    baseline_rows = read_live_optimizer_csv(args.baseline_results)
     candidates, metadata = select_high_sample_candidates(
         high_sample_rows,
         baseline_rows,

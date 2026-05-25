@@ -13,7 +13,7 @@ from nvda_quant_model.data.feature_engineering import build_model_frame
 from nvda_quant_model.data.load_data import load_ohlcv
 from nvda_quant_model.high_sample_optimizer import SEARCH_SPACE as HIGH_SAMPLE_SEARCH_SPACE
 from nvda_quant_model.high_sample_optimizer import high_sample_quality, high_sample_score
-from nvda_quant_model.high_sample_validation import select_high_sample_candidates
+from nvda_quant_model.high_sample_validation import read_live_optimizer_csv, select_high_sample_candidates
 from nvda_quant_model.live_order_flow import analyze_order_flow, bars_frame
 from nvda_quant_model.long_run_optimizer import SEARCH_SPACE as STRICT_SEARCH_SPACE
 from nvda_quant_model.meta_decision_layer import MetaPolicy, build_meta_signals
@@ -558,6 +558,22 @@ def test_high_sample_validation_uses_fallback_baseline_label() -> None:
     assert metadata["baseline_found"] is False
     assert metadata["effective_baseline_label"] == "fresh_repaired_baseline"
     assert candidates.iloc[0]["roles"] == "current_baseline"
+
+
+def test_high_sample_validation_skips_partially_written_optimizer_rows(tmp_path) -> None:
+    path = tmp_path / "live_results.csv"
+    path.write_text(
+        "label,score,bt_num_trades\n"
+        "good_a,1.0,60\n"
+        "partial,2.0,61,unfinished_extra_field\n"
+        "good_b,3.0,62\n",
+        encoding="utf-8",
+    )
+
+    frame = read_live_optimizer_csv(path, attempts=1, delay_seconds=0.0)
+
+    assert frame["label"].tolist() == ["good_a", "good_b"]
+    assert frame["bt_num_trades"].tolist() == [60, 62]
 
 
 def test_optimizer_monitor_detects_new_high_sample_validation_need() -> None:
