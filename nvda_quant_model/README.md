@@ -231,6 +231,30 @@ contains event distribution adjustments (`event_mu_adjustment`,
 `event_sigma_multiplier`, `event_tail_risk_multiplier`) plus reason codes, and
 still never emits `signal` or `position`.
 
+Build a clean NVDA point-in-time historical event store before using news/events
+in historical validation:
+
+```sh
+python3.13 -m nvda_quant_model.event_overlay.history_builder \
+  --start 2019-01-01 \
+  --end latest \
+  --sources sec,gdelt \
+  --with-labels \
+  --output-dir nvda_quant_model/outputs/event_overlay_history
+```
+
+The builder writes separate files for event inputs and future labels:
+
+- `nvda_historical_events.csv`: publication-time fields only.
+- `nvda_event_labels.csv`: future return/direction labels for training and validation only.
+- `nvda_news_history_articles.csv`: compatibility export for `--news-history-csv`.
+- `event_store_audit.json`: sample count, month coverage, source concentration, and whether the store is ready for serious walk-forward validation.
+
+If the store has fewer than 250 labeled events, fewer than 24 covered months, or
+too much single-source concentration, the backtest path returns
+`insufficient_point_in_time_sample` instead of pretending the event layer has
+validated. Live news remains a current overlay only.
+
 Fetch real-time top-of-book buy/sell pressure and recent 1-minute trend:
 
 ```sh
