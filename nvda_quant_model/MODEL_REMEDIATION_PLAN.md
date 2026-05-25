@@ -167,7 +167,7 @@
 解决方案：
 - 新增 `calibration` 模块，输出 active signal 的 Brier score、平均校准误差、分箱校准误差。
 - 候选晋级的 24/36/60 跨窗口报告纳入校准字段，避免只看收益/胜率。
-- 增加 engine rolling calibration，用真实 NVDA 历史窗口检查 PIT 均值、80%/95% 区间覆盖率，为后续动态波动率和校准加权打基础。
+- 增加 engine rolling calibration，用真实 NVDA 历史窗口直接调用 historical bootstrap、GBM normal、GBM Student-t 三个仿真引擎，检查 PIT 均值、80%/95% 区间覆盖率，为后续动态波动率和校准加权打基础。
 - 期权 overlay 明确标注 `path_dependent_metrics_status=unavailable`，不再暗示能从 snapshot 直接得出 barrier/drawdown。
 
 验收标准：
@@ -175,4 +175,4 @@
 - 后续若引入期权分布/RND，必须先通过覆盖率/尾部校准检验。
 - 对无法校准的期权 path 指标，宁可输出不可用，也不能输出伪精确数字。
 
-当前状态：第三版已完成。真实 NVDA 10 年校准显示 21 日 horizon 下 PIT 均值接近 0.5，80% 覆盖率接近目标，95% 覆盖率偏低。`step=5` 重叠窗口把样本从 59 增至 247，并加入 Newey-West/HAC 标准误与 PIT KS 检验；结果显示 95% 覆盖率仍约低 2.3pct，但 HAC z 约 -1.05，暂不足以证明小幅 tail-widening 改动显著优于当前引擎。PIT KS p-value 约 0.62，未发现整体 PIT 分布显著偏离均匀。下一步应优先做能产生更大可检测改善的尾部/极端波动处理，而不是追逐 1pct 级别小调参。
+当前状态：第四版已完成。校准尺子已经从正态代理改为真实仿真引擎，且 realized return 与 engine terminal_returns 统一为 simple return 口径。NVDA 10 年、21 日 horizon、5 年训练窗、`n_sims=5000` 的真实引擎校准显示：`step=5` 下每个方法有 247 个窗口，historical bootstrap 的 80%/95% 覆盖率为 78.14%/91.90%，GBM normal 为 81.78%/92.31%，GBM Student-t 为 80.57%/93.12%；三者 PIT 均值均接近 0.5，PIT KS p-value 分别约 0.86/0.12/0.12。下一步应基于各引擎真实覆盖率选择尾部修正和 ensemble 权重，而不是用代理分布下结论。

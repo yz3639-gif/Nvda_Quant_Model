@@ -7,6 +7,9 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
+from methods.historical import run_historical_bootstrap
+from methods.monte_carlo import run_monte_carlo_methods
+
 
 def probability_calibration(
     signals: pd.DataFrame,
@@ -166,83 +169,133 @@ def engine_rolling_calibration(
     n_sims: int = 5_000,
     confidence_levels: Iterable[float] = (0.50, 0.80, 0.95),
     seed: int = 42,
-    volatility_mode: str = "rolling",
-    ewma_span: int = 60,
     hac_lags: int | None = None,
+    block_size: int = 5,
+    engine_methods: Iterable[str] = ("historical_bootstrap", "gbm_normal", "gbm_student_t"),
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Calibrate the NVDA terminal-return simulation engine on rolling historical as-of dates.
+    """Calibrate NVDA terminal-return simulation engines on rolling historical as-of dates.
 
-    The PIT value is the fraction of simulated terminal log returns below the realized
-    terminal log return. A calibrated engine should have PIT values centered near 0.5
-    and interval coverage close to the requested confidence levels.
+    The PIT value is the fraction of simulated terminal simple returns below the
+    realized terminal simple return. A calibrated engine should have PIT values
+    centered near 0.5 and interval coverage close to the requested confidence
+    levels. The returned window rows are per engine method, not a normal proxy.
     """
 
     prices = _coerce_close_series(close)
-    if horizon_days <= 0 or train_window_years <= 0 or step <= 0 or n_sims <= 100:
-        raise ValueError("horizon_days, train_window_years, step, and n_sims must be positive.")
+    if horizon_days <= 0 or train_window_years <= 0 or step <= 0 or n_sims <= 100 or block_size <= 0:
+        raise ValueError("horizon_days, train_window_years, step, n_sims, and block_size must be positive.")
     levels = tuple(float(level) for level in confidence_levels)
     if not levels or any(level <= 0.0 or level >= 1.0 for level in levels):
         raise ValueError("confidence_levels must be between 0 and 1.")
+    requested_methods = tuple(dict.fromkeys(str(method) for method in engine_methods))
+    valid_methods = {"historical_bootstrap", "gbm_normal", "gbm_student_t"}
+    unknown_methods = set(requested_methods).difference(valid_methods)
+    if unknown_methods:
+        raise ValueError(f"Unsupported engine_methods: {sorted(unknown_methods)}")
+    if not requested_methods:
+        raise ValueError("At least one engine method is required.")
 
     train_window = int(round(train_window_years * 252))
     if prices.shape[0] <= train_window + horizon_days:
         raise ValueError("Not enough prices for engine rolling calibration.")
 
     log_returns = np.log(prices / prices.shift(1)).dropna()
-    rng = np.random.default_rng(seed)
     rows: list[dict[str, Any]] = []
+    as_of_positions = list(range(train_window, prices.shape[0] - horizon_days, step))
+    seed_sequence = np.random.SeedSequence(seed)
+    child_seeds = seed_sequence.spawn(max(len(as_of_positions) * 2, 1))
 
-    for as_of_pos in range(train_window, prices.shape[0] - horizon_days, step):
+    for window_id, as_of_pos in enumerate(as_of_positions):
         as_of_date = prices.index[as_of_pos]
         train_returns = log_returns.loc[:as_of_date].tail(train_window)
         train_returns = train_returns[np.isfinite(train_returns)]
         if train_returns.shape[0] < max(60, int(train_window * 0.5)):
             continue
         daily_mu = float(train_returns.mean())
-        if volatility_mode == "rolling":
-            daily_sigma = float(train_returns.std(ddof=1))
-        elif volatility_mode == "ewma":
-            daily_sigma = float(train_returns.ewm(span=ewma_span, adjust=False).std(bias=False).iloc[-1])
-        else:
-            raise ValueError("volatility_mode must be 'rolling' or 'ewma'.")
+        daily_sigma = float(train_returns.std(ddof=1))
         if not np.isfinite(daily_mu) or not np.isfinite(daily_sigma) or daily_sigma <= 0.0:
             continue
 
-        shocks = rng.standard_normal(size=(int(n_sims), int(horizon_days)))
-        simulated_terminal_returns = (daily_mu + daily_sigma * shocks).sum(axis=1)
+        spot = float(prices.iloc[as_of_pos])
         terminal_date = prices.index[as_of_pos + horizon_days]
-        actual_log_return = float(np.log(prices.iloc[as_of_pos + horizon_days] / prices.iloc[as_of_pos]))
-        pit = float(np.mean(simulated_terminal_returns <= actual_log_return))
-        row: dict[str, Any] = {
-            "as_of_date": pd.Timestamp(as_of_date).strftime("%Y-%m-%d"),
-            "terminal_date": pd.Timestamp(terminal_date).strftime("%Y-%m-%d"),
-            "actual_log_return": actual_log_return,
-            "simulated_mean_log_return": float(np.mean(simulated_terminal_returns)),
-            "simulated_median_log_return": float(np.median(simulated_terminal_returns)),
-            "simulated_std_log_return": float(np.std(simulated_terminal_returns, ddof=1)),
-            "pit": pit,
-            "pit_centered": pit - 0.5,
-            "daily_mu": daily_mu,
-            "daily_sigma": daily_sigma,
-            "annualized_mu": daily_mu * 252,
-            "annualized_sigma": daily_sigma * np.sqrt(252),
-            "horizon_days": int(horizon_days),
-            "train_window_days": int(train_window),
-            "n_sims": int(n_sims),
-            "volatility_mode": volatility_mode,
-        }
-        for level in levels:
-            low_q = (1.0 - level) / 2.0
-            high_q = 1.0 - low_q
-            low, high = np.quantile(simulated_terminal_returns, [low_q, high_q])
-            key = int(round(level * 100))
-            row[f"ci_{key}_low"] = float(low)
-            row[f"ci_{key}_high"] = float(high)
-            row[f"ci_{key}_width"] = float(high - low)
-            row[f"inside_{key}"] = bool(low <= actual_log_return <= high)
-            row[f"below_{key}"] = bool(actual_log_return < low)
-            row[f"above_{key}"] = bool(actual_log_return > high)
-        rows.append(row)
+        actual_simple_return = float(prices.iloc[as_of_pos + horizon_days] / spot - 1.0)
+        actual_log_return = float(np.log(prices.iloc[as_of_pos + horizon_days] / spot))
+        rng_hist = np.random.default_rng(child_seeds[window_id * 2])
+        rng_mc = np.random.default_rng(child_seeds[window_id * 2 + 1])
+
+        method_results: dict[str, Any] = {}
+        if "historical_bootstrap" in requested_methods:
+            method_results["historical_bootstrap"] = run_historical_bootstrap(
+                returns=train_returns.to_numpy(dtype=float),
+                spot=spot,
+                horizon_days=int(horizon_days),
+                n_sims=int(n_sims),
+                block_size=int(block_size),
+                rng=rng_hist,
+                thresholds=[0.0],
+                lookback_years=float(train_window_years),
+            )
+        if "gbm_normal" in requested_methods or "gbm_student_t" in requested_methods:
+            gbm_normal, gbm_student_t = run_monte_carlo_methods(
+                returns=train_returns.to_numpy(dtype=float),
+                spot=spot,
+                horizon_days=int(horizon_days),
+                n_sims=int(n_sims),
+                rng=rng_mc,
+                thresholds=[0.0],
+                lookback_years=float(train_window_years),
+            )
+            if "gbm_normal" in requested_methods:
+                method_results["gbm_normal"] = gbm_normal
+            if "gbm_student_t" in requested_methods:
+                method_results["gbm_student_t"] = gbm_student_t
+
+        for method_name in requested_methods:
+            result = method_results.get(method_name)
+            if result is None:
+                continue
+            simulated_terminal_returns = np.asarray(result.terminal_returns, dtype=float)
+            simulated_terminal_returns = simulated_terminal_returns[np.isfinite(simulated_terminal_returns)]
+            if simulated_terminal_returns.size <= 1:
+                continue
+            pit = float(np.mean(simulated_terminal_returns <= actual_simple_return))
+            row: dict[str, Any] = {
+                "method": method_name,
+                "method_label": result.name,
+                "method_detail": result.extras.get("method_detail", method_name),
+                "as_of_date": pd.Timestamp(as_of_date).strftime("%Y-%m-%d"),
+                "terminal_date": pd.Timestamp(terminal_date).strftime("%Y-%m-%d"),
+                "spot": spot,
+                "actual_simple_return": actual_simple_return,
+                "actual_log_return": actual_log_return,
+                "simulated_mean_return": float(np.mean(simulated_terminal_returns)),
+                "simulated_median_return": float(np.median(simulated_terminal_returns)),
+                "simulated_std_return": float(np.std(simulated_terminal_returns, ddof=1)),
+                "pit": pit,
+                "pit_centered": pit - 0.5,
+                "daily_mu": daily_mu,
+                "daily_sigma": daily_sigma,
+                "annualized_mu": daily_mu * 252,
+                "annualized_sigma": daily_sigma * np.sqrt(252),
+                "horizon_days": int(horizon_days),
+                "train_window_days": int(train_window),
+                "n_sims": int(n_sims),
+                "block_size": int(block_size),
+                "engine_source": "simulation_engine",
+                "student_t_df": result.extras.get("student_t_df"),
+            }
+            for level in levels:
+                low_q = (1.0 - level) / 2.0
+                high_q = 1.0 - low_q
+                low, high = np.quantile(simulated_terminal_returns, [low_q, high_q])
+                key = int(round(level * 100))
+                row[f"ci_{key}_low"] = float(low)
+                row[f"ci_{key}_high"] = float(high)
+                row[f"ci_{key}_width"] = float(high - low)
+                row[f"inside_{key}"] = bool(low <= actual_simple_return <= high)
+                row[f"below_{key}"] = bool(actual_simple_return < low)
+                row[f"above_{key}"] = bool(actual_simple_return > high)
+            rows.append(row)
 
     windows = pd.DataFrame(rows)
     if windows.empty:
@@ -250,48 +303,55 @@ def engine_rolling_calibration(
 
     summary_rows: list[dict[str, Any]] = []
     effective_hac_lags = max(0, int(hac_lags if hac_lags is not None else np.ceil(horizon_days / step)))
-    pit_values = windows["pit"].to_numpy(dtype=float)
-    pit_ks = stats.kstest(pit_values, "uniform")
-    pit_mean = float(np.mean(pit_values))
-    pit_mean_error = pit_mean - 0.5
-    pit_naive_se = float(np.std(pit_values, ddof=1) / np.sqrt(len(pit_values))) if len(pit_values) > 1 else np.nan
-    pit_hac_se = _newey_west_mean_se(pit_values, effective_hac_lags)
-    for level in levels:
-        key = int(round(level * 100))
-        hits = windows[f"inside_{key}"].astype(float).to_numpy()
-        coverage = float(np.mean(hits))
-        coverage_error = coverage - level
-        naive_se = float(np.sqrt(max(level * (1.0 - level), 0.0) / len(hits)))
-        hac_se = _newey_west_mean_se(hits, effective_hac_lags)
-        summary_rows.append(
-            {
-                "confidence_level": level,
-                "expected_coverage": level,
-                "actual_coverage": coverage,
-                "coverage_error": coverage_error,
-                "coverage_naive_se": naive_se,
-                "coverage_hac_se": hac_se,
-                "coverage_z_hac": coverage_error / hac_se if hac_se and np.isfinite(hac_se) and hac_se > 0 else np.nan,
-                "below_rate": float(windows[f"below_{key}"].mean()),
-                "above_rate": float(windows[f"above_{key}"].mean()),
-                "avg_interval_width": float(windows[f"ci_{key}_width"].mean()),
-                "pit_mean": pit_mean,
-                "pit_mean_error": pit_mean_error,
-                "pit_naive_se": pit_naive_se,
-                "pit_hac_se": pit_hac_se,
-                "pit_z_hac": pit_mean_error / pit_hac_se if pit_hac_se and np.isfinite(pit_hac_se) and pit_hac_se > 0 else np.nan,
-                "pit_std": float(np.std(pit_values, ddof=0)),
-                "pit_ks_stat": float(pit_ks.statistic),
-                "pit_ks_pvalue": float(pit_ks.pvalue),
-                "n_windows": int(len(windows)),
-                "hac_lags": effective_hac_lags,
-                "horizon_days": int(horizon_days),
-                "train_window_years": float(train_window_years),
-                "train_window_days": int(train_window),
-                "n_sims": int(n_sims),
-                "volatility_mode": volatility_mode,
-            }
-        )
+    for method_name in requested_methods:
+        method_windows = windows.loc[windows["method"] == method_name]
+        if method_windows.empty:
+            continue
+        pit_values = method_windows["pit"].to_numpy(dtype=float)
+        pit_ks = stats.kstest(pit_values, "uniform")
+        pit_mean = float(np.mean(pit_values))
+        pit_mean_error = pit_mean - 0.5
+        pit_naive_se = float(np.std(pit_values, ddof=1) / np.sqrt(len(pit_values))) if len(pit_values) > 1 else np.nan
+        pit_hac_se = _newey_west_mean_se(pit_values, effective_hac_lags)
+        for level in levels:
+            key = int(round(level * 100))
+            hits = method_windows[f"inside_{key}"].astype(float).to_numpy()
+            coverage = float(np.mean(hits))
+            coverage_error = coverage - level
+            naive_se = float(np.sqrt(max(level * (1.0 - level), 0.0) / len(hits)))
+            hac_se = _newey_west_mean_se(hits, effective_hac_lags)
+            summary_rows.append(
+                {
+                    "method": method_name,
+                    "method_label": str(method_windows["method_label"].iloc[0]),
+                    "confidence_level": level,
+                    "expected_coverage": level,
+                    "actual_coverage": coverage,
+                    "coverage_error": coverage_error,
+                    "coverage_naive_se": naive_se,
+                    "coverage_hac_se": hac_se,
+                    "coverage_z_hac": coverage_error / hac_se if hac_se and np.isfinite(hac_se) and hac_se > 0 else np.nan,
+                    "below_rate": float(method_windows[f"below_{key}"].mean()),
+                    "above_rate": float(method_windows[f"above_{key}"].mean()),
+                    "avg_interval_width": float(method_windows[f"ci_{key}_width"].mean()),
+                    "pit_mean": pit_mean,
+                    "pit_mean_error": pit_mean_error,
+                    "pit_naive_se": pit_naive_se,
+                    "pit_hac_se": pit_hac_se,
+                    "pit_z_hac": pit_mean_error / pit_hac_se if pit_hac_se and np.isfinite(pit_hac_se) and pit_hac_se > 0 else np.nan,
+                    "pit_std": float(np.std(pit_values, ddof=0)),
+                    "pit_ks_stat": float(pit_ks.statistic),
+                    "pit_ks_pvalue": float(pit_ks.pvalue),
+                    "n_windows": int(len(method_windows)),
+                    "hac_lags": effective_hac_lags,
+                    "horizon_days": int(horizon_days),
+                    "train_window_years": float(train_window_years),
+                    "train_window_days": int(train_window),
+                    "n_sims": int(n_sims),
+                    "block_size": int(block_size),
+                    "engine_source": "simulation_engine",
+                }
+            )
     return pd.DataFrame(summary_rows), windows
 
 

@@ -397,6 +397,9 @@ def test_engine_rolling_calibration_reports_pit_and_interval_coverage() -> None:
     assert not windows.empty
     assert summary["pit_mean"].between(0.0, 1.0).all()
     assert set(summary["confidence_level"]) == {0.50, 0.80, 0.95}
+    assert set(summary["method"]) == {"historical_bootstrap", "gbm_normal", "gbm_student_t"}
+    assert set(windows["method"]) == {"historical_bootstrap", "gbm_normal", "gbm_student_t"}
+    assert {"actual_simple_return", "simulated_mean_return", "engine_source"}.issubset(windows.columns)
     assert summary["actual_coverage"].between(0.0, 1.0).all()
     assert {"coverage_hac_se", "coverage_z_hac", "pit_ks_pvalue", "hac_lags"}.issubset(summary.columns)
     assert summary["coverage_hac_se"].notna().all()
