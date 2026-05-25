@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 from nvda_quant_model.backtest.backtest_engine import BacktestEngine
-from nvda_quant_model.calibration import probability_calibration, rolling_interval_calibration
+from nvda_quant_model.calibration import engine_rolling_calibration, probability_calibration, rolling_interval_calibration
 from nvda_quant_model.candidate_promotion import classify_candidate, select_promotion_candidates
 from nvda_quant_model.config import MACRO_TICKERS, PROJECT_ROOT, SECTOR_TICKERS, StrategyConfig
 from nvda_quant_model.data.feature_engineering import build_model_frame
@@ -378,6 +378,26 @@ def test_rolling_interval_calibration_reports_nvda_coverage() -> None:
     assert not windows.empty
     assert set(summary["confidence_level"]) == {0.80, 0.95}
     assert summary["coverage"].between(0.0, 1.0).all()
+
+
+def test_engine_rolling_calibration_reports_pit_and_interval_coverage() -> None:
+    index = pd.bdate_range("2020-01-02", periods=420)
+    returns = 0.0006 + 0.018 * np.sin(np.arange(len(index)) / 15.0)
+    close = pd.Series(100.0 * np.exp(np.cumsum(returns)), index=index)
+
+    summary, windows = engine_rolling_calibration(
+        close,
+        horizon_days=10,
+        train_window_years=1.0,
+        step=20,
+        n_sims=750,
+        seed=7,
+    )
+
+    assert not windows.empty
+    assert summary["pit_mean"].between(0.0, 1.0).all()
+    assert set(summary["confidence_level"]) == {0.50, 0.80, 0.95}
+    assert summary["actual_coverage"].between(0.0, 1.0).all()
 
 
 def test_high_sample_optimizer_requires_trade_count_and_quality_gates() -> None:

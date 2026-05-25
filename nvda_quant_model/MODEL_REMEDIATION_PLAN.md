@@ -167,7 +167,7 @@
 解决方案：
 - 新增 `calibration` 模块，输出 active signal 的 Brier score、平均校准误差、分箱校准误差。
 - 候选晋级的 24/36/60 跨窗口报告纳入校准字段，避免只看收益/胜率。
-- 增加 EWMA rolling interval calibration，用历史窗口检查 80%/95% 区间覆盖率，为后续动态波动率和校准加权打基础。
+- 增加 engine rolling calibration，用真实 NVDA 历史窗口检查 PIT 均值、80%/95% 区间覆盖率，为后续动态波动率和校准加权打基础。
 - 期权 overlay 明确标注 `path_dependent_metrics_status=unavailable`，不再暗示能从 snapshot 直接得出 barrier/drawdown。
 
 验收标准：
@@ -175,4 +175,4 @@
 - 后续若引入期权分布/RND，必须先通过覆盖率/尾部校准检验。
 - 对无法校准的期权 path 指标，宁可输出不可用，也不能输出伪精确数字。
 
-当前状态：第一版已完成，等待 repaired 长跑产生新候选后自动进入复验报告。
+当前状态：第二版已完成。真实 NVDA 10 年校准显示 21 日 horizon 下 PIT 均值接近 0.5，80% 覆盖率接近目标，95% 覆盖率偏低，说明下一步应优先处理尾部/极端波动低估，而不是先大改漂移项。
