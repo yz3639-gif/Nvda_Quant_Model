@@ -147,19 +147,21 @@ def plot_risk_neutral_vs_historical_density(
 
 
 def plot_all(
-    primary_results: list[ScenarioResult],
-    historical_result: ScenarioResult,
-    option_result: ScenarioResult,
+    results: list[ScenarioResult],
     output_dir: Path,
     rng: np.random.Generator,
 ) -> list[Path]:
     """Save all required forecast charts and return their paths."""
 
+    if not results:
+        raise ValueError("At least one result is required to plot forecast charts.")
+    historical_result = results[0]
+    option_result = next((result for result in results if result.name.startswith("Option-Implied")), results[-1])
     return [
-        plot_histogram_overlay(primary_results, output_dir),
-        plot_fan_chart(primary_results, output_dir),
-        plot_cdf_comparison(primary_results, output_dir),
-        plot_sample_paths(primary_results, output_dir, rng),
+        plot_histogram_overlay(results, output_dir),
+        plot_fan_chart(results, output_dir),
+        plot_cdf_comparison(results, output_dir),
+        plot_sample_paths(results, output_dir, rng),
         plot_risk_neutral_vs_historical_density(historical_result, option_result, output_dir),
     ]
 

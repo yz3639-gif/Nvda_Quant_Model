@@ -5,10 +5,17 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+import logging
 import math
+import os
 
 import numpy as np
 import pandas as pd
+
+
+logger = logging.getLogger(__name__)
+PRICE_CACHE_MAX_AGE_SECONDS = 24 * 60 * 60
+OPTION_CHAIN_CACHE_MAX_AGE_SECONDS = 60 * 60
 
 
 @dataclass(slots=True)
@@ -59,27 +66,41 @@ def read_price_history(
     ensure_directory(cache_dir)
     end = (end_date or pd.Timestamp.today()).normalize() + pd.Timedelta(days=1)
     start = end - pd.Timedelta(days=int(math.ceil(lookback_years * 365.25)) + 10)
-    cache_path = cache_dir / _cache_name("prices", ticker, start.date().isoformat(), end.date().isoformat(), "csv")
-    if cache_path.exists():
-        return _read_cached_prices(cache_path)
+    cache_path = cache_dir / _cache_name("prices", ticker, "csv")
+    cached = _read_price_cache_if_usable(cache_path, start, end, allow_stale=False)
+    if cached is not None:
+        return cached
 
-    yf = _import_yfinance()
-    data = yf.download(
-        ticker,
-        start=start.date().isoformat(),
-        end=end.date().isoformat(),
-        auto_adjust=False,
-        progress=False,
-        threads=False,
-    )
-    adjusted_close = _extract_adjusted_close(data, ticker)
-    if adjusted_close.empty:
-        raise ValueError(f"No adjusted close data returned for {ticker}.")
-    adjusted_close = adjusted_close.dropna().sort_index()
-    if adjusted_close.empty:
-        raise ValueError(f"Adjusted close data for {ticker} is empty after cleaning.")
-    adjusted_close.to_frame("adj_close").to_csv(cache_path, index_label="date")
-    return adjusted_close
+    try:
+        yf = _import_yfinance()
+        data = yf.download(
+            ticker,
+            start=start.date().isoformat(),
+            end=end.date().isoformat(),
+            auto_adjust=False,
+            progress=False,
+            threads=False,
+            timeout=30,
+        )
+    except Exception:
+        cached = _read_price_cache_if_usable(cache_path, start, end, allow_stale=True)
+        if cached is not None:
+            logger.warning("Price download failed for %s; using stale cache %s.", ticker, cache_path)
+            return cached
+        raise
+    try:
+        adjusted_close = _extract_adjusted_close(data, ticker)
+        if adjusted_close.empty:
+            raise ValueError(f"No adjusted close data returned for {ticker}.")
+        adjusted_close = _clean_price_series(adjusted_close, ticker)
+    except ValueError:
+        cached = _read_price_cache_if_usable(cache_path, start, end, allow_stale=True)
+        if cached is not None:
+            logger.warning("Downloaded price data failed quality checks for %s; using stale cache %s.", ticker, cache_path)
+            return cached
+        raise
+    _write_prices_cache(cache_path, adjusted_close)
+    return _slice_prices(adjusted_close, start, end, ticker)
 
 
 def compute_log_returns(prices: pd.Series) -> pd.Series:
@@ -89,6 +110,9 @@ def compute_log_returns(prices: pd.Series) -> pd.Series:
     if clean_prices.shape[0] < 3:
         raise ValueError("At least three price observations are required.")
     returns = np.log(clean_prices / clean_prices.shift(1)).dropna()
+    returns = returns[np.isfinite(returns)]
+    if returns.shape[0] < 2:
+        raise ValueError("At least two finite log returns are required.")
     returns.name = "log_return"
     return returns
 
@@ -150,25 +174,17 @@ def read_option_chain(
             (pd.Timestamp(item) for item in expirations),
             key=lambda item: abs((item - target_expiration).days),
         )
-        cache_path = cache_dir / _cache_name(
-            "option_chain",
-            ticker,
-            expiration.date().isoformat(),
-            as_of.date().isoformat(),
-            "pkl",
-        )
-        if cache_path.exists():
-            cached = pd.read_pickle(cache_path)
-            return OptionChainData(
-                calls=cached["calls"],
-                puts=cached["puts"],
+        cache_path = cache_dir / _cache_name("option_chain", ticker, expiration.date().isoformat(), "pkl")
+        if cache_path.exists() and _cache_age_seconds(cache_path) <= OPTION_CHAIN_CACHE_MAX_AGE_SECONDS:
+            return _read_option_chain_cache(
+                cache_path,
                 expiration=expiration,
                 source=source,
-                warnings=["Loaded option chain from local cache."],
+                warning="Loaded option chain from fresh local cache.",
             )
         chain = ticker_object.option_chain(expiration.date().isoformat())
         payload = {"calls": chain.calls.copy(), "puts": chain.puts.copy()}
-        pd.to_pickle(payload, cache_path)
+        _write_pickle_cache(cache_path, payload)
         return OptionChainData(
             calls=payload["calls"],
             puts=payload["puts"],
@@ -195,25 +211,124 @@ def _read_cached_prices(cache_path: Path) -> pd.Series:
     return series.sort_index()
 
 
+def _read_price_cache_if_usable(
+    cache_path: Path,
+    start: pd.Timestamp,
+    end: pd.Timestamp,
+    allow_stale: bool,
+) -> pd.Series | None:
+    """Read a price cache when it is fresh enough and covers the requested date range."""
+
+    if not cache_path.exists():
+        return None
+    if not allow_stale and _cache_age_seconds(cache_path) > PRICE_CACHE_MAX_AGE_SECONDS:
+        return None
+    try:
+        cached = _read_cached_prices(cache_path)
+        return _slice_prices(cached, start, end, ticker=cache_path.stem)
+    except (OSError, ValueError, pd.errors.ParserError) as exc:
+        logger.warning("Ignoring corrupt price cache %s: %s", cache_path, exc)
+        try:
+            cache_path.unlink()
+        except OSError:
+            pass
+        return None
+
+
+def _slice_prices(series: pd.Series, start: pd.Timestamp, end: pd.Timestamp, ticker: str) -> pd.Series:
+    """Slice and validate cached or downloaded price history."""
+
+    clean = _clean_price_series(series, ticker)
+    sliced = clean[(clean.index >= start) & (clean.index < end)]
+    if sliced.shape[0] < 3:
+        raise ValueError(f"Price history for {ticker} has fewer than three usable observations.")
+    return sliced
+
+
+def _clean_price_series(series: pd.Series, ticker: str) -> pd.Series:
+    """Validate adjusted close data before it enters simulations."""
+
+    numeric = pd.to_numeric(series, errors="coerce").sort_index()
+    nan_count = int(numeric.isna().sum())
+    if nan_count > max(1, int(numeric.shape[0] * 0.01)):
+        raise ValueError(f"Price history for {ticker} has too many NaN values ({nan_count}).")
+    clean = numeric.dropna()
+    clean = clean[np.isfinite(clean)]
+    clean = clean[clean > 0.0]
+    if clean.shape[0] < 3:
+        raise ValueError(f"Price history for {ticker} is empty after quality checks.")
+    clean.name = "adj_close"
+    return clean
+
+
+def _write_prices_cache(cache_path: Path, prices: pd.Series) -> None:
+    """Atomically write adjusted close prices to the local cache."""
+
+    tmp_path = cache_path.with_name(f"{cache_path.name}.tmp.{os.getpid()}")
+    prices.to_frame("adj_close").to_csv(tmp_path, index_label="date")
+    tmp_path.replace(cache_path)
+
+
+def _write_pickle_cache(cache_path: Path, payload: Any) -> None:
+    """Atomically write pickle payloads to the local cache."""
+
+    tmp_path = cache_path.with_name(f"{cache_path.name}.tmp.{os.getpid()}")
+    pd.to_pickle(payload, tmp_path)
+    tmp_path.replace(cache_path)
+
+
+def _cache_age_seconds(path: Path) -> float:
+    """Return a cache file age in seconds."""
+
+    return max(0.0, pd.Timestamp.now().timestamp() - path.stat().st_mtime)
+
+
+def _read_option_chain_cache(
+    cache_path: Path,
+    expiration: pd.Timestamp,
+    source: str,
+    warning: str,
+) -> OptionChainData:
+    """Read and validate a cached option chain payload."""
+
+    cached = pd.read_pickle(cache_path)
+    return OptionChainData(
+        calls=cached["calls"].copy(),
+        puts=cached["puts"].copy(),
+        expiration=expiration,
+        source=source,
+        warnings=[warning],
+    )
+
+
 def _read_latest_option_cache(cache_dir: Path, ticker: str) -> OptionChainData | None:
     """Read the newest cached option chain for a ticker when live fetch fails."""
 
     candidates = sorted(cache_dir.glob(f"option_chain_{_safe_key(ticker)}_*.pkl"), reverse=True)
     for path in candidates:
         try:
-            cached: dict[str, Any] = pd.read_pickle(path)
-            parts = path.stem.split("_")
-            expiration = pd.Timestamp(parts[-2])
-            return OptionChainData(
-                calls=cached["calls"],
-                puts=cached["puts"],
+            expiration = _expiration_from_option_cache_name(path)
+            return _read_option_chain_cache(
+                path,
                 expiration=expiration,
                 source="yfinance-cache",
-                warnings=["Loaded latest available option chain cache."],
+                warning="Loaded latest available option chain cache.",
             )
         except Exception:
             continue
     return None
+
+
+def _expiration_from_option_cache_name(path: Path) -> pd.Timestamp:
+    """Extract expiration from new or legacy option-chain cache names."""
+
+    parts = path.stem.split("_")
+    for part in reversed(parts):
+        try:
+            return pd.Timestamp(part)
+        except ValueError:
+            continue
+    raise ValueError(f"Could not infer expiration from option cache name: {path}")
 
 
 def _extract_adjusted_close(data: pd.DataFrame, ticker: str) -> pd.Series:

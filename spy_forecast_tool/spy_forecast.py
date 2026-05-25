@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 from pathlib import Path
 from typing import Any, Sequence
 
@@ -38,6 +39,8 @@ from utils.stats import (
 )
 
 
+logger = logging.getLogger(__name__)
+
 DISCLAIMER = """
 IMPORTANT DISCLAIMER
 This tool produces statistical probability distributions under explicit modeling assumptions.
@@ -47,16 +50,42 @@ liquidity shifts, volatility risk premia move, or option chains are stale/sparse
 """
 
 
+def _positive_int(value: str) -> int:
+    """Parse a strictly positive integer CLI value."""
+
+    parsed = int(value)
+    if parsed <= 0:
+        raise argparse.ArgumentTypeError("value must be a positive integer")
+    return parsed
+
+
+def _positive_float(value: str) -> float:
+    """Parse a strictly positive float CLI value."""
+
+    parsed = float(value)
+    if parsed <= 0.0:
+        raise argparse.ArgumentTypeError("value must be positive")
+    return parsed
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Build the command-line argument parser."""
 
     parser = argparse.ArgumentParser(description="Estimate SPY forward return probability distributions.")
     parser.add_argument("--ticker", default="SPY", help="Ticker to analyze. Default: SPY")
-    parser.add_argument("--horizon-days", type=int, default=63, help="Forecast horizon in trading days.")
+    parser.add_argument("--horizon-days", type=_positive_int, default=63, help="Forecast horizon in trading days.")
     parser.add_argument("--start-date", type=str, default=None, help="Forecast start date. Default: next business day.")
-    parser.add_argument("--lookback-years", type=float, default=20.0, help="Historical lookback window in years.")
-    parser.add_argument("--n-sims", type=int, default=10_000, help="Number of simulation paths.")
-    parser.add_argument("--block-size", type=int, default=5, help="Historical bootstrap block size in trading days.")
+    parser.add_argument("--lookback-years", type=_positive_float, default=20.0, help="Historical lookback window in years.")
+    parser.add_argument("--n-sims", type=_positive_int, default=10_000, help="Number of simulation paths.")
+    parser.add_argument(
+        "--block-size",
+        type=_positive_int,
+        default=5,
+        help=(
+            "Historical bootstrap block size in trading days. Smaller values assume more independence; "
+            "larger values preserve more short-run clustering."
+        ),
+    )
     parser.add_argument("--risk-free-rate", type=float, default=None, help="Annual risk-free rate override as decimal.")
     parser.add_argument(
         "--thresholds",
@@ -67,6 +96,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--options-source", default="yfinance", help="Options data source. Default: yfinance")
     parser.add_argument("--seed", type=int, default=42, help="Random seed.")
     parser.add_argument("--validate", action="store_true", help="Run a one-year-ago historical validation.")
+    parser.add_argument("--verbose", action="store_true", help="Print traceback details when a forecast fails.")
     plot_group = parser.add_mutually_exclusive_group()
     plot_group.add_argument("--plot", dest="plot", action="store_true", default=True, help="Generate PNG charts.")
     plot_group.add_argument("--no-plot", dest="plot", action="store_false", help="Skip PNG charts.")
@@ -78,11 +108,22 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     parser = build_parser()
     args = parser.parse_args(argv)
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    )
     print(DISCLAIMER.strip())
     try:
         run_forecast(args)
+    except KeyboardInterrupt:
+        logger.warning("Forecast interrupted by user.")
+        return 130
     except Exception as exc:
-        print(f"\nERROR: {exc}")
+        if args.verbose:
+            logger.exception("Forecast failed")
+        else:
+            logger.error("Forecast failed: %s", exc)
+        print(f"\nERROR: {exc}\nRun with --verbose for traceback.")
         return 1
     return 0
 
@@ -95,10 +136,13 @@ def run_forecast(args: argparse.Namespace) -> None:
     cache_dir = ensure_directory(Path("./cache"))
     start_date = _resolve_start_date(args.start_date)
     seed_sequence = np.random.SeedSequence(args.seed)
-    rng_historical, rng_mc, rng_option, rng_plot, rng_validation = [
-        np.random.default_rng(child) for child in seed_sequence.spawn(5)
-    ]
+    rng_names = ("historical", "mc", "option", "plot", "validation")
+    rngs = {
+        name: np.random.default_rng(child_seed)
+        for name, child_seed in zip(rng_names, seed_sequence.spawn(len(rng_names)), strict=True)
+    }
 
+    logger.info("Loading %s price history for %.2f lookback years.", args.ticker, args.lookback_years)
     prices = read_price_history(args.ticker, args.lookback_years, cache_dir)
     returns = compute_log_returns(prices)
     spot = float(prices.iloc[-1])
@@ -117,7 +161,7 @@ def run_forecast(args: argparse.Namespace) -> None:
         horizon_days=args.horizon_days,
         n_sims=args.n_sims,
         block_size=args.block_size,
-        rng=rng_historical,
+        rng=rngs["historical"],
         thresholds=thresholds,
         lookback_years=args.lookback_years,
     )
@@ -126,7 +170,7 @@ def run_forecast(args: argparse.Namespace) -> None:
         spot=spot,
         horizon_days=args.horizon_days,
         n_sims=args.n_sims,
-        rng=rng_mc,
+        rng=rngs["mc"],
         thresholds=thresholds,
         lookback_years=args.lookback_years,
     )
@@ -137,7 +181,7 @@ def run_forecast(args: argparse.Namespace) -> None:
         as_of_date=as_of_date,
         returns=returns.to_numpy(dtype=float),
         risk_free_rate=risk_free.rate,
-        rng=rng_option,
+        rng=rngs["option"],
         thresholds=thresholds,
     )
 
@@ -162,11 +206,11 @@ def run_forecast(args: argparse.Namespace) -> None:
     )
 
     if args.plot:
-        chart_paths = plot_all(primary_results, historical, option_result, output_dir, rng_plot)
+        chart_paths = plot_all(results=primary_results, output_dir=output_dir, rng=rngs["plot"])
         saved_files.extend(chart_paths)
 
     if args.validate:
-        validation = run_validation(prices, args, thresholds, rng_validation)
+        validation = run_validation(prices, args, thresholds, rngs["validation"])
         validation_paths = _save_validation(validation, output_dir)
         saved_files.extend(validation_paths)
         _print_validation(validation)
@@ -188,9 +232,11 @@ def run_validation(
     if clean_prices.shape[0] <= args.horizon_days + 30:
         return [{"warning": "Not enough price history to run validation."}]
     target_date = clean_prices.index[-1] - pd.Timedelta(days=365)
-    as_of_position = int(np.searchsorted(clean_prices.index.to_numpy(), np.datetime64(target_date)))
+    as_of_position = int(np.searchsorted(clean_prices.index.to_numpy(), np.datetime64(target_date), side="right") - 1)
     as_of_position = min(as_of_position, clean_prices.shape[0] - args.horizon_days - 1)
     as_of_position = max(as_of_position, 30)
+    if as_of_position >= clean_prices.shape[0] - args.horizon_days:
+        return [{"warning": "Not enough future price history to run validation at the requested horizon."}]
     validation_prices = clean_prices.iloc[: as_of_position + 1]
     future_terminal = float(clean_prices.iloc[as_of_position + args.horizon_days])
     validation_spot = float(clean_prices.iloc[as_of_position])
@@ -352,7 +398,12 @@ def _save_outputs(
         "comparison": json_safe(comparison.to_dict(orient="records")),
         "divergence_notes": divergence_notes,
     }
-    json_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    try:
+        json_payload = json.dumps(json_safe(payload), indent=2, ensure_ascii=False)
+    except (TypeError, ValueError) as exc:
+        logger.exception("JSON serialization failed for forecast payload.")
+        raise ValueError(f"Could not serialize forecast output: {exc}") from exc
+    json_path.write_text(json_payload, encoding="utf-8")
     return [json_path, metrics_path, comparison_path]
 
 
@@ -361,7 +412,12 @@ def _save_validation(validation: list[dict[str, Any]], output_dir: Path) -> list
 
     json_path = output_dir / "validation_results.json"
     csv_path = output_dir / "validation_results.csv"
-    json_path.write_text(json.dumps(json_safe(validation), indent=2, ensure_ascii=False), encoding="utf-8")
+    try:
+        json_payload = json.dumps(json_safe(validation), indent=2, ensure_ascii=False)
+    except (TypeError, ValueError) as exc:
+        logger.exception("JSON serialization failed for validation payload.")
+        raise ValueError(f"Could not serialize validation output: {exc}") from exc
+    json_path.write_text(json_payload, encoding="utf-8")
     pd.DataFrame(validation).to_csv(csv_path, index=False)
     return [json_path, csv_path]
 

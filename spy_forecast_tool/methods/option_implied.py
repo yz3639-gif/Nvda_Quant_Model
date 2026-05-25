@@ -7,6 +7,7 @@ from typing import Iterable
 
 import numpy as np
 import pandas as pd
+from scipy.ndimage import gaussian_filter1d
 from scipy import optimize, stats
 
 from methods.monte_carlo import TRADING_DAYS_PER_YEAR
@@ -138,8 +139,7 @@ def reconstruct_risk_neutral_density(
         )
     strikes = prepared["strike"].to_numpy(dtype=float)
     prices = prepared["price"].to_numpy(dtype=float)
-    first_derivative = np.gradient(prices, strikes)
-    second_derivative = np.gradient(first_derivative, strikes)
+    second_derivative = _smooth_second_derivative(prices, strikes)
     density = np.maximum(np.exp(risk_free_rate * time_to_expiry) * second_derivative, 0.0)
     positive_points = int(np.sum(density > 0.0))
     integral = float(np.trapezoid(density, strikes))
@@ -164,6 +164,17 @@ def reconstruct_risk_neutral_density(
             ),
         )
     return RiskNeutralDensity(strikes=strikes, density=density, reconstructed=True)
+
+
+def _smooth_second_derivative(prices: np.ndarray, strikes: np.ndarray) -> np.ndarray:
+    """Estimate a less noisy second derivative for Breeden-Litzenberger density."""
+
+    if prices.size != strikes.size or prices.size < 5:
+        raise ValueError("Second derivative reconstruction requires at least five aligned price points.")
+    sigma = 1.0 if prices.size < 35 else 1.5
+    smooth_prices = gaussian_filter1d(prices, sigma=sigma, mode="nearest")
+    first_derivative = np.gradient(smooth_prices, strikes, edge_order=2)
+    return np.gradient(first_derivative, strikes, edge_order=2)
 
 
 def simulate_lognormal_option_paths(

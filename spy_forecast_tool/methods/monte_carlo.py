@@ -13,6 +13,8 @@ from utils.stats import ScenarioResult, build_result, make_price_paths
 
 
 TRADING_DAYS_PER_YEAR = 252
+MIN_STUDENT_T_DF = 2.1
+MAX_STUDENT_T_DF = 30.0
 
 
 @dataclass(slots=True)
@@ -43,8 +45,8 @@ def estimate_gbm_parameters(returns: np.ndarray) -> GBMParameters:
         raise ValueError("GBM parameter estimation requires at least two valid returns.")
     mean_daily = float(np.mean(clean_returns))
     std_daily = float(np.std(clean_returns, ddof=1))
-    if std_daily <= 0:
-        raise ValueError("GBM volatility estimate must be positive.")
+    if not np.isfinite(std_daily) or std_daily <= 0:
+        raise ValueError("GBM volatility estimate must be finite and positive.")
     return GBMParameters(
         mean_daily=mean_daily,
         std_daily=std_daily,
@@ -63,10 +65,15 @@ def fit_student_t_distribution(returns: np.ndarray) -> StudentTParameters:
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         df, loc, scale = stats.t.fit(clean_returns)
-    if not np.isfinite(df) or df <= 2.0:
-        df = 2.5
+    if not np.isfinite(df):
+        df = MAX_STUDENT_T_DF
+    df = float(np.clip(df, MIN_STUDENT_T_DF, MAX_STUDENT_T_DF))
     if not np.isfinite(scale) or scale <= 0.0:
         scale = float(np.std(clean_returns, ddof=1))
+    if not np.isfinite(scale) or scale <= 0.0:
+        raise ValueError("Student t scale estimate must be finite and positive.")
+    if not np.isfinite(loc):
+        loc = float(np.mean(clean_returns))
     return StudentTParameters(df=float(df), loc=float(loc), scale=float(scale))
 
 
@@ -103,8 +110,15 @@ def simulate_student_t_gbm_paths(
 ) -> np.ndarray:
     """Simulate vectorized GBM paths with standardized Student t shocks."""
 
-    if df <= 2.0:
+    if horizon_days <= 0:
+        raise ValueError("horizon_days must be positive.")
+    if n_sims <= 0:
+        raise ValueError("n_sims must be positive.")
+    if sigma_annual <= 0:
+        raise ValueError("sigma_annual must be positive.")
+    if df <= 2.0 or not np.isfinite(df):
         raise ValueError("Student t degrees of freedom must exceed 2 for finite variance.")
+    df = float(np.clip(df, MIN_STUDENT_T_DF, MAX_STUDENT_T_DF))
     dt = 1.0 / TRADING_DAYS_PER_YEAR
     raw_shocks = rng.standard_t(df=df, size=(n_sims, horizon_days))
     standardized_shocks = raw_shocks / np.sqrt(df / (df - 2.0))

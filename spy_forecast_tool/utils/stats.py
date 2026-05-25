@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Iterable
 
 import numpy as np
@@ -35,6 +36,8 @@ def parse_thresholds(raw: str) -> list[float]:
     values = [float(item.strip()) / 100.0 for item in raw.split(",") if item.strip()]
     if not values:
         raise ValueError("At least one threshold is required.")
+    if not all(np.isfinite(value) for value in values):
+        raise ValueError("Thresholds must be finite numbers.")
     return sorted(set(values))
 
 
@@ -112,6 +115,10 @@ def barrier_probabilities(paths: np.ndarray, spot: float) -> dict[str, float]:
 def compute_metrics(paths: np.ndarray, spot: float, thresholds: Iterable[float]) -> dict[str, Any]:
     """Compute terminal, tail-risk, interval, drawdown, and barrier statistics."""
 
+    if paths.ndim != 2 or paths.shape[0] < 2 or paths.shape[1] < 2:
+        raise ValueError("Metrics require at least two simulated paths with one forward step.")
+    if not np.isfinite(paths).all():
+        raise ValueError("Simulated paths contain NaN or infinite values.")
     terminal_prices = paths[:, -1]
     terminal_returns = (terminal_prices / spot) - 1.0
     mdd = max_drawdowns(paths)
@@ -129,10 +136,8 @@ def compute_metrics(paths: np.ndarray, spot: float, thresholds: Iterable[float])
         }
         for level in CONFIDENCE_LEVELS
     }
-    var_95 = float(np.quantile(terminal_returns, 0.05))
-    var_99 = float(np.quantile(terminal_returns, 0.01))
-    cvar_95 = float(np.mean(terminal_returns[terminal_returns <= var_95]))
-    cvar_99 = float(np.mean(terminal_returns[terminal_returns <= var_99]))
+    var_95, cvar_95 = _var_cvar(terminal_returns, 0.05)
+    var_99, cvar_99 = _var_cvar(terminal_returns, 0.01)
     mdd_loss = -mdd
     return {
         "p_up": float(np.mean(terminal_returns > 0.0)),
@@ -235,7 +240,8 @@ def comparison_frame(results: list[ScenarioResult]) -> pd.DataFrame:
     frame = pd.DataFrame(rows)
     numeric_cols = ["P(up)", "expected_return", "VaR_95_return", "one_sigma_low", "one_sigma_high"]
     for col in numeric_cols:
-        frame[f"{col}_diverges_gt_5pp"] = bool(frame[col].max() - frame[col].min() > 0.05)
+        has_divergence = bool(frame[col].max() - frame[col].min() > 0.05)
+        frame[f"{col}_diverges_gt_5pp"] = has_divergence
     return frame
 
 
@@ -265,11 +271,27 @@ def json_safe(value: Any) -> Any:
         return value.tolist()
     if isinstance(value, pd.Timestamp):
         return value.isoformat()
+    if isinstance(value, Path):
+        return str(value)
+    if isinstance(value, pd.Series):
+        return json_safe(value.to_dict())
+    if isinstance(value, pd.DataFrame):
+        return json_safe(value.to_dict(orient="records"))
     if isinstance(value, dict):
         return {str(key): json_safe(item) for key, item in value.items()}
     if isinstance(value, (list, tuple)):
         return [json_safe(item) for item in value]
     return value
+
+
+def _var_cvar(terminal_returns: np.ndarray, tail_probability: float) -> tuple[float, float]:
+    """Compute left-tail VaR and CVaR using a fixed worst-tail sample count."""
+
+    ordered = np.sort(np.asarray(terminal_returns, dtype=float))
+    tail_count = max(1, int(np.ceil(ordered.size * tail_probability)))
+    tail = ordered[:tail_count]
+    var_index = min(tail_count - 1, ordered.size - 1)
+    return float(ordered[var_index]), float(np.mean(tail))
 
 
 def result_summary_for_json(result: ScenarioResult) -> dict[str, Any]:
