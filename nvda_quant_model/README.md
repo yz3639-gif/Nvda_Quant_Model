@@ -255,6 +255,22 @@ too much single-source concentration, the backtest path returns
 `insufficient_point_in_time_sample` instead of pretending the event layer has
 validated. Live news remains a current overlay only.
 
+Run the 60M/OOS stable-candidate validator before promoting any optimizer rule:
+
+```sh
+python3.13 -m nvda_quant_model.stable_candidate_optimizer \
+  --strict-results nvda_quant_model/outputs/long_run_optimizer_repaired/long_run_results.csv \
+  --high-sample-results nvda_quant_model/outputs/high_sample_optimizer_repaired/high_sample_results.csv \
+  --output-dir nvda_quant_model/outputs/stable_candidate_optimizer \
+  --hours 6 \
+  --resume
+```
+
+This validator keeps the production baseline unless a challenger passes
+24/36/60M hard gates, 60M sample requirements, rolling OOS degradation checks,
+and regime diagnostics. A candidate that looks good in 24M but fails 60M is
+reported as `reject_long_window_failure`, not promoted.
+
 Fetch real-time top-of-book buy/sell pressure and recent 1-minute trend:
 
 ```sh

@@ -7,7 +7,7 @@ import pandas as pd
 
 from nvda_quant_model.backtest.backtest_engine import BacktestEngine
 from nvda_quant_model.calibration import engine_rolling_calibration, probability_calibration, rolling_interval_calibration
-from nvda_quant_model.candidate_promotion import classify_candidate, select_promotion_candidates
+from nvda_quant_model.candidate_promotion import classify_candidate, hard_gate_failures, select_promotion_candidates
 from nvda_quant_model.config import MACRO_TICKERS, PROJECT_ROOT, SECTOR_TICKERS, StrategyConfig
 from nvda_quant_model.data.feature_engineering import build_model_frame
 from nvda_quant_model.data.load_data import load_ohlcv
@@ -26,6 +26,7 @@ from nvda_quant_model.optimizer_monitor import (
     is_optimizer_running,
     needs_high_sample_validation,
     optimizer_process_count,
+    optimizer_specs,
     validation_contains_label,
 )
 from nvda_quant_model.precision_search import MOMENTUM_FEATURES
@@ -39,6 +40,11 @@ from nvda_quant_model.risk_off_guard import (
 )
 from nvda_quant_model.production_model import BASELINE_PRODUCTION_LABEL
 from nvda_quant_model.strict_model_selection import rule_from_row
+from nvda_quant_model.stable_candidate_optimizer import (
+    select_stable_candidates,
+    stable_score,
+    summarize_stable_validation,
+)
 
 
 def _synthetic_prices(periods: int = 520) -> pd.DataFrame:
@@ -415,7 +421,7 @@ def test_candidate_promotion_classifies_stable_improvement() -> None:
             {
                 "label": "candidate",
                 "lookback_months": 36,
-                "annualized_return": 0.14,
+                "annualized_return": 0.16,
                 "sharpe_ratio": 1.3,
                 "max_drawdown": -0.10,
                 "win_rate": 0.60,
@@ -425,17 +431,59 @@ def test_candidate_promotion_classifies_stable_improvement() -> None:
             {
                 "label": "candidate",
                 "lookback_months": 60,
-                "annualized_return": 0.02,
-                "sharpe_ratio": 0.4,
+                "annualized_return": 0.16,
+                "sharpe_ratio": 1.1,
                 "max_drawdown": -0.18,
-                "win_rate": 0.55,
-                "profit_factor": 1.3,
-                "num_trades": 80,
+                "win_rate": 0.56,
+                "profit_factor": 1.7,
+                "num_trades": 90,
+                "dir_active_days": 130,
             },
         ]
     )
 
     assert classify_candidate(candidate, baseline) == "promote_candidate"
+
+
+def test_candidate_promotion_rejects_weak_60m_window() -> None:
+    candidate = pd.DataFrame(
+        [
+            {
+                "label": "candidate",
+                "lookback_months": 24,
+                "annualized_return": 0.24,
+                "sharpe_ratio": 1.8,
+                "max_drawdown": -0.07,
+                "win_rate": 0.66,
+                "profit_factor": 2.6,
+                "num_trades": 36,
+            },
+            {
+                "label": "candidate",
+                "lookback_months": 36,
+                "annualized_return": 0.18,
+                "sharpe_ratio": 1.3,
+                "max_drawdown": -0.10,
+                "win_rate": 0.60,
+                "profit_factor": 2.1,
+                "num_trades": 50,
+            },
+            {
+                "label": "candidate",
+                "lookback_months": 60,
+                "annualized_return": 0.03,
+                "sharpe_ratio": 0.4,
+                "max_drawdown": -0.21,
+                "win_rate": 0.53,
+                "profit_factor": 1.4,
+                "num_trades": 30,
+                "dir_active_days": 70,
+            },
+        ]
+    )
+
+    assert hard_gate_failures(candidate.iloc[-1], enforce_long_sample=True)
+    assert classify_candidate(candidate, pd.DataFrame()) == "reject_long_window_failure"
 
 
 def test_probability_calibration_scores_active_nvda_signals() -> None:
@@ -635,6 +683,136 @@ def test_optimizer_monitor_process_matching_uses_module_and_output_dir(tmp_path)
 
     assert is_optimizer_running(relative_spec, ps_output)
     assert optimizer_process_count(relative_spec, ps_output) == 2
+
+
+def test_optimizer_monitor_can_include_stable_optimizer(tmp_path) -> None:
+    class Args:
+        strict_output_dir = str(tmp_path / "strict")
+        high_sample_output_dir = str(tmp_path / "high")
+        stable_output_dir = str(tmp_path / "stable")
+        hours = 1.0
+        price_override = 215.34
+        include_stable = True
+
+    specs = optimizer_specs(Args)
+    stable = [spec for spec in specs if spec.name == "stable"]
+
+    assert len(stable) == 1
+    assert stable[0].state_path.name == "stable_state.json"
+    assert stable[0].module == "nvda_quant_model.stable_candidate_optimizer"
+
+
+def test_stable_candidate_summary_rejects_oos_degradation() -> None:
+    stress = pd.DataFrame(
+        [
+            {
+                "label": "candidate",
+                "roles": "high_sample_stability_probe",
+                "lookback_months": months,
+                "annualized_return": 0.20,
+                "sharpe_ratio": 1.4,
+                "max_drawdown": -0.10,
+                "win_rate": 0.60,
+                "profit_factor": 2.0,
+                "num_trades": 90 if months == 60 else 45,
+                "dir_active_days": 130 if months == 60 else 70,
+                "dir_precision": 0.61,
+            }
+            for months in (24, 36, 60)
+        ]
+    )
+    oos = pd.DataFrame(
+        [
+            {
+                "label": "candidate",
+                "window_days": 63,
+                "sharpe_degradation": 0.35,
+                "oos_num_trades": 5,
+                "oos_status": "reject_oos_degradation",
+            }
+        ]
+    )
+
+    summary = summarize_stable_validation(stress, oos, pd.DataFrame(), baseline_label="baseline")
+
+    assert summary.loc[0, "status"] == "reject_oos_degradation"
+
+
+def test_stable_candidate_summary_blocks_regime_weakness() -> None:
+    stress = pd.DataFrame(
+        [
+            {
+                "label": "candidate",
+                "roles": "high_sample_stability_probe",
+                "lookback_months": months,
+                "annualized_return": 0.20,
+                "sharpe_ratio": 1.4,
+                "max_drawdown": -0.10,
+                "win_rate": 0.60,
+                "profit_factor": 2.0,
+                "num_trades": 90 if months == 60 else 45,
+                "dir_active_days": 130 if months == 60 else 70,
+                "dir_precision": 0.61,
+            }
+            for months in (24, 36, 60)
+        ]
+    )
+    oos = pd.DataFrame(
+        [
+            {
+                "label": "candidate",
+                "window_days": days,
+                "sharpe_degradation": 0.05,
+                "oos_num_trades": 4,
+                "oos_status": "pass",
+            }
+            for days in (45, 63, 84, 126)
+        ]
+    )
+    regimes = pd.DataFrame(
+        [
+            {
+                "label": "candidate",
+                "regime": "high_vol_downtrend",
+                "active_days": 6,
+                "precision": 0.33,
+                "regime_status": "watchlist_regime_weakness",
+            }
+        ]
+    )
+
+    summary = summarize_stable_validation(stress, oos, regimes, baseline_label="baseline")
+
+    assert summary.loc[0, "status"] == "watchlist_regime_weakness"
+    assert stable_score(stress, oos, regimes) > 0
+
+
+def test_stable_candidate_selection_keeps_current_baseline() -> None:
+    high_sample = pd.DataFrame(
+        [
+            {
+                "label": "challenger",
+                "sample_gate": True,
+                "quality_gate": True,
+                "high_sample_score": 5.0,
+            }
+        ]
+    )
+    strict = pd.DataFrame(
+        [
+            {
+                "label": BASELINE_PRODUCTION_LABEL,
+                "long_score": 3.0,
+                "bt_num_trades": 32,
+            }
+        ]
+    )
+
+    selected, metadata = select_stable_candidates(high_sample, strict, baseline_label=BASELINE_PRODUCTION_LABEL, top_n=1)
+
+    assert metadata["baseline_found"] is True
+    assert BASELINE_PRODUCTION_LABEL in set(selected["label"])
+    assert selected.set_index("label").loc[BASELINE_PRODUCTION_LABEL, "roles"] == "current_baseline"
 
 
 def test_reaction_pool_alerts_only_when_baseline_is_flat() -> None:

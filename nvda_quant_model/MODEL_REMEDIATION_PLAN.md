@@ -204,3 +204,15 @@
 - 明确控制项：新规则必须通过 24/36/60 复验；2022-like 高波动/弱趋势 regime 独立建模；概率校准未改善前不把 `prob_up` 用作仓位杠杆；未来 stop/take 改动必须有参数邻域证据。
 
 当前状态：第一版已完成。当前 production baseline 硬门槛通过，但审计状态是 `PASS_BUT_FRAGILE`，原因包括：60M 年化安全垫偏薄、参数邻域只有 1/9 通过、短窗口交易数不足 60、2022 年 precision 低于 50%、概率校准弱、95% 区间仍 under-covered。结论是可以继续作为生产 baseline，但不能升仓，也不能停止长跑优化。
+
+## P12：60M / Rolling OOS 稳定晋级整改
+
+问题：此前 high-sample 与 strict optimizer 都主要在 24M 快筛，60M 和 OOS 更像事后报告。结果是候选能在短窗口漂亮，但 60M 复验或最后 45 天 OOS 崩掉。
+
+解决方案：
+- 新增 `stable_candidate_optimizer`，从 strict/high-sample repaired 结果中抽取候选，再统一跑 24/36/60M、rolling OOS 和 regime diagnostics。
+- `candidate_promotion` 的 60M 逻辑从 “not broken” 改成硬门槛：年化、Sharpe、回撤、胜率、利润因子、交易数和 active days 必须同时达标。
+- rolling OOS 检查 45/63/84/126 trading-day 段；OOS 样本不足或 Sharpe degradation 超过 20% 都不能晋级。
+- 当前 baseline 没有被替换；新候选只有 `promote_candidate` 才允许进入 production 讨论。
+
+当前状态：第一版已完成。smoke run 显示当前 high-sample 候选 `tw210_sw42_5d_return...` 被稳定验证器判为 `reject_long_window_failure`：24M/36M 强，但 60M 年化、Sharpe、回撤、胜率和交易数不达标；production baseline 继续保留。

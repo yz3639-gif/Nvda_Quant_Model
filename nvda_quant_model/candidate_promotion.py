@@ -21,6 +21,15 @@ from nvda_quant_model.strict_model_selection import rule_from_row
 
 
 DEFAULT_BASELINE_LABEL = "tw147_sw63_10d_return_mq0.60_vq0.45_smh++obv++rsi<75+p60>0.96+vix<0.9"
+HARD_GATE_THRESHOLDS = {
+    "annualized_return": 0.15,
+    "sharpe_ratio": 1.0,
+    "max_abs_drawdown": 0.20,
+    "win_rate": 0.55,
+    "profit_factor": 1.50,
+}
+LONG_WINDOW_MIN_TRADES = 80
+LONG_WINDOW_MIN_ACTIVE_DAYS = 120
 METRIC_COLUMNS = [
     "long_score",
     "bt_annualized_return",
@@ -139,6 +148,32 @@ def _metric_value(row: pd.Series, column: str, default: float = 0.0) -> float:
     return float(value)
 
 
+def hard_gate_failures(row: pd.Series, *, enforce_long_sample: bool = False) -> list[str]:
+    """Return production hard-gate failures for one stress-test window."""
+
+    failures: list[str] = []
+    if _metric_value(row, "annualized_return") < HARD_GATE_THRESHOLDS["annualized_return"]:
+        failures.append("annualized_return")
+    if _metric_value(row, "sharpe_ratio") < HARD_GATE_THRESHOLDS["sharpe_ratio"]:
+        failures.append("sharpe_ratio")
+    if abs(_metric_value(row, "max_drawdown")) > HARD_GATE_THRESHOLDS["max_abs_drawdown"]:
+        failures.append("max_drawdown")
+    if _metric_value(row, "win_rate") < HARD_GATE_THRESHOLDS["win_rate"]:
+        failures.append("win_rate")
+    if _metric_value(row, "profit_factor") < HARD_GATE_THRESHOLDS["profit_factor"]:
+        failures.append("profit_factor")
+    if enforce_long_sample:
+        if _metric_value(row, "num_trades") < LONG_WINDOW_MIN_TRADES:
+            failures.append("num_trades")
+        if _metric_value(row, "dir_active_days") < LONG_WINDOW_MIN_ACTIVE_DAYS:
+            failures.append("dir_active_days")
+    return failures
+
+
+def hard_gate_pass(row: pd.Series, *, enforce_long_sample: bool = False) -> bool:
+    return not hard_gate_failures(row, enforce_long_sample=enforce_long_sample)
+
+
 def promotion_score(group: pd.DataFrame) -> float:
     by_window = {int(row["lookback_months"]): row for _, row in group.iterrows()}
     recent = by_window.get(24)
@@ -176,27 +211,16 @@ def classify_candidate(group: pd.DataFrame, baseline_group: pd.DataFrame | None)
     recent = by_window.get(24)
     mid = by_window.get(36)
     long = by_window.get(60)
-    if recent is None:
-        return "reject_missing_recent"
+    if recent is None or mid is None or long is None:
+        return "reject_missing_window"
 
-    recent_pass = (
-        _metric_value(recent, "annualized_return") >= 0.18
-        and _metric_value(recent, "sharpe_ratio") >= 1.5
-        and abs(_metric_value(recent, "max_drawdown")) <= 0.10
-        and _metric_value(recent, "win_rate") >= 0.62
-        and _metric_value(recent, "profit_factor") >= 2.0
-        and _metric_value(recent, "num_trades") >= 30
-    )
-    mid_pass = mid is not None and (
-        _metric_value(mid, "annualized_return") >= 0.12
-        and _metric_value(mid, "sharpe_ratio") >= 1.20
-        and abs(_metric_value(mid, "max_drawdown")) <= 0.16
-        and _metric_value(mid, "win_rate") >= 0.58
-    )
-    long_not_broken = long is not None and (
-        _metric_value(long, "annualized_return") >= -0.02
-        and abs(_metric_value(long, "max_drawdown")) <= 0.25
-    )
+    recent_pass = hard_gate_pass(recent)
+    mid_pass = hard_gate_pass(mid)
+    long_pass = hard_gate_pass(long, enforce_long_sample=True)
+    if not long_pass:
+        return "reject_long_window_failure"
+    if not recent_pass or not mid_pass:
+        return "reject_weak_metrics"
 
     beats_recent_baseline = False
     if baseline_group is not None and not baseline_group.empty:
@@ -211,10 +235,10 @@ def classify_candidate(group: pd.DataFrame, baseline_group: pd.DataFrame | None)
                 and _metric_value(recent, "profit_factor") >= _metric_value(base, "profit_factor") * 0.90
             )
 
-    if recent_pass and mid_pass and long_not_broken and beats_recent_baseline:
+    if recent_pass and mid_pass and long_pass and beats_recent_baseline:
         return "promote_candidate"
     if recent_pass and mid_pass:
-        return "watchlist_strong_recent_mid"
+        return "watchlist_all_windows"
     if recent_pass:
         return "watchlist_recent_only"
     return "reject_weak_metrics"

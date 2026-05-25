@@ -23,11 +23,11 @@ class OptimizerSpec:
     output_dir: Path
     log_name: str
     extra_args: tuple[str, ...]
+    state_name: str = "state.json"
 
     @property
     def state_path(self) -> Path:
-        filename = "long_run_state.json" if self.name == "strict" else "high_sample_state.json"
-        return self.output_dir / filename
+        return self.output_dir / self.state_name
 
     @property
     def log_path(self) -> Path:
@@ -62,13 +62,14 @@ def read_json(path: Path) -> dict[str, Any]:
 def optimizer_specs(args: argparse.Namespace) -> list[OptimizerSpec]:
     strict_dir = Path(args.strict_output_dir)
     high_dir = Path(args.high_sample_output_dir)
-    return [
+    specs = [
         OptimizerSpec(
             name="strict",
             module="nvda_quant_model.long_run_optimizer",
             screen_name="nvda_optimizer_repaired",
             output_dir=strict_dir,
             log_name="optimizer.log",
+            state_name="long_run_state.json",
             extra_args=(
                 "--hours",
                 str(args.hours),
@@ -87,6 +88,7 @@ def optimizer_specs(args: argparse.Namespace) -> list[OptimizerSpec]:
             screen_name="nvda_high_sample_repaired",
             output_dir=high_dir,
             log_name="high_sample_optimizer.log",
+            state_name="high_sample_state.json",
             extra_args=(
                 "--hours",
                 str(args.hours),
@@ -108,6 +110,29 @@ def optimizer_specs(args: argparse.Namespace) -> list[OptimizerSpec]:
             ),
         ),
     ]
+    if getattr(args, "include_stable", False):
+        specs.append(
+            OptimizerSpec(
+                name="stable",
+                module="nvda_quant_model.stable_candidate_optimizer",
+                screen_name="nvda_stable_candidate",
+                output_dir=Path(args.stable_output_dir),
+                log_name="stable_candidate_optimizer.log",
+                state_name="stable_state.json",
+                extra_args=(
+                    "--hours",
+                    str(args.hours),
+                    "--resume",
+                    "--price-override",
+                    str(args.price_override),
+                    "--strict-results",
+                    str(strict_dir / "long_run_results.csv"),
+                    "--high-sample-results",
+                    str(high_dir / "high_sample_results.csv"),
+                ),
+            )
+        )
+    return specs
 
 
 def process_table() -> str:
@@ -296,6 +321,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--monitor-output-dir",
         default=str(PROJECT_ROOT / "outputs" / "optimizer_monitor_repaired"),
+    )
+    parser.add_argument("--include-stable", action="store_true", help="Also monitor the stable 60M/OOS validator.")
+    parser.add_argument(
+        "--stable-output-dir",
+        default=str(PROJECT_ROOT / "outputs" / "stable_candidate_optimizer"),
     )
     return parser.parse_args()
 
