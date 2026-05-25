@@ -18,6 +18,7 @@ from nvda_quant_model.data.feature_engineering import build_model_frame
 from nvda_quant_model.data.load_data import load_market_data, load_peer_ohlcv_panel, resolve_data_window, warmup_start
 from nvda_quant_model.precision_search import (
     build_evaluation_context,
+    MOMENTUM_FEATURES,
     PrecisionRule,
     evaluate_rule,
     latest_prediction_for_rule,
@@ -53,7 +54,7 @@ FLAG_SETS: list[dict[str, bool]] = [
 SEARCH_SPACE: dict[str, list[Any]] = {
     "train_window": [84, 105, 126, 147, 168, 189, 210, 252, 315],
     "test_window": [21, 28, 42, 63],
-    "momentum_feature": ["5d_return", "10d_return", "20d_return", "60d_return"],
+    "momentum_feature": MOMENTUM_FEATURES,
     "momentum_quantile": [0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80],
     "volume_quantile": [0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75],
     "max_rsi": [None, 60.0, 65.0, 68.0, 72.0, 75.0, 78.0, 82.0],

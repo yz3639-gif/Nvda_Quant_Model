@@ -20,6 +20,7 @@ from nvda_quant_model.precision_search import (
     build_evaluation_context,
     evaluate_rule,
     latest_prediction_for_rule,
+    MOMENTUM_FEATURES,
     write_summary,
 )
 
@@ -45,7 +46,7 @@ FLAG_SETS: list[dict[str, bool]] = [
 SEARCH_SPACE: dict[str, list[Any]] = {
     "train_window": [63, 84, 105, 126, 147, 168, 189, 210, 252],
     "test_window": [21, 28, 42, 63],
-    "momentum_feature": ["5d_return", "10d_return", "20d_return", "60d_return"],
+    "momentum_feature": MOMENTUM_FEATURES,
     "momentum_quantile": [0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65],
     "volume_quantile": [0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60],
     "max_rsi": [None, 68.0, 72.0, 75.0, 78.0, 82.0, 85.0],

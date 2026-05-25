@@ -227,8 +227,19 @@ def next_us_trading_day(date: pd.Timestamp) -> pd.Timestamp:
 
 
 def factor_signals(last_row: pd.Series) -> dict[str, int]:
-    momentum_score = np.nanmean([last_row.get("5d_return", 0.0), last_row.get("20d_return", 0.0), last_row.get("SMH_return", 0.0)])
+    ema_trend_score = np.nanmean(
+        [last_row.get("ema_10_20_spread", 0.0), last_row.get("ema_20_50_spread", 0.0)]
+    )
+    momentum_score = np.nanmean(
+        [
+            last_row.get("5d_return", 0.0),
+            last_row.get("20d_return", 0.0),
+            last_row.get("SMH_return", 0.0),
+            ema_trend_score,
+        ]
+    )
     zscore = last_row.get("price_zscore_20", 0.0)
+    boll_percent_b = last_row.get("boll_percent_b_20", 0.5)
     vol20 = last_row.get("volatility_20", 0.0)
     vol60 = last_row.get("volatility_60", 0.0)
     sp_return = last_row.get("SP500_return", 0.0)
@@ -241,6 +252,8 @@ def factor_signals(last_row: pd.Series) -> dict[str, int]:
     return {
         "momentum": int(np.sign(momentum_score)),
         "mean_reversion": int(1 if zscore < -1 else -1 if zscore > 1 else 0),
+        "ema_trend": int(np.sign(ema_trend_score)),
+        "bollinger": int(1 if boll_percent_b < 0.20 else -1 if boll_percent_b > 0.80 else 0),
         "volatility": int(-1 if vol20 > vol60 * 1.20 else 1 if vol20 < vol60 * 0.80 else 0),
         "correlation": int(1 if sp_return > 0 and corr > 0 else -1 if sp_return < 0 and corr > 0 else 0),
         "holiday_sentiment": holiday_sentiment,

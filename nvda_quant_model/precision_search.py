@@ -18,6 +18,18 @@ from nvda_quant_model.data.load_data import load_market_data, load_peer_ohlcv_pa
 from nvda_quant_model.main import factor_signals, next_us_trading_day
 
 
+MOMENTUM_FEATURES: list[str] = [
+    "5d_return",
+    "10d_return",
+    "20d_return",
+    "60d_return",
+    "ema_10_20_spread",
+    "ema_20_50_spread",
+    "boll_percent_b_20",
+    "boll_zscore_20",
+]
+
+
 @dataclass(frozen=True)
 class PrecisionRule:
     train_window: int
@@ -311,7 +323,7 @@ def candidate_rules(base: StrategyConfig, max_candidates: int | None = None) -> 
 
     train_windows = [126, 189, 252, 315]
     test_windows = [21, 42, 63]
-    momentum_features = ["5d_return", "10d_return", "20d_return", "60d_return"]
+    momentum_features = MOMENTUM_FEATURES
     momentum_quantiles = [0.55, 0.60, 0.65, 0.70, 0.75]
     volume_quantiles = [0.50, 0.55, 0.60, 0.65]
     max_rsi_values = [None, 65.0, 72.0, 78.0]
@@ -327,7 +339,13 @@ def candidate_rules(base: StrategyConfig, max_candidates: int | None = None) -> 
     volume_quantile_groups = _priority_groups(volume_quantiles, lambda value: abs(value - 0.55))
     momentum_feature_groups = _priority_groups(
         momentum_features,
-        lambda value: 0.0 if value in {"10d_return", "20d_return"} else 0.5,
+        lambda value: (
+            0.0
+            if value in {"10d_return", "20d_return"}
+            else 0.5
+            if value in {"5d_return", "60d_return"}
+            else 0.8
+        ),
     )
     flag_groups = _priority_groups(required_sets, lambda value: 0.0 if value.get("require_smh_positive", False) else 0.2)
     stop_loss_groups = _priority_groups(stop_loss_values, lambda value: abs(value - base.stop_loss_pct))

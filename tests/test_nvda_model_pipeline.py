@@ -207,6 +207,41 @@ def test_build_model_frame_adds_adaptive_regime_features_without_target_leakage(
     assert frame.loc[sample_date, "target_return"] == expected_next_return
 
 
+def test_build_model_frame_adds_bollinger_and_ema_features() -> None:
+    prices = _synthetic_prices()
+    external = _synthetic_external(prices.index)
+    start = prices.index[320].strftime("%Y-%m-%d")
+    end = prices.index[-2].strftime("%Y-%m-%d")
+
+    frame, feature_columns = build_model_frame(
+        prices,
+        external,
+        start,
+        end,
+        include_fundamentals=False,
+        peer_ohlcv={},
+    )
+
+    expected_columns = [
+        "ema_10_ratio",
+        "ema_20_ratio",
+        "ema_50_ratio",
+        "ema_10_20_spread",
+        "ema_20_50_spread",
+        "boll_upper_distance_20",
+        "boll_lower_distance_20",
+        "boll_bandwidth_20",
+        "boll_percent_b_20",
+        "boll_zscore_20",
+    ]
+    for column in expected_columns:
+        assert column in frame.columns
+        assert column in feature_columns
+        assert np.isfinite(frame[column]).all()
+
+    assert frame["boll_bandwidth_20"].gt(0).all()
+
+
 def test_load_ohlcv_recovers_from_corrupt_cache(tmp_path, monkeypatch) -> None:
     cache_file = tmp_path / "NVDA_2025-01-01_2025-01-04.csv"
     cache_file.write_text(

@@ -40,6 +40,10 @@ def _macd(close: pd.Series) -> tuple[pd.Series, pd.Series, pd.Series]:
     return macd_line, signal, hist
 
 
+def _safe_divide(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
+    return numerator / denominator.replace(0, np.nan)
+
+
 def _external_column(external: pd.DataFrame, primary: str, fallback: str | None = None) -> pd.Series | None:
     if primary in external.columns:
         return external[primary]
@@ -61,9 +65,27 @@ def build_technical_features(prices: pd.DataFrame) -> pd.DataFrame:
     sma20 = close.rolling(20, min_periods=20).mean()
     sma60 = close.rolling(60, min_periods=60).mean()
     std20 = close.rolling(20, min_periods=20).std()
-    features["price_20ma_ratio"] = close / sma20
-    features["price_60ma_ratio"] = close / sma60
-    features["price_zscore_20"] = (close - sma20) / std20
+    features["price_20ma_ratio"] = _safe_divide(close, sma20)
+    features["price_60ma_ratio"] = _safe_divide(close, sma60)
+    features["price_zscore_20"] = _safe_divide(close - sma20, std20)
+
+    ema10 = close.ewm(span=10, adjust=False, min_periods=10).mean()
+    ema20 = close.ewm(span=20, adjust=False, min_periods=20).mean()
+    ema50 = close.ewm(span=50, adjust=False, min_periods=50).mean()
+    features["ema_10_ratio"] = _safe_divide(close, ema10)
+    features["ema_20_ratio"] = _safe_divide(close, ema20)
+    features["ema_50_ratio"] = _safe_divide(close, ema50)
+    features["ema_10_20_spread"] = _safe_divide(ema10 - ema20, close)
+    features["ema_20_50_spread"] = _safe_divide(ema20 - ema50, close)
+
+    boll_upper = sma20 + 2.0 * std20
+    boll_lower = sma20 - 2.0 * std20
+    boll_width = boll_upper - boll_lower
+    features["boll_upper_distance_20"] = _safe_divide(boll_upper - close, close)
+    features["boll_lower_distance_20"] = _safe_divide(close - boll_lower, close)
+    features["boll_bandwidth_20"] = _safe_divide(boll_width, sma20)
+    features["boll_percent_b_20"] = _safe_divide(close - boll_lower, boll_width)
+    features["boll_zscore_20"] = _safe_divide(close - sma20, 2.0 * std20)
 
     features["volatility_20"] = returns.rolling(20, min_periods=20).std()
     features["volatility_60"] = returns.rolling(60, min_periods=60).std()
