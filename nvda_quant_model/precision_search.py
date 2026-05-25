@@ -11,6 +11,7 @@ import pandas as pd
 
 from nvda_quant_model.backtest.backtest_engine import BacktestEngine
 from nvda_quant_model.backtest.metrics import benchmark_metrics
+from nvda_quant_model.calibration import probability_calibration
 from nvda_quant_model.config import MACRO_TICKERS, PROJECT_ROOT, StrategyConfig
 from nvda_quant_model.data.feature_engineering import build_model_frame
 from nvda_quant_model.data.load_data import load_market_data, load_peer_ohlcv_panel, resolve_data_window, warmup_start
@@ -212,8 +213,15 @@ def directional_metrics(signals: pd.DataFrame, frame: pd.DataFrame) -> dict[str,
             "median_next_return": 0.0,
             "period_precision_std": 1.0,
             "worst_year_precision": 0.0,
+            "calibration_samples": 0,
+            "brier_score": np.nan,
+            "calibration_error": np.nan,
+            "mean_abs_calibration_error": np.nan,
+            "max_abs_bin_error": np.nan,
+            "calibration_bins": [],
         }
     yearly = active_rows.assign(year=active_rows.index.year).groupby("year")["target_direction"].mean()
+    calibration = probability_calibration(signals, frame)
     return {
         "active_days": int(len(active_rows)),
         "coverage": float(len(active_rows) / len(aligned)),
@@ -222,7 +230,13 @@ def directional_metrics(signals: pd.DataFrame, frame: pd.DataFrame) -> dict[str,
         "median_next_return": float(active_rows["target_return"].median()),
         "period_precision_std": float(yearly.std(ddof=0)) if len(yearly) > 1 else 0.0,
         "worst_year_precision": float(yearly.min()) if not yearly.empty else 0.0,
+        "calibration_samples": calibration["samples"],
+        "brier_score": calibration["brier_score"],
+        "calibration_error": calibration["calibration_error"],
+        "mean_abs_calibration_error": calibration["mean_abs_calibration_error"],
+        "max_abs_bin_error": calibration["max_abs_bin_error"],
         "year_precision": {str(year): float(value) for year, value in yearly.items()},
+        "calibration_bins": calibration["bins"],
     }
 
 
@@ -404,10 +418,11 @@ def evaluate_rule(
         "score": score,
         **asdict(rule),
         **{f"bt_{key}": value for key, value in result.metrics.items()},
-        **{f"dir_{key}": value for key, value in dmetrics.items() if key != "year_precision"},
+        **{f"dir_{key}": value for key, value in dmetrics.items() if key not in {"year_precision", "calibration_bins"}},
         "benchmark_annualized_return": benchmark["annualized_return"],
         "benchmark_sharpe_ratio": benchmark["sharpe_ratio"],
         "year_precision": json.dumps(dmetrics.get("year_precision", {}), ensure_ascii=False),
+        "calibration_bins": json.dumps(dmetrics.get("calibration_bins", []), ensure_ascii=False),
     }
     return row, signals, period_rows
 

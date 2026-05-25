@@ -263,6 +263,17 @@ def analyze_options(
         "iv_vs_hv20": iv_vs_hv20,
         "volatility_signal": volatility_signal,
         "skew_signal": skew_signal,
+        "distribution_assessment": {
+            "terminal_range_source": "atm_straddle_and_iv_overlay",
+            "risk_neutral_density_status": "not_reconstructed_from_snapshot",
+            "path_dependent_metrics_status": "unavailable",
+            "barrier_probabilities": None,
+            "drawdown_estimates": None,
+            "warning": (
+                "This option snapshot overlay estimates terminal range and skew only. "
+                "It must not be interpreted as calibrated barrier-touch or drawdown probabilities."
+            ),
+        },
         "model_range": model_range,
         "fused_two_week_range": fused_range,
         "expiries": sorted(expiries, key=lambda row: row["days_to_expiry"]),

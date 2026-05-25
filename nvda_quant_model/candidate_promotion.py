@@ -266,6 +266,11 @@ def evaluate_candidates(
                     "dir_active_days": row["dir_active_days"],
                     "dir_worst_year_precision": row["dir_worst_year_precision"],
                     "period_precision_std": row["dir_period_precision_std"],
+                    "calibration_samples": row.get("dir_calibration_samples"),
+                    "brier_score": row.get("dir_brier_score"),
+                    "calibration_error": row.get("dir_calibration_error"),
+                    "mean_abs_calibration_error": row.get("dir_mean_abs_calibration_error"),
+                    "max_abs_bin_error": row.get("dir_max_abs_bin_error"),
                     "losing_periods": int((precision_series < 0.5).sum()) if not precision_series.empty else 0,
                     "source_long_score": candidate.get("long_score"),
                 }
@@ -315,8 +320,21 @@ def summarize_promotions(
             if frame.empty:
                 continue
             item = frame.iloc[0]
-            for column in ["annualized_return", "sharpe_ratio", "max_drawdown", "win_rate", "profit_factor", "num_trades", "dir_precision"]:
-                row[f"{prefix}_{column}"] = item[column]
+            for column in [
+                "annualized_return",
+                "sharpe_ratio",
+                "max_drawdown",
+                "win_rate",
+                "profit_factor",
+                "num_trades",
+                "dir_precision",
+                "brier_score",
+                "calibration_error",
+                "mean_abs_calibration_error",
+                "max_abs_bin_error",
+            ]:
+                if column in item:
+                    row[f"{prefix}_{column}"] = item[column]
         rows.append(row)
     return pd.DataFrame(rows).sort_values(["status", "promotion_score"], ascending=[True, False]).reset_index(drop=True)
 
@@ -336,7 +354,7 @@ def _num(value: Any) -> str:
 def write_report(output_dir: Path, metadata: dict[str, Any], summary: pd.DataFrame, stress: pd.DataFrame, latest: pd.DataFrame) -> Path:
     display = summary.copy()
     for column in display.columns:
-        if any(key in column for key in ["annualized_return", "max_drawdown", "win_rate", "dir_precision"]):
+        if any(key in column for key in ["annualized_return", "max_drawdown", "win_rate", "dir_precision", "calibration_error"]):
             display[column] = display[column].map(_pct)
         elif any(key in column for key in ["sharpe_ratio", "profit_factor", "promotion_score"]):
             display[column] = display[column].map(_num)

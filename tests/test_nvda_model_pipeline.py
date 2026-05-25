@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 
 from nvda_quant_model.backtest.backtest_engine import BacktestEngine
+from nvda_quant_model.calibration import probability_calibration, rolling_interval_calibration
 from nvda_quant_model.candidate_promotion import classify_candidate, select_promotion_candidates
 from nvda_quant_model.config import MACRO_TICKERS, PROJECT_ROOT, SECTOR_TICKERS, StrategyConfig
 from nvda_quant_model.data.feature_engineering import build_model_frame
@@ -15,6 +16,7 @@ from nvda_quant_model.high_sample_validation import select_high_sample_candidate
 from nvda_quant_model.live_order_flow import analyze_order_flow, bars_frame
 from nvda_quant_model.meta_decision_layer import MetaPolicy, build_meta_signals
 from nvda_quant_model.models.ml_model import build_candidate_models, load_model_parameter_overrides
+from nvda_quant_model.options_volatility import analyze_options
 from nvda_quant_model.order_flow_backtest import backtest_intraday_signals
 from nvda_quant_model.optimizer_monitor import (
     OptimizerSpec,
@@ -345,6 +347,37 @@ def test_candidate_promotion_classifies_stable_improvement() -> None:
     )
 
     assert classify_candidate(candidate, baseline) == "promote_candidate"
+
+
+def test_probability_calibration_scores_active_nvda_signals() -> None:
+    index = pd.bdate_range("2026-01-02", periods=6)
+    signals = pd.DataFrame(
+        {
+            "position": [1.0, 1.0, 0.0, 1.0, 1.0, 0.0],
+            "prob_up": [0.70, 0.70, 0.50, 0.60, 0.60, 0.50],
+        },
+        index=index,
+    )
+    frame = pd.DataFrame({"target_direction": [1, 0, 1, 1, 1, 0]}, index=index)
+
+    calibration = probability_calibration(signals, frame, bins=4)
+
+    assert calibration["samples"] == 4
+    assert 0.0 <= calibration["brier_score"] <= 1.0
+    assert calibration["realized_up"] == 0.75
+    assert calibration["bins"]
+
+
+def test_rolling_interval_calibration_reports_nvda_coverage() -> None:
+    index = pd.bdate_range("2024-01-02", periods=340)
+    returns = 0.001 + 0.012 * np.sin(np.arange(len(index)) / 12.0)
+    close = pd.Series(100.0 * np.exp(np.cumsum(returns)), index=index)
+
+    summary, windows = rolling_interval_calibration(close, horizon_days=5, train_window=120, step=20)
+
+    assert not windows.empty
+    assert set(summary["confidence_level"]) == {0.80, 0.95}
+    assert summary["coverage"].between(0.0, 1.0).all()
 
 
 def test_high_sample_optimizer_requires_trade_count_and_quality_gates() -> None:
@@ -721,6 +754,53 @@ def test_live_order_flow_overlay_scores_top_of_book_and_minute_trend() -> None:
     assert overlay["micro_signal"]["signal"] == 1
     assert overlay["micro_signal"]["label"] == "bullish"
     assert overlay["execution_filter"]["use_as_entry_signal"] is False
+
+
+def test_options_overlay_marks_path_dependent_metrics_unavailable(tmp_path, monkeypatch) -> None:
+    snapshot = {
+        "as_of_date": "2026-05-25",
+        "source": "test_option_snapshot",
+        "feed": "indicative",
+        "snapshots": {
+            "NVDA260605C00215000": {
+                "latest_quote": {"bid_price": 10.0, "ask_price": 10.4},
+                "latest_trade": {"price": 10.2},
+                "implied_volatility": 0.55,
+                "greeks": {"delta": 0.50},
+            },
+            "NVDA260605P00215000": {
+                "latest_quote": {"bid_price": 9.5, "ask_price": 9.9},
+                "latest_trade": {"price": 9.7},
+                "implied_volatility": 0.58,
+                "greeks": {"delta": -0.50},
+            },
+            "NVDA260612C00215000": {
+                "latest_quote": {"bid_price": 13.0, "ask_price": 13.4},
+                "latest_trade": {"price": 13.2},
+                "implied_volatility": 0.56,
+                "greeks": {"delta": 0.50},
+            },
+            "NVDA260612P00215000": {
+                "latest_quote": {"bid_price": 12.5, "ask_price": 12.9},
+                "latest_trade": {"price": 12.7},
+                "implied_volatility": 0.62,
+                "greeks": {"delta": -0.50},
+            },
+        },
+    }
+    path = tmp_path / "snapshot.json"
+    path.write_text(json.dumps(snapshot), encoding="utf-8")
+    monkeypatch.setattr(
+        "nvda_quant_model.options_volatility.realized_volatility",
+        lambda ticker="NVDA": {"hv_10d": 0.45, "hv_20d": 0.50, "hv_60d": 0.48},
+    )
+
+    report = analyze_options(path, underlying_price=215.0)
+
+    assessment = report["distribution_assessment"]
+    assert assessment["path_dependent_metrics_status"] == "unavailable"
+    assert assessment["barrier_probabilities"] is None
+    assert "must not be interpreted" in assessment["warning"]
 
 
 def test_order_flow_backtest_charges_round_trip_cost_once() -> None:

@@ -159,3 +159,20 @@
 - 不因自动同步上传无关研究目录。
 
 当前状态：已启用。当前 `origin/main` 最新提交为 `f25283b`，本地暂无未提交 NVDA 代码变更。
+
+## P9：校准与期权诚实度
+
+问题：方向准确率和收益指标不能单独证明模型“准”。如果概率没有校准，`prob_up=0.65` 可能只是一个漂亮数字。期权 snapshot 也只能给终端区间和 skew 线索，不能诚实地产生 path-dependent barrier/drawdown 概率。
+
+解决方案：
+- 新增 `calibration` 模块，输出 active signal 的 Brier score、平均校准误差、分箱校准误差。
+- 候选晋级的 24/36/60 跨窗口报告纳入校准字段，避免只看收益/胜率。
+- 增加 EWMA rolling interval calibration，用历史窗口检查 80%/95% 区间覆盖率，为后续动态波动率和校准加权打基础。
+- 期权 overlay 明确标注 `path_dependent_metrics_status=unavailable`，不再暗示能从 snapshot 直接得出 barrier/drawdown。
+
+验收标准：
+- 每个晋级候选都能看到概率校准指标。
+- 后续若引入期权分布/RND，必须先通过覆盖率/尾部校准检验。
+- 对无法校准的期权 path 指标，宁可输出不可用，也不能输出伪精确数字。
+
+当前状态：第一版已完成，等待 repaired 长跑产生新候选后自动进入复验报告。
