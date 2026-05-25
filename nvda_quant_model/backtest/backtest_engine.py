@@ -39,12 +39,16 @@ class BacktestEngine:
         rows: list[dict[str, float | pd.Timestamp]] = []
         trades: list[dict[str, float | pd.Timestamp | str]] = []
         current_trade: dict[str, float | pd.Timestamp] | None = None
+        halted = False
 
-        for date, row in data.iterrows():
-            close = float(row["Close"])
-            high = float(row["High"])
-            low = float(row["Low"])
-            target_position = float(row["position"])
+        for row in data.itertuples(index=True):
+            date = row.Index
+            close = float(row.Close)
+            high = float(row.High)
+            low = float(row.Low)
+            target_position = float(row.position)
+            if halted:
+                target_position = 0.0
 
             if prev_close is None:
                 rows.append({"Date": date, "equity": equity, "position": target_position, "strategy_return": 0.0})
@@ -107,11 +111,27 @@ class BacktestEngine:
                 )
                 current_trade = None
 
+            if drawdown <= -self.max_drawdown_limit:
+                halted = True
+                target_position = 0.0
+                if current_trade is not None:
+                    pnl = equity - float(current_trade["entry_equity"])
+                    trades.append(
+                        {
+                            "entry_date": current_trade["entry_date"],
+                            "exit_date": date,
+                            "entry_price": current_trade["entry_price"],
+                            "exit_price": close,
+                            "position": current_trade["position"],
+                            "pnl": pnl,
+                            "return": equity / float(current_trade["entry_equity"]) - 1.0,
+                            "exit_reason": "drawdown_stop",
+                        }
+                    )
+                    current_trade = None
+
             if target_position != 0 and current_trade is None:
                 current_trade = {"entry_date": date, "entry_equity": equity, "entry_price": close, "position": target_position}
-
-            if drawdown <= -self.max_drawdown_limit:
-                target_position = 0.0
 
             rows.append({"Date": date, "equity": equity, "position": target_position, "strategy_return": strategy_return})
             prev_close = close
@@ -122,4 +142,3 @@ class BacktestEngine:
         trades_df = pd.DataFrame(trades)
         metrics = calculate_metrics(equity_curve["equity"], daily_returns, trades_df, self.initial_capital)
         return BacktestResult(metrics, equity_curve, trades_df, daily_returns)
-

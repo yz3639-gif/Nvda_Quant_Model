@@ -25,6 +25,7 @@ class StrategyConfig:
     max_drawdown_limit: float = 0.20
     train_window: int = 189
     test_window: int = 42
+    walk_forward_jobs: int = 1
     top_k_features: int = 12
     include_fundamentals: bool = False
     include_peer_events: bool = True
@@ -32,6 +33,9 @@ class StrategyConfig:
     min_expected_return: float = 0.0005
     rule_quantile: float = 0.55
     rule_max_filters: int = 2
+    fast_rule_only: bool = False
+    model_params_path: str | None = None
+    precision_rule_path: str | None = None
     random_state: int = 42
 
     @property

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from datetime import timedelta
 from pathlib import Path
 from typing import Iterable
@@ -41,9 +42,13 @@ def _download_one(
     cache_dir.mkdir(parents=True, exist_ok=True)
     path = _cache_path(ticker, start, end, cache_dir)
     if path.exists() and not force_refresh:
-        data = pd.read_csv(path, parse_dates=["Date"], index_col="Date")
-        if not data.empty:
-            return data.sort_index()
+        try:
+            data = pd.read_csv(path, parse_dates=["Date"], index_col="Date")
+            if not data.empty:
+                return data.sort_index()
+        except (OSError, ValueError, pd.errors.ParserError) as exc:
+            LOGGER.warning("Ignoring corrupt cache for %s at %s: %s", ticker, path, exc)
+            path.unlink(missing_ok=True)
 
     last_error: Exception | None = None
     for attempt in range(retries + 1):
@@ -67,7 +72,9 @@ def _download_one(
             data.index = pd.to_datetime(data.index).tz_localize(None)
             data = data.dropna(how="all")
             if not data.empty:
-                data.to_csv(path)
+                tmp_path = path.with_name(f"{path.name}.tmp.{os.getpid()}")
+                data.to_csv(tmp_path)
+                tmp_path.replace(path)
                 return data
         except Exception as exc:  # pragma: no cover - network dependent
             last_error = exc

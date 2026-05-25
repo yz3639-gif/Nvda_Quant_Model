@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import json
 from dataclasses import asdict, dataclass, replace
-from itertools import product
 from pathlib import Path
 from typing import Any
 
@@ -72,6 +71,26 @@ class PrecisionRule:
             f"tw{self.train_window}_sw{self.test_window}_{self.momentum_feature}"
             f"_mq{self.momentum_quantile:.2f}_vq{self.volume_quantile:.2f}_{suffix}"
         )
+
+
+@dataclass(frozen=True)
+class EvaluationContext:
+    report_prices: pd.DataFrame
+    report_frame: pd.DataFrame
+    benchmark: dict[str, float]
+
+
+def build_evaluation_context(
+    base: StrategyConfig,
+    frame: pd.DataFrame,
+    prices: pd.DataFrame,
+    external: pd.DataFrame,
+) -> EvaluationContext:
+    report_prices = prices.loc[base.start_date : base.end_date]
+    report_frame = frame.loc[base.start_date : base.end_date]
+    benchmark_close = external[MACRO_TICKERS["SP500"]].reindex(report_prices.index).ffill().dropna()
+    benchmark, _, _ = benchmark_metrics(benchmark_close, base.initial_capital)
+    return EvaluationContext(report_prices=report_prices, report_frame=report_frame, benchmark=benchmark)
 
 
 def _json_default(obj: Any) -> Any:
@@ -238,6 +257,13 @@ def score_candidate(
     )
 
 
+def _priority_groups(values: list[Any], key_func: Any) -> list[list[Any]]:
+    groups: dict[float, list[Any]] = {}
+    for value in values:
+        groups.setdefault(float(key_func(value)), []).append(value)
+    return [groups[key] for key in sorted(groups)]
+
+
 def candidate_rules(base: StrategyConfig, max_candidates: int | None = None) -> list[PrecisionRule]:
     required_sets = [
         {},
@@ -268,77 +294,82 @@ def candidate_rules(base: StrategyConfig, max_candidates: int | None = None) -> 
         {"require_smh_positive": True, "require_obv_positive": True, "require_qqq_positive": True, "require_peer_breadth_positive": True},
         {"require_smh_positive": True, "require_obv_positive": True, "require_macd_positive": True, "require_peer_breadth_positive": True},
     ]
-    raw_rules: list[PrecisionRule] = []
-    for (
-        train_window,
-        test_window,
-        momentum_feature,
-        momentum_quantile,
-        volume_quantile,
-        max_rsi,
-        min_price_60ma,
-        vix_quantile_cap,
-        stop_loss,
-        take_profit,
-        max_exposure,
-    ) in product(
-        [126, 189, 252, 315],
-        [21, 42, 63],
-        ["5d_return", "10d_return", "20d_return", "60d_return"],
-        [0.55, 0.60, 0.65, 0.70, 0.75],
-        [0.50, 0.55, 0.60, 0.65],
-        [None, 65.0, 72.0, 78.0],
-        [None, 0.98, 1.00, 1.02],
-        [None, 0.70, 0.80],
-        [0.025, 0.035, 0.045],
-        [0.04, 0.05, 0.06],
-        [0.75, 1.0],
-    ):
-        if take_profit <= stop_loss:
-            continue
-        for flags in required_sets:
-            raw_rules.append(
-                PrecisionRule(
-                    train_window=train_window,
-                    test_window=test_window,
-                    momentum_feature=momentum_feature,
-                    momentum_quantile=momentum_quantile,
-                    volume_quantile=volume_quantile,
-                    max_rsi=max_rsi,
-                    min_price_60ma=min_price_60ma,
-                    require_smh_positive=flags.get("require_smh_positive", False),
-                    require_qqq_positive=flags.get("require_qqq_positive", False),
-                    require_sp500_positive=flags.get("require_sp500_positive", False),
-                    require_macd_positive=flags.get("require_macd_positive", False),
-                    require_obv_positive=flags.get("require_obv_positive", False),
-                    require_vol_calm=flags.get("require_vol_calm", False),
-                    require_peer_breadth_positive=flags.get("require_peer_breadth_positive", False),
-                    require_peer_mean_positive=flags.get("require_peer_mean_positive", False),
-                    require_peer_event_net_positive=flags.get("require_peer_event_net_positive", False),
-                    require_no_peer_business_stress=flags.get("require_no_peer_business_stress", False),
-                    vix_quantile_cap=vix_quantile_cap,
-                    exclude_negative_pre_holiday=flags.get("exclude_negative_pre_holiday", False),
-                    stop_loss_pct=stop_loss,
-                    take_profit_pct=take_profit,
-                    max_exposure=max_exposure,
-                )
-            )
 
-    def priority(rule: PrecisionRule) -> tuple[float, ...]:
-        return (
-            abs(rule.train_window - base.train_window) / 252,
-            abs(rule.test_window - base.test_window) / 63,
-            abs(rule.momentum_quantile - 0.65),
-            abs(rule.volume_quantile - 0.55),
-            0.0 if rule.momentum_feature in {"10d_return", "20d_return"} else 0.5,
-            0.0 if rule.require_smh_positive else 0.2,
-            abs(rule.stop_loss_pct - base.stop_loss_pct),
-            abs(rule.take_profit_pct - base.take_profit_pct),
-        )
+    train_windows = [126, 189, 252, 315]
+    test_windows = [21, 42, 63]
+    momentum_features = ["5d_return", "10d_return", "20d_return", "60d_return"]
+    momentum_quantiles = [0.55, 0.60, 0.65, 0.70, 0.75]
+    volume_quantiles = [0.50, 0.55, 0.60, 0.65]
+    max_rsi_values = [None, 65.0, 72.0, 78.0]
+    min_price_60ma_values = [None, 0.98, 1.00, 1.02]
+    vix_quantile_cap_values = [None, 0.70, 0.80]
+    stop_loss_values = [0.025, 0.035, 0.045]
+    take_profit_values = [0.04, 0.05, 0.06]
+    max_exposure_values = [0.75, 1.0]
 
-    rules = sorted(raw_rules, key=priority)
-    if max_candidates is not None:
-        rules = rules[:max_candidates]
+    train_groups = _priority_groups(train_windows, lambda value: abs(value - base.train_window) / 252)
+    test_groups = _priority_groups(test_windows, lambda value: abs(value - base.test_window) / 63)
+    momentum_quantile_groups = _priority_groups(momentum_quantiles, lambda value: abs(value - 0.65))
+    volume_quantile_groups = _priority_groups(volume_quantiles, lambda value: abs(value - 0.55))
+    momentum_feature_groups = _priority_groups(
+        momentum_features,
+        lambda value: 0.0 if value in {"10d_return", "20d_return"} else 0.5,
+    )
+    flag_groups = _priority_groups(required_sets, lambda value: 0.0 if value.get("require_smh_positive", False) else 0.2)
+    stop_loss_groups = _priority_groups(stop_loss_values, lambda value: abs(value - base.stop_loss_pct))
+    take_profit_groups = _priority_groups(take_profit_values, lambda value: abs(value - base.take_profit_pct))
+
+    rules: list[PrecisionRule] = []
+    for train_group in train_groups:
+        for test_group in test_groups:
+            for momentum_quantile_group in momentum_quantile_groups:
+                for volume_quantile_group in volume_quantile_groups:
+                    for momentum_feature_group in momentum_feature_groups:
+                        for flag_group in flag_groups:
+                            for stop_loss_group in stop_loss_groups:
+                                for take_profit_group in take_profit_groups:
+                                    for train_window in train_group:
+                                        for test_window in test_group:
+                                            for momentum_feature in momentum_feature_group:
+                                                for momentum_quantile in momentum_quantile_group:
+                                                    for volume_quantile in volume_quantile_group:
+                                                        for max_rsi in max_rsi_values:
+                                                            for min_price_60ma in min_price_60ma_values:
+                                                                for vix_quantile_cap in vix_quantile_cap_values:
+                                                                    for stop_loss in stop_loss_group:
+                                                                        for take_profit in take_profit_group:
+                                                                            if take_profit <= stop_loss:
+                                                                                continue
+                                                                            for max_exposure in max_exposure_values:
+                                                                                for flags in flag_group:
+                                                                                    rules.append(
+                                                                                        PrecisionRule(
+                                                                                            train_window=train_window,
+                                                                                            test_window=test_window,
+                                                                                            momentum_feature=momentum_feature,
+                                                                                            momentum_quantile=momentum_quantile,
+                                                                                            volume_quantile=volume_quantile,
+                                                                                            max_rsi=max_rsi,
+                                                                                            min_price_60ma=min_price_60ma,
+                                                                                            require_smh_positive=flags.get("require_smh_positive", False),
+                                                                                            require_qqq_positive=flags.get("require_qqq_positive", False),
+                                                                                            require_sp500_positive=flags.get("require_sp500_positive", False),
+                                                                                            require_macd_positive=flags.get("require_macd_positive", False),
+                                                                                            require_obv_positive=flags.get("require_obv_positive", False),
+                                                                                            require_vol_calm=flags.get("require_vol_calm", False),
+                                                                                            require_peer_breadth_positive=flags.get("require_peer_breadth_positive", False),
+                                                                                            require_peer_mean_positive=flags.get("require_peer_mean_positive", False),
+                                                                                            require_peer_event_net_positive=flags.get("require_peer_event_net_positive", False),
+                                                                                            require_no_peer_business_stress=flags.get("require_no_peer_business_stress", False),
+                                                                                            vix_quantile_cap=vix_quantile_cap,
+                                                                                            exclude_negative_pre_holiday=flags.get("exclude_negative_pre_holiday", False),
+                                                                                            stop_loss_pct=stop_loss,
+                                                                                            take_profit_pct=take_profit,
+                                                                                            max_exposure=max_exposure,
+                                                                                        )
+                                                                                    )
+                                                                                    if max_candidates is not None and len(rules) >= max_candidates:
+                                                                                        return rules
     return rules
 
 
@@ -350,9 +381,11 @@ def evaluate_rule(
     external: pd.DataFrame,
     min_active_days: int,
     min_trades: int,
+    context: EvaluationContext | None = None,
 ) -> tuple[dict[str, Any], pd.DataFrame, pd.DataFrame]:
+    context = context or build_evaluation_context(base, frame, prices, external)
     signals, period_rows = build_walk_forward_rule_signals(frame, rule, base.start_date)
-    report_prices = prices.loc[base.start_date : base.end_date]
+    report_prices = context.report_prices
     signals = signals.reindex(report_prices.index).dropna(subset=["prob_up", "expected_return"])
     cfg = replace(
         base,
@@ -363,9 +396,8 @@ def evaluate_rule(
         max_exposure=rule.max_exposure,
     )
     result = BacktestEngine(cfg).backtest(signals, report_prices)
-    dmetrics = directional_metrics(signals, frame.loc[base.start_date : base.end_date])
-    benchmark_close = external[MACRO_TICKERS["SP500"]].reindex(report_prices.index).ffill().dropna()
-    benchmark, _, _ = benchmark_metrics(benchmark_close, cfg.initial_capital)
+    dmetrics = directional_metrics(signals, context.report_frame)
+    benchmark = context.benchmark
     score = score_candidate(result.metrics, dmetrics, period_rows, min_active_days, min_trades)
     row = {
         "label": rule.label,
@@ -504,6 +536,7 @@ def main() -> None:
         include_fundamentals=False,
         peer_ohlcv=peer_ohlcv,
     )
+    context = build_evaluation_context(base, frame, prices, external)
 
     rows: list[dict[str, Any]] = []
     best: dict[str, Any] | None = None
@@ -520,6 +553,7 @@ def main() -> None:
                 external,
                 args.min_active_days,
                 args.min_trades,
+                context,
             )
         except Exception as exc:
             print(f"[{idx}/{len(rules)}] skipped {rule.label}: {exc}", flush=True)

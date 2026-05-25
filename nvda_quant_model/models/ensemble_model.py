@@ -5,17 +5,23 @@ import pandas as pd
 
 from nvda_quant_model.config import StrategyConfig
 from nvda_quant_model.models.baseline_model import SMARsiBaseline, VolumeMomentumRule
-from nvda_quant_model.models.ml_model import ValidationScore, build_candidate_models
+from nvda_quant_model.models.ml_model import ValidationScore, build_candidate_models, load_model_parameter_overrides
 
 
 class EnsembleModel:
     def __init__(self, config: StrategyConfig):
         self.config = config
-        self.models = [
-            VolumeMomentumRule(config.rule_quantile, config.rule_max_filters),
-            SMARsiBaseline(),
-            *build_candidate_models(config.top_k_features, config.random_state),
-        ]
+        rule_model = VolumeMomentumRule(config.rule_quantile, config.rule_max_filters)
+        parameter_overrides = load_model_parameter_overrides(config.model_params_path)
+        self.models = (
+            [rule_model]
+            if config.fast_rule_only
+            else [
+                rule_model,
+                SMARsiBaseline(),
+                *build_candidate_models(config.top_k_features, config.random_state, parameter_overrides),
+            ]
+        )
         self.weights_: dict[str, float] = {}
         self.validation_scores_: list[ValidationScore] = []
         self.feature_importance_: pd.Series = pd.Series(dtype=float)

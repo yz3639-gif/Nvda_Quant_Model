@@ -1,10 +1,52 @@
 from __future__ import annotations
 
+from concurrent.futures import ProcessPoolExecutor
+
 import pandas as pd
 
 from nvda_quant_model.backtest.backtest_engine import BacktestEngine
 from nvda_quant_model.config import StrategyConfig
 from nvda_quant_model.models.ensemble_model import EnsembleModel
+
+
+def _walk_forward_windows(
+    data: pd.DataFrame,
+    config: StrategyConfig,
+    report_start: str,
+) -> list[tuple[int, int]]:
+    windows: list[tuple[int, int]] = []
+    start_idx = config.train_window
+    while start_idx < len(data):
+        end_idx = min(start_idx + config.test_window, len(data))
+        test = data.iloc[start_idx:end_idx]
+        if test.empty:
+            break
+        if test.index[-1] >= pd.Timestamp(report_start):
+            windows.append((start_idx, end_idx))
+        start_idx += config.test_window
+    return windows
+
+
+def _walk_forward_period(
+    args: tuple[pd.DataFrame, list[str], StrategyConfig, int, int],
+) -> tuple[pd.DataFrame, dict[str, float | str], pd.Series]:
+    data, feature_columns, config, start_idx, end_idx = args
+    train = data.iloc[start_idx - config.train_window : start_idx]
+    test = data.iloc[start_idx:end_idx]
+    model = EnsembleModel(config).fit(train, feature_columns)
+    pred = model.predict(test)
+    engine = BacktestEngine(config)
+    result = engine.backtest(pred, test[["Open", "High", "Low", "Close"]])
+    period = {
+        "period_start": test.index.min().strftime("%Y-%m-%d"),
+        "period_end": test.index.max().strftime("%Y-%m-%d"),
+        "annualized_return": result.metrics["annualized_return"],
+        "sharpe_ratio": result.metrics["sharpe_ratio"],
+        "max_drawdown": result.metrics["max_drawdown"],
+        "win_rate": result.metrics["win_rate"],
+        "profit_factor": result.metrics["profit_factor"],
+    }
+    return pred, period, model.feature_importance_
 
 
 def walk_forward_signals(
@@ -18,37 +60,21 @@ def walk_forward_signals(
     periods: list[dict[str, float | str]] = []
     feature_importance = pd.Series(0.0, index=feature_columns)
     n_models = 0
+    windows = _walk_forward_windows(data, config, report_start)
+    jobs = max(1, int(config.walk_forward_jobs))
+    tasks = [(data, feature_columns, config, start_idx, end_idx) for start_idx, end_idx in windows]
 
-    start_idx = config.train_window
-    while start_idx < len(data):
-        train = data.iloc[start_idx - config.train_window : start_idx]
-        test = data.iloc[start_idx : min(start_idx + config.test_window, len(data))]
-        if test.empty:
-            break
-        if test.index[-1] < pd.Timestamp(report_start):
-            start_idx += config.test_window
-            continue
+    if jobs > 1 and len(tasks) > 1:
+        with ProcessPoolExecutor(max_workers=jobs) as executor:
+            results = list(executor.map(_walk_forward_period, tasks))
+    else:
+        results = [_walk_forward_period(task) for task in tasks]
 
-        model = EnsembleModel(config).fit(train, feature_columns)
-        pred = model.predict(test)
+    for pred, period, importance in results:
         signals.append(pred)
-        feature_importance = feature_importance.add(model.feature_importance_, fill_value=0.0)
+        periods.append(period)
+        feature_importance = feature_importance.add(importance, fill_value=0.0)
         n_models += 1
-
-        engine = BacktestEngine(config)
-        result = engine.backtest(pred, test[["Open", "High", "Low", "Close"]])
-        periods.append(
-            {
-                "period_start": test.index.min().strftime("%Y-%m-%d"),
-                "period_end": test.index.max().strftime("%Y-%m-%d"),
-                "annualized_return": result.metrics["annualized_return"],
-                "sharpe_ratio": result.metrics["sharpe_ratio"],
-                "max_drawdown": result.metrics["max_drawdown"],
-                "win_rate": result.metrics["win_rate"],
-                "profit_factor": result.metrics["profit_factor"],
-            }
-        )
-        start_idx += config.test_window
 
     if not signals:
         raise ValueError("Not enough data to create walk-forward signals")

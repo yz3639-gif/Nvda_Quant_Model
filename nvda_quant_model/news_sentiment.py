@@ -387,9 +387,52 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Fetch live NVDA news and build point-in-time news features")
     parser.add_argument("--days", type=int, default=7)
     parser.add_argument("--queries", default="", help="Pipe-separated custom queries")
+    parser.add_argument(
+        "--input-json",
+        default="",
+        help="Optional path to a JSON list of article dicts (offline mode; skips network fetch).",
+    )
     parser.add_argument("--output-dir", default=str(PROJECT_ROOT / "outputs" / "news_live"))
     parser.add_argument("--price-index-csv", default="", help="Optional CSV with Date column to align daily features")
     return parser.parse_args()
+
+
+def _articles_from_input_json(path: Path) -> list[NewsArticle]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, list):
+        raise ValueError("--input-json must be a JSON list of article objects")
+    articles: list[NewsArticle] = []
+    for raw in payload:
+        if not isinstance(raw, dict):
+            continue
+        title = str(raw.get("title", "")).strip()
+        link = str(raw.get("link", "")).strip()
+        if not title or not link:
+            continue
+        source = str(raw.get("source", "")).strip()
+        summary = str(raw.get("summary", "")).strip()
+        query = str(raw.get("query", "")).strip() or "offline"
+        published_at_raw = str(raw.get("published_at", "")).strip()
+        try:
+            published_at = pd.Timestamp(published_at_raw).tz_localize(None)
+        except Exception:
+            published_at = pd.Timestamp.utcnow().tz_localize(None)
+        score, event_scores = score_text(title, summary, source)
+        override_event_scores = raw.get("event_scores")
+        articles.append(
+            NewsArticle(
+                id=str(raw.get("id", "")).strip() or _article_id(title, link),
+                title=title,
+                link=link,
+                source=source,
+                published_at=published_at.isoformat(),
+                summary=summary,
+                query=query,
+                sentiment_score=float(raw.get("sentiment_score", score)),
+                event_scores=override_event_scores if isinstance(override_event_scores, dict) else event_scores,
+            )
+        )
+    return sorted(articles, key=lambda item: item.published_at, reverse=True)
 
 
 def main() -> None:
@@ -398,7 +441,10 @@ def main() -> None:
     price_index = None
     if args.price_index_csv:
         price_index = pd.read_csv(args.price_index_csv, parse_dates=["Date"], index_col="Date").index
-    articles = fetch_live_news(queries=queries, days=args.days)
+    if args.input_json:
+        articles = _articles_from_input_json(Path(args.input_json))
+    else:
+        articles = fetch_live_news(queries=queries, days=args.days)
     payload = save_news_outputs(articles, Path(args.output_dir), price_index=price_index)
     print(json.dumps(payload, indent=2, ensure_ascii=False, default=_json_default))
 

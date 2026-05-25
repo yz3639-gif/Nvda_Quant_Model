@@ -17,6 +17,7 @@ from nvda_quant_model.config import PROJECT_ROOT, StrategyConfig
 from nvda_quant_model.data.feature_engineering import build_model_frame
 from nvda_quant_model.data.load_data import load_market_data, load_peer_ohlcv_panel, resolve_data_window, warmup_start
 from nvda_quant_model.precision_search import (
+    build_evaluation_context,
     PrecisionRule,
     evaluate_rule,
     latest_prediction_for_rule,
@@ -151,6 +152,30 @@ def _load_seen(results_path: Path) -> set[str]:
         return set()
 
 
+def _row_to_dict(row: pd.Series) -> dict[str, Any]:
+    values = row.to_dict()
+    return {key: (None if pd.isna(value) else value) for key, value in values.items()}
+
+
+def _load_existing_best(output_dir: Path, results_path: Path) -> dict[str, Any] | None:
+    if results_path.exists():
+        try:
+            rows = pd.read_csv(results_path)
+            if not rows.empty and "long_score" in rows.columns:
+                return _row_to_dict(rows.sort_values("long_score", ascending=False).iloc[0])
+        except (ValueError, pd.errors.EmptyDataError):
+            pass
+    best_path = output_dir / "best_precision.json"
+    if best_path.exists():
+        try:
+            payload = json.loads(best_path.read_text(encoding="utf-8"))
+            best = payload.get("best")
+            return best if isinstance(best, dict) else None
+        except json.JSONDecodeError:
+            return None
+    return None
+
+
 def _append_rows(path: Path, rows: list[dict[str, Any]]) -> None:
     if not rows:
         return
@@ -241,6 +266,7 @@ def run_long_optimizer(args: argparse.Namespace) -> dict[str, Any]:
         include_fundamentals=False,
         peer_ohlcv=peer_ohlcv,
     )
+    context = build_evaluation_context(base, frame, prices, external)
     metadata = {
         **metadata,
         "resolved_start": base.start_date,
@@ -250,13 +276,20 @@ def run_long_optimizer(args: argparse.Namespace) -> dict[str, Any]:
 
     seen = _load_seen(results_path) if args.resume else set()
     pending_rows: list[dict[str, Any]] = []
-    best_row: dict[str, Any] | None = None
+    best_row: dict[str, Any] | None = _load_existing_best(output_dir, results_path) if args.resume else None
     best_signals = pd.DataFrame()
     best_periods = pd.DataFrame()
-    evaluated = 0
+    evaluated = len(seen) if args.resume else 0
     skipped_duplicates = 0
     skipped_errors = 0
     last_report = time.time()
+    if best_row is not None:
+        best_score = best_row.get("long_score", best_row.get("score", 0.0)) or 0.0
+        print(
+            f"resumed best long_score={float(best_score):.3f} "
+            f"label={best_row.get('label')}",
+            flush=True,
+        )
 
     while time.time() < deadline_ts and (args.max_runs is None or evaluated < args.max_runs):
         rule = _sample_rule(rng)
@@ -273,11 +306,11 @@ def run_long_optimizer(args: argparse.Namespace) -> dict[str, Any]:
                 external,
                 args.min_active_days,
                 args.min_trades,
+                context,
             )
             row["long_score"] = _robust_score(row, periods)
             row["evaluated_at"] = _now()
             row["run_seed"] = args.seed
-            latest_prediction = latest_prediction_for_rule(rule, frame, args.price_override)
         except Exception as exc:
             skipped_errors += 1
             if args.verbose:
@@ -290,6 +323,7 @@ def run_long_optimizer(args: argparse.Namespace) -> dict[str, Any]:
             best_row = row
             best_signals = signals
             best_periods = periods
+            latest_prediction = latest_prediction_for_rule(rule, frame, args.price_override)
             _write_best(output_dir, best_row, best_signals, best_periods, latest_prediction, metadata)
             print(
                 f"new best #{evaluated}: long_score={row['long_score']:.3f} "

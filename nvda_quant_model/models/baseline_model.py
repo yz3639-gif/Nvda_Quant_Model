@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from itertools import combinations
 from types import SimpleNamespace
 
@@ -79,7 +80,9 @@ class VolumeMomentumRule:
         self.active_coverage_ = float(condition.mean()) if len(condition) else 0.0
         return self
 
-    def _candidate_specs(self) -> list[RuleSpec]:
+    @staticmethod
+    @lru_cache(maxsize=None)
+    def _candidate_specs_cached(max_filters: int) -> tuple[RuleSpec, ...]:
         quantiles = [0.55, 0.60, 0.65, 0.70]
         filters = [
             "rsi_lt_75",
@@ -91,14 +94,17 @@ class VolumeMomentumRule:
             "holiday_not_negative",
         ]
         filter_sets: list[tuple[str, ...]] = [tuple()]
-        for size in range(1, self.max_filters + 1):
+        for size in range(1, max_filters + 1):
             filter_sets.extend(combinations(filters, size))
-        return [
+        return tuple(
             RuleSpec(momentum_quantile=mq, volume_quantile=vq, filters=flt)
             for mq in quantiles
             for vq in quantiles
             for flt in filter_sets
-        ]
+        )
+
+    def _candidate_specs(self) -> tuple[RuleSpec, ...]:
+        return self._candidate_specs_cached(self.max_filters)
 
     def _fit_filter_thresholds(self, data: pd.DataFrame, spec: RuleSpec) -> dict[str, float]:
         thresholds: dict[str, float] = {}

@@ -294,6 +294,65 @@ def add_correlation_features(frame: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def build_market_state_features(frame: pd.DataFrame) -> pd.DataFrame:
+    """Adaptive market-regime features known at the current close.
+
+    Thresholds use trailing distributions shifted by one session where a
+    dynamic cutoff is needed, so the current value is not used to define its
+    own high/low-volatility bucket.
+    """
+    out = pd.DataFrame(index=frame.index)
+
+    vix = frame["VIX"] if "VIX" in frame else pd.Series(np.nan, index=frame.index)
+    high_vix_cutoff = vix.rolling(126, min_periods=40).quantile(0.70).shift(1)
+    low_vix_cutoff = vix.rolling(126, min_periods=40).quantile(0.30).shift(1)
+    high_vol = (vix > high_vix_cutoff).fillna(False)
+    low_vol = (vix < low_vix_cutoff).fillna(False)
+    out["regime_high_vol"] = high_vol.astype(float)
+    out["regime_low_vol"] = low_vol.astype(float)
+
+    trend_up = (
+        (frame.get("price_20ma_ratio", 0.0) > 1.0)
+        & (frame.get("price_60ma_ratio", 0.0) > 1.0)
+        & (frame.get("20d_return", 0.0) > 0.0)
+    )
+    trend_down = (
+        (frame.get("price_20ma_ratio", 0.0) < 1.0)
+        & (frame.get("price_60ma_ratio", 0.0) < 1.0)
+        & (frame.get("20d_return", 0.0) < 0.0)
+    )
+    out["regime_uptrend"] = pd.Series(trend_up, index=frame.index).fillna(False).astype(float)
+    out["regime_downtrend"] = pd.Series(trend_down, index=frame.index).fillna(False).astype(float)
+
+    momentum_fast = 0.6 * frame.get("5d_return", 0.0) + 0.4 * frame.get("10d_return", 0.0)
+    momentum_trend = 0.5 * frame.get("20d_return", 0.0) + 0.5 * frame.get("60d_return", 0.0)
+    out["adaptive_momentum_score"] = np.select(
+        [high_vol, trend_down, trend_up],
+        [momentum_fast, frame.get("10d_return", 0.0), momentum_trend],
+        default=frame.get("20d_return", 0.0),
+    )
+
+    rsi = frame["rsi_14"] if "rsi_14" in frame else pd.Series(np.nan, index=frame.index)
+    out["adaptive_rsi_signal"] = np.select(
+        [
+            high_vol & (rsi < 40),
+            high_vol & (rsi > 65),
+            trend_up & (rsi < 45),
+            trend_up & (rsi > 78),
+            trend_down & (rsi < 35),
+            trend_down & (rsi > 60),
+        ],
+        [1, -1, 1, -1, 1, -1],
+        default=0,
+    )
+    out["adaptive_risk_budget"] = np.select(
+        [high_vol, low_vol & trend_up, trend_down],
+        [0.50, 1.15, 0.70],
+        default=1.0,
+    )
+    return out.astype(float)
+
+
 def build_model_frame(
     prices: pd.DataFrame,
     external: pd.DataFrame,
@@ -328,6 +387,7 @@ def build_model_frame(
         frame = frame.join(news_numeric, how="left")
     frame = frame.join(build_holiday_features(frame.index, frame["Close"]), how="left")
     frame = add_correlation_features(frame)
+    frame = frame.join(build_market_state_features(frame), how="left")
 
     if include_fundamentals:
         fundamentals = fetch_nvda_fundamentals(frame.index, frame["Close"], ticker)

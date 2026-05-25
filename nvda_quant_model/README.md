@@ -6,6 +6,7 @@ This package implements a walk-forward, multi-factor NVDA strategy research work
 - Semiconductor peer features for AMD, AVGO, TSM, ASML, MU, QCOM, INTC, and ARM
 - Peer business-event proxies from abnormal peer moves, volume spikes, breadth, and stress
 - Optional Alpaca option snapshot overlay for ATM straddle implied move, IV/HV, and skew
+- Optional Alpaca stock top-of-book/order-flow overlay for best bid/ask, spread, quote imbalance, latest trade, and recent 1-minute trend
 - Daily technical features plus weekly macro/sector returns
 - ElasticNet/Logit, Random Forest, HistGradientBoosting, optional XGBoost, and a heuristic baseline
 - Walk-forward validation with optimized 189-day train windows and 42-day test windows
@@ -132,6 +133,52 @@ python3.13 -m nvda_quant_model.main \
 
 Live news is intentionally treated as a current overlay unless a historical
 point-in-time cache is present.
+
+Fetch real-time top-of-book buy/sell pressure and recent 1-minute trend:
+
+```sh
+python3.13 -m nvda_quant_model.live_order_flow \
+  --symbol NVDA \
+  --feed iex \
+  --minutes 60 \
+  --output-dir nvda_quant_model/outputs/live_order_flow
+
+python3.13 -m nvda_quant_model.main \
+  --precision-rule-json nvda_quant_model/outputs/strict_selection_trades30/strict_best_precision.json \
+  --include-live-order-flow \
+  --order-flow-feed iex \
+  --order-flow-minutes 60
+```
+
+For US equities, Alpaca stock snapshots provide top-of-book best bid/ask,
+latest trade, latest minute bar, daily bar, and previous daily bar. That is
+not a full Level-2 depth book. If you need full multi-level order-book depth,
+connect a dedicated Level-2 provider such as Nasdaq TotalView, IEX DEEP, or
+another depth feed and keep it as a separate real-time overlay.
+
+Backtest the live order-flow proxy on recent historical 1-minute bars:
+
+```sh
+python3.13 -m nvda_quant_model.order_flow_backtest \
+  --symbol NVDA \
+  --period 8d \
+  --horizon-minutes 15 \
+  --output-dir nvda_quant_model/outputs/order_flow_backtest
+
+python3.13 -m nvda_quant_model.order_flow_backtest \
+  --symbol NVDA \
+  --period 8d \
+  --calibrate \
+  --train-sessions 4 \
+  --output-dir nvda_quant_model/outputs/order_flow_backtest_calibrated
+```
+
+This proxy backtest validates the minute-trend, VWAP, volume-acceleration, and
+day-range-position parts of the live overlay. It does not validate historical
+bid/ask-size imbalance because Yahoo 1-minute bars do not contain quotes. The
+calibrated mode disables the proxy when rolling training sessions fail minimum
+edge gates, so the live layer remains an execution filter instead of becoming
+an unvalidated entry engine.
 
 Outputs are written to `nvda_quant_model/outputs/`:
 

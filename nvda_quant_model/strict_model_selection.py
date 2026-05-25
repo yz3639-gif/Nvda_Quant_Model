@@ -13,7 +13,13 @@ import pandas as pd
 from nvda_quant_model.config import PROJECT_ROOT, StrategyConfig
 from nvda_quant_model.data.feature_engineering import build_model_frame
 from nvda_quant_model.data.load_data import load_market_data, load_peer_ohlcv_panel, resolve_data_window, warmup_start
-from nvda_quant_model.precision_search import PrecisionRule, evaluate_rule, latest_prediction_for_rule, write_summary
+from nvda_quant_model.precision_search import (
+    PrecisionRule,
+    build_evaluation_context,
+    evaluate_rule,
+    latest_prediction_for_rule,
+    write_summary,
+)
 
 
 def _json_default(obj: Any) -> Any:
@@ -114,10 +120,11 @@ def run_selection(args: argparse.Namespace) -> dict[str, Any]:
         include_fundamentals=False,
         peer_ohlcv=peer_ohlcv,
     )
+    context = build_evaluation_context(base, frame, prices, external)
 
     selected_row = filtered.iloc[0]
     rule = rule_from_row(selected_row)
-    row, signals, periods = evaluate_rule(rule, base, frame, prices, external, args.min_active_days, args.min_trades)
+    row, signals, periods = evaluate_rule(rule, base, frame, prices, external, args.min_active_days, args.min_trades, context)
     if "long_score" in selected_row:
         row["long_score"] = float(selected_row["long_score"])
     latest = latest_prediction_for_rule(rule, frame, args.price_override)

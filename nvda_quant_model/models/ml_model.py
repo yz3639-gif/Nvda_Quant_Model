@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from functools import lru_cache
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -134,51 +137,109 @@ def clone_model(model: SklearnDirectionReturnModel) -> SklearnDirectionReturnMod
     )
 
 
-def build_candidate_models(top_k: int = 12, random_state: int = 42) -> list[SklearnDirectionReturnModel]:
+@lru_cache(maxsize=8)
+def load_model_parameter_overrides(path: str | None) -> dict[str, dict[str, dict[str, Any]]]:
+    if not path:
+        return {}
+    data = json.loads(Path(path).expanduser().read_text(encoding="utf-8"))
+    if "model_params" in data:
+        data = data["model_params"]
+    return data
+
+
+def _apply_model_overrides(
+    name: str,
+    classifier: BaseEstimator,
+    regressor: BaseEstimator,
+    overrides: dict[str, dict[str, dict[str, Any]]],
+) -> tuple[BaseEstimator, BaseEstimator]:
+    params = overrides.get(name, {})
+    classifier_params = params.get("classifier", {})
+    regressor_params = params.get("regressor", {})
+    if classifier_params:
+        classifier = classifier.set_params(**classifier_params)
+    if regressor_params:
+        regressor = regressor.set_params(**regressor_params)
+    return classifier, regressor
+
+
+def _top_k_for_model(name: str, default_top_k: int, overrides: dict[str, dict[str, dict[str, Any]]]) -> int:
+    top_k = overrides.get(name, {}).get("top_k")
+    if isinstance(top_k, dict):
+        top_k = top_k.get("value")
+    if top_k is None:
+        return default_top_k
+    return int(top_k)
+
+
+def build_candidate_models(
+    top_k: int = 12,
+    random_state: int = 42,
+    parameter_overrides: dict[str, dict[str, dict[str, Any]]] | None = None,
+) -> list[SklearnDirectionReturnModel]:
+    parameter_overrides = parameter_overrides or {}
+    logit_clf, logit_reg = _apply_model_overrides(
+        "ElasticNet_Logit",
+        LogisticRegression(penalty="l1", solver="liblinear", C=0.5, random_state=random_state, max_iter=1000),
+        ElasticNet(alpha=0.0005, l1_ratio=0.5, random_state=random_state, max_iter=5000),
+        parameter_overrides,
+    )
+    rf_clf, rf_reg = _apply_model_overrides(
+        "RandomForest",
+        RandomForestClassifier(
+            n_estimators=300,
+            max_depth=4,
+            min_samples_leaf=12,
+            random_state=random_state,
+            class_weight="balanced_subsample",
+        ),
+        RandomForestRegressor(
+            n_estimators=300,
+            max_depth=4,
+            min_samples_leaf=12,
+            random_state=random_state,
+        ),
+        parameter_overrides,
+    )
+    hgb_clf, hgb_reg = _apply_model_overrides(
+        "HistGradientBoosting",
+        HistGradientBoostingClassifier(
+            max_iter=160,
+            learning_rate=0.035,
+            max_leaf_nodes=8,
+            l2_regularization=0.2,
+            random_state=random_state,
+        ),
+        HistGradientBoostingRegressor(
+            max_iter=160,
+            learning_rate=0.035,
+            max_leaf_nodes=8,
+            l2_regularization=0.2,
+            random_state=random_state,
+        ),
+        parameter_overrides,
+    )
     models: list[SklearnDirectionReturnModel] = [
         SklearnDirectionReturnModel(
             "ElasticNet_Logit",
-            LogisticRegression(penalty="l1", solver="liblinear", C=0.5, random_state=random_state, max_iter=1000),
-            ElasticNet(alpha=0.0005, l1_ratio=0.5, random_state=random_state, max_iter=5000),
-            top_k=top_k,
+            logit_clf,
+            logit_reg,
+            top_k=_top_k_for_model("ElasticNet_Logit", top_k, parameter_overrides),
             random_state=random_state,
             scale=True,
         ),
         SklearnDirectionReturnModel(
             "RandomForest",
-            RandomForestClassifier(
-                n_estimators=300,
-                max_depth=4,
-                min_samples_leaf=12,
-                random_state=random_state,
-                class_weight="balanced_subsample",
-            ),
-            RandomForestRegressor(
-                n_estimators=300,
-                max_depth=4,
-                min_samples_leaf=12,
-                random_state=random_state,
-            ),
-            top_k=top_k,
+            rf_clf,
+            rf_reg,
+            top_k=_top_k_for_model("RandomForest", top_k, parameter_overrides),
             random_state=random_state,
         ),
         SklearnDirectionReturnModel(
             "HistGradientBoosting",
-            HistGradientBoostingClassifier(
-                max_iter=160,
-                learning_rate=0.035,
-                max_leaf_nodes=8,
-                l2_regularization=0.2,
-                random_state=random_state,
-            ),
-            HistGradientBoostingRegressor(
-                max_iter=160,
-                learning_rate=0.035,
-                max_leaf_nodes=8,
-                l2_regularization=0.2,
-                random_state=random_state,
-            ),
-            top_k=top_k,
+            hgb_clf,
+            hgb_reg,
+            top_k=_top_k_for_model("HistGradientBoosting", top_k, parameter_overrides),
             random_state=random_state,
         ),
     ]
@@ -189,28 +250,32 @@ def build_candidate_models(top_k: int = 12, random_state: int = 42) -> list[Skle
         models.append(
             SklearnDirectionReturnModel(
                 "XGBoost",
-                XGBClassifier(
-                    n_estimators=180,
-                    max_depth=3,
-                    learning_rate=0.035,
-                    subsample=0.85,
-                    colsample_bytree=0.85,
-                    reg_lambda=0.5,
-                    reg_alpha=0.1,
-                    eval_metric="logloss",
-                    random_state=random_state,
+                *_apply_model_overrides(
+                    "XGBoost",
+                    XGBClassifier(
+                        n_estimators=180,
+                        max_depth=3,
+                        learning_rate=0.035,
+                        subsample=0.85,
+                        colsample_bytree=0.85,
+                        reg_lambda=0.5,
+                        reg_alpha=0.1,
+                        eval_metric="logloss",
+                        random_state=random_state,
+                    ),
+                    XGBRegressor(
+                        n_estimators=180,
+                        max_depth=3,
+                        learning_rate=0.035,
+                        subsample=0.85,
+                        colsample_bytree=0.85,
+                        reg_lambda=0.5,
+                        reg_alpha=0.1,
+                        random_state=random_state,
+                    ),
+                    parameter_overrides,
                 ),
-                XGBRegressor(
-                    n_estimators=180,
-                    max_depth=3,
-                    learning_rate=0.035,
-                    subsample=0.85,
-                    colsample_bytree=0.85,
-                    reg_lambda=0.5,
-                    reg_alpha=0.1,
-                    random_state=random_state,
-                ),
-                top_k=top_k,
+                top_k=_top_k_for_model("XGBoost", top_k, parameter_overrides),
                 random_state=random_state,
             )
         )
@@ -218,4 +283,3 @@ def build_candidate_models(top_k: int = 12, random_state: int = 42) -> list[Skle
         pass
 
     return models
-

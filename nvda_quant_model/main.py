@@ -18,10 +18,9 @@ from nvda_quant_model.backtest.backtest_engine import BacktestEngine
 from nvda_quant_model.backtest.metrics import benchmark_metrics
 from nvda_quant_model.backtest.walk_forward import train_latest_model, walk_forward_signals
 from nvda_quant_model.config import MACRO_TICKERS, PROJECT_ROOT, StrategyConfig
-from nvda_quant_model.data.feature_engineering import build_model_frame
-from nvda_quant_model.data.load_data import load_market_data, load_peer_ohlcv_panel, resolve_data_window, warmup_start
-from nvda_quant_model.news_sentiment import fetch_live_news, load_news_feature_cache, save_news_outputs
+from nvda_quant_model.news_sentiment import fetch_live_news, save_news_outputs
 from nvda_quant_model.options_volatility import analyze_options
+from nvda_quant_model.pipeline import prepare_model_inputs
 
 
 def _json_default(obj: Any) -> Any:
@@ -59,6 +58,96 @@ def _fmt_pct(value: Any) -> str:
 def _check(value: float, threshold: float, op: str) -> str:
     ok = value > threshold if op == ">" else value < threshold
     return "PASS" if ok else "FAIL"
+
+
+def _load_precision_rule(path: str) -> Any:
+    from nvda_quant_model.precision_search import PrecisionRule
+
+    payload = json.loads(Path(path).expanduser().read_text(encoding="utf-8"))
+    row = payload.get("best", payload)
+    fields: dict[str, Any] = {}
+    for name in PrecisionRule.__dataclass_fields__:
+        value = row.get(name)
+        if isinstance(value, float) and np.isnan(value):
+            value = None
+        if name.startswith("require_") or name == "exclude_negative_pre_holiday":
+            value = bool(value)
+        elif name in {"train_window", "test_window"} and value is not None:
+            value = int(value)
+        elif name in {
+            "momentum_quantile",
+            "volume_quantile",
+            "max_rsi",
+            "min_price_60ma",
+            "vix_quantile_cap",
+            "stop_loss_pct",
+            "take_profit_pct",
+            "max_exposure",
+        } and value is not None:
+            value = float(value)
+        fields[name] = value
+    return PrecisionRule(**fields)
+
+
+def _precision_feature_importance(rule: Any, feature_columns: list[str]) -> pd.Series:
+    weights = {
+        rule.momentum_feature: 0.26,
+        "volume_sma_ratio": 0.20,
+        "rsi_14": 0.10 if rule.max_rsi is not None else 0.0,
+        "price_60ma_ratio": 0.12 if rule.min_price_60ma is not None else 0.0,
+        "SMH_return": 0.10 if rule.require_smh_positive else 0.0,
+        "QQQ_return": 0.10 if rule.require_qqq_positive else 0.0,
+        "SP500_return": 0.10 if rule.require_sp500_positive else 0.0,
+        "macd_hist": 0.08 if rule.require_macd_positive else 0.0,
+        "obv_signal": 0.10 if rule.require_obv_positive else 0.0,
+        "VIX_weekly_change": 0.10 if rule.vix_quantile_cap is not None else 0.0,
+        "volatility_20": 0.06 if rule.require_vol_calm else 0.0,
+        "volatility_60": 0.06 if rule.require_vol_calm else 0.0,
+        "peer_positive_breadth_5d": 0.08 if rule.require_peer_breadth_positive else 0.0,
+        "peer_mean_return_5d": 0.08 if rule.require_peer_mean_positive else 0.0,
+        "peer_event_net_score_3d": 0.08 if rule.require_peer_event_net_positive else 0.0,
+        "peer_business_stress": 0.08 if rule.require_no_peer_business_stress else 0.0,
+        "pre_holiday_session": 0.04 if rule.exclude_negative_pre_holiday else 0.0,
+        "pre_holiday_momentum": 0.04 if rule.exclude_negative_pre_holiday else 0.0,
+    }
+    importance = pd.Series(0.0, index=feature_columns)
+    for feature, weight in weights.items():
+        if feature in importance.index:
+            importance.loc[feature] += weight
+    importance = importance[importance > 0]
+    if importance.sum() > 0:
+        importance = importance / importance.sum()
+    return importance.sort_values(ascending=False)
+
+
+def _augment_precision_walk_forward(
+    wf: pd.DataFrame,
+    signals: pd.DataFrame,
+    prices: pd.DataFrame,
+    config: StrategyConfig,
+) -> pd.DataFrame:
+    if wf.empty or {"annualized_return", "sharpe_ratio", "max_drawdown"}.issubset(wf.columns):
+        return wf
+    engine = BacktestEngine(config)
+    rows = []
+    for _, row in wf.iterrows():
+        start = pd.Timestamp(row["period_start"])
+        end = pd.Timestamp(row["period_end"])
+        period_prices = prices.loc[(prices.index >= start) & (prices.index <= end)]
+        period_signals = signals.reindex(period_prices.index)
+        result = engine.backtest(period_signals, period_prices)
+        enriched = row.to_dict()
+        enriched.update(
+            {
+                "annualized_return": result.metrics["annualized_return"],
+                "sharpe_ratio": result.metrics["sharpe_ratio"],
+                "max_drawdown": result.metrics["max_drawdown"],
+                "win_rate": result.metrics["win_rate"],
+                "profit_factor": result.metrics["profit_factor"],
+            }
+        )
+        rows.append(enriched)
+    return pd.DataFrame(rows)
 
 
 def apply_signal_policy(
@@ -221,6 +310,7 @@ def write_report(
     model_comparison: pd.DataFrame,
     options_volatility: dict[str, Any] | None = None,
     news_overlay: dict[str, Any] | None = None,
+    order_flow_overlay: dict[str, Any] | None = None,
 ) -> Path:
     pass_map = {
         "annualized_return": _check(metrics["annualized_return"], 0.15, ">"),
@@ -385,6 +475,40 @@ def write_report(
             )
         lines.append("说明: 实时新闻层只用于当前预测 overlay；只有提供 point-in-time 新闻缓存时才会进入历史训练/回测。")
         lines.append("")
+    if order_flow_overlay:
+        lines.append("## 实时买卖盘/分钟走势层")
+        lines.append("")
+        book = order_flow_overlay.get("top_of_book") or {}
+        trend = order_flow_overlay.get("minute_trend") or {}
+        micro = order_flow_overlay.get("micro_signal") or {}
+        execution_filter = order_flow_overlay.get("execution_filter") or {}
+        lines.append(
+            f"- as-of: {order_flow_overlay.get('as_of', 'unknown')} / "
+            f"feed={order_flow_overlay.get('feed', 'unknown')}"
+        )
+        lines.append(
+            f"- Bid/Ask: {_fmt_num(book.get('bid_price'), 4)} x {_fmt_num(book.get('bid_size'), 0)} / "
+            f"{_fmt_num(book.get('ask_price'), 4)} x {_fmt_num(book.get('ask_size'), 0)}"
+        )
+        lines.append(
+            f"- Spread: {_fmt_num(book.get('spread'), 4)} ({_fmt_pct(book.get('spread_pct'))}), "
+            f"盘口不平衡: {_fmt_num(book.get('quote_imbalance'), 3)}"
+        )
+        lines.append(
+            f"- 1m close/VWAP: {_fmt_num(trend.get('latest_close'), 4)} / {_fmt_num(trend.get('latest_vwap'), 4)}, "
+            f"5m={_fmt_pct(trend.get('return_5m'))}, 15m={_fmt_pct(trend.get('return_15m'))}, "
+            f"30m={_fmt_pct(trend.get('return_30m'))}"
+        )
+        lines.append(
+            f"- Micro signal: {micro.get('label', 'neutral')} "
+            f"(score={_fmt_num(micro.get('score'), 1)}, confidence={_fmt_pct(micro.get('confidence'))})"
+        )
+        lines.append(
+            f"- Execution filter: {execution_filter.get('recommendation', 'monitor_only')}; "
+            f"use_as_entry_signal={execution_filter.get('use_as_entry_signal', False)}"
+        )
+        lines.append("说明: 股票买卖盘为 top-of-book best bid/ask，不是完整 Level-2 深度；当前该层只作为执行过滤/解释层，不作为独立开仓信号。")
+        lines.append("")
     lines.append("## 图表")
     lines.append("")
     for name, path in charts.items():
@@ -499,58 +623,56 @@ def run(
     include_live_news: bool = False,
     news_history_path: Path | None = None,
     news_days: int = 7,
+    include_live_order_flow: bool = False,
+    order_flow_json_path: Path | None = None,
+    order_flow_feed: str = "iex",
+    order_flow_minutes: int = 60,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     cache_dir = PROJECT_ROOT / "cache"
-
-    resolved_start, resolved_end, date_metadata = resolve_data_window(
-        config.start_date,
-        config.end_date,
-        ticker=config.ticker,
-        lookback_months=config.lookback_months,
-    )
-    config = replace(config, start_date=resolved_start, end_date=resolved_end)
-
-    prices, external = load_market_data(
-        config.ticker,
-        config.start_date,
-        config.end_date,
+    inputs = prepare_model_inputs(
+        config,
+        price_override=price_override,
+        force_refresh=force_refresh,
+        news_history_path=news_history_path,
         cache_dir=cache_dir,
-        force_refresh=force_refresh or date_metadata.get("end_source") == "latest_yfinance_daily",
     )
-    peer_ohlcv = (
-        load_peer_ohlcv_panel(
-            warmup_start(config.start_date),
-            config.end_date,
-            cache_dir=cache_dir,
-            force_refresh=force_refresh or date_metadata.get("end_source") == "latest_yfinance_daily",
-        )
-        if config.include_peer_events
-        else {}
-    )
-    data_status = _build_data_status(config, prices, external, date_metadata, price_override)
+    config = inputs.config
+    prices = inputs.prices
+    external = inputs.external
+    peer_ohlcv = inputs.peer_ohlcv
+    data_status = inputs.data_status
+    frame = inputs.frame
+    feature_columns = inputs.feature_columns
+    trainable = inputs.trainable
+    report_prices = inputs.report_prices
+
     data_quality_csv, data_quality_json = _write_data_audit(output_dir, prices, external, config, peer_ohlcv)
-    news_features = None
-    if news_history_path is not None:
-        news_features = load_news_feature_cache(news_history_path, prices.index)
-    frame, feature_columns = build_model_frame(
-        prices,
-        external,
-        config.start_date,
-        config.end_date,
-        config.ticker,
-        include_fundamentals=config.include_fundamentals,
-        peer_ohlcv=peer_ohlcv,
-        news_features=news_features,
-    )
-    trainable = frame.dropna(subset=["target_return", "target_direction"])
 
-    raw_signals, wf, wf_feature_importance = walk_forward_signals(trainable, feature_columns, config, config.start_date)
-    report_prices = prices.loc[(prices.index >= pd.Timestamp(config.start_date)) & (prices.index <= pd.Timestamp(config.end_date))]
-    raw_signals = raw_signals.reindex(report_prices.index).dropna(subset=["prob_up", "expected_return"])
+    precision_rule = _load_precision_rule(config.precision_rule_path) if config.precision_rule_path else None
+    if precision_rule is not None:
+        from nvda_quant_model.precision_search import build_walk_forward_rule_signals
 
-    selected_config = optimize_signal_policy(raw_signals, report_prices, config)
-    signals = apply_signal_policy(raw_signals, selected_config)
+        selected_config = replace(
+            config,
+            train_window=precision_rule.train_window,
+            test_window=precision_rule.test_window,
+            stop_loss_pct=precision_rule.stop_loss_pct,
+            take_profit_pct=precision_rule.take_profit_pct,
+            max_exposure=precision_rule.max_exposure,
+            signal_threshold=0.50,
+            min_expected_return=0.0,
+        )
+        raw_signals, wf = build_walk_forward_rule_signals(frame, precision_rule, selected_config.start_date)
+        signals = raw_signals.reindex(report_prices.index).dropna(subset=["prob_up", "expected_return"])
+        wf = _augment_precision_walk_forward(wf, signals, report_prices, selected_config)
+        wf_feature_importance = _precision_feature_importance(precision_rule, feature_columns)
+    else:
+        raw_signals, wf, wf_feature_importance = walk_forward_signals(trainable, feature_columns, config, config.start_date)
+        raw_signals = raw_signals.reindex(report_prices.index).dropna(subset=["prob_up", "expected_return"])
+
+        selected_config = optimize_signal_policy(raw_signals, report_prices, config)
+        signals = apply_signal_policy(raw_signals, selected_config)
 
     engine = BacktestEngine(selected_config)
     result = engine.backtest(signals, report_prices)
@@ -573,24 +695,91 @@ def run(
     oos_metrics = calculate_metrics(oos_equity, oos_returns, pd.DataFrame(), selected_config.initial_capital)
     oos = oos_degradation(result.metrics, oos_metrics)
 
-    latest_model = train_latest_model(trainable.loc[trainable.index <= pd.Timestamp(config.end_date)], feature_columns, selected_config)
     latest_row = frame.loc[frame.index <= pd.Timestamp(config.end_date)].tail(1)
-    latest_raw = latest_model.predict(latest_row)
-    latest_signal = apply_signal_policy(latest_raw, selected_config).iloc[-1]
-    prediction = build_prediction(latest_signal, latest_row.iloc[-1], latest_row.index[-1], selected_config, price_override)
-    model_comparison = latest_model.model_comparison_frame()
+    if precision_rule is not None:
+        from nvda_quant_model.precision_search import latest_prediction_for_rule
+
+        prediction = latest_prediction_for_rule(precision_rule, frame.loc[frame.index <= pd.Timestamp(config.end_date)], price_override)
+        model_comparison = pd.DataFrame(
+            [
+                {
+                    "model": "Strict_Precision_Rule",
+                    "validation_accuracy": result.metrics["win_rate"],
+                    "validation_log_loss": np.nan,
+                    "ensemble_weight": 1.0,
+                    "selected_rule": precision_rule.label,
+                    "coverage": float((signals["position"] > 0).mean()) if len(signals) else 0.0,
+                }
+            ]
+        )
+    else:
+        latest_model = train_latest_model(trainable.loc[trainable.index <= pd.Timestamp(config.end_date)], feature_columns, selected_config)
+        latest_raw = latest_model.predict(latest_row)
+        latest_signal = apply_signal_policy(latest_raw, selected_config).iloc[-1]
+        prediction = build_prediction(latest_signal, latest_row.iloc[-1], latest_row.index[-1], selected_config, price_override)
+        model_comparison = latest_model.model_comparison_frame()
     news_overlay = None
     if include_live_news:
         news_dir = output_dir / "news_live"
-        articles = fetch_live_news(days=news_days)
-        news_payload = save_news_outputs(articles, news_dir, price_index=report_prices.index)
-        news_overlay = news_payload["overlay"]
+        overlay_path = news_dir / "live_news_overlay.json"
+        try:
+            articles = fetch_live_news(days=news_days)
+            if not articles and overlay_path.exists():
+                news_overlay = json.loads(overlay_path.read_text(encoding="utf-8"))
+                news_overlay["fetch_error"] = "live_news_fetch_returned_zero_articles"
+            else:
+                news_payload = save_news_outputs(articles, news_dir, price_index=report_prices.index)
+                news_overlay = news_payload["overlay"]
+        except Exception as exc:
+            if overlay_path.exists():
+                news_overlay = json.loads(overlay_path.read_text(encoding="utf-8"))
+                news_overlay["fetch_error"] = str(exc)
+            else:
+                news_overlay = {"article_count": 0, "sentiment_score": 0.0, "signal": 0, "risk_flags": [f"news_fetch_failed:{exc}"]}
         prediction["news_overlay"] = {
             "signal": news_overlay.get("signal", 0),
             "sentiment_score": round(float(news_overlay.get("sentiment_score", 0.0)), 4),
             "article_count": int(news_overlay.get("article_count", 0)),
             "risk_flags": news_overlay.get("risk_flags", []),
             "confidence_adjustment": round(float(news_overlay.get("confidence_adjustment", 0.0)), 4),
+        }
+    order_flow_overlay = None
+    if include_live_order_flow or order_flow_json_path is not None:
+        from nvda_quant_model.live_order_flow import analyze_order_flow, fetch_live_order_flow
+
+        order_flow_dir = output_dir / "live_order_flow"
+        order_flow_dir.mkdir(parents=True, exist_ok=True)
+        if order_flow_json_path is not None:
+            order_flow_payload = json.loads(order_flow_json_path.read_text(encoding="utf-8"))
+            order_flow_overlay = (
+                order_flow_payload
+                if "micro_signal" in order_flow_payload and "top_of_book" in order_flow_payload
+                else analyze_order_flow(order_flow_payload, symbol=config.ticker)
+            )
+        else:
+            order_flow_overlay, order_flow_bars = fetch_live_order_flow(
+                symbol=config.ticker,
+                feed=order_flow_feed,
+                minutes=order_flow_minutes,
+            )
+            if order_flow_bars is not None and not order_flow_bars.empty:
+                order_flow_bars.to_csv(order_flow_dir / f"{config.ticker}_recent_1min_bars.csv")
+        (order_flow_dir / f"{config.ticker}_order_flow.json").write_text(
+            json.dumps(order_flow_overlay, indent=2, ensure_ascii=False, default=_json_default),
+            encoding="utf-8",
+        )
+        prediction["order_flow_overlay"] = {
+            "signal": order_flow_overlay.get("micro_signal", {}).get("signal", 0),
+            "label": order_flow_overlay.get("micro_signal", {}).get("label", "neutral"),
+            "score": order_flow_overlay.get("micro_signal", {}).get("score", 0.0),
+            "confidence": order_flow_overlay.get("micro_signal", {}).get("confidence", 0.5),
+            "latest_trade_price": order_flow_overlay.get("latest_trade", {}).get("price"),
+            "spread_pct": order_flow_overlay.get("top_of_book", {}).get("spread_pct"),
+            "quote_imbalance": order_flow_overlay.get("top_of_book", {}).get("quote_imbalance"),
+            "return_5m": order_flow_overlay.get("minute_trend", {}).get("return_5m"),
+            "return_15m": order_flow_overlay.get("minute_trend", {}).get("return_15m"),
+            "execution_recommendation": order_flow_overlay.get("execution_filter", {}).get("recommendation"),
+            "use_as_entry_signal": order_flow_overlay.get("execution_filter", {}).get("use_as_entry_signal", False),
         }
     options_volatility = None
     if options_snapshot_path is not None:
@@ -608,7 +797,7 @@ def run(
 
     feature_importance = wf_feature_importance
     if feature_importance.empty or feature_importance.sum() == 0:
-        feature_importance = latest_model.feature_importance_
+        feature_importance = pd.Series(dtype=float) if precision_rule is not None else latest_model.feature_importance_
 
     charts = create_all_charts(
         result.equity_curve["equity"],
@@ -633,6 +822,7 @@ def run(
         model_comparison,
         options_volatility,
         news_overlay,
+        order_flow_overlay,
     )
 
     signals.to_csv(output_dir / "signals.csv")
@@ -655,8 +845,10 @@ def run(
         "robustness": robustness,
         "oos": oos,
         "prediction_next_day": prediction,
+        "precision_rule": precision_rule.label if precision_rule is not None else None,
         "options_volatility": options_volatility,
         "news_overlay": news_overlay,
+        "order_flow_overlay": order_flow_overlay,
         "report_path": str(report_path),
         "charts": {k: str(v) for k, v in charts.items()},
     }
@@ -677,8 +869,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--include-live-news", action="store_true", help="Fetch real-time news and add current news overlay")
     parser.add_argument("--news-days", type=int, default=7, help="Lookback window for live news RSS queries")
     parser.add_argument("--news-history-csv", default=None, help="Optional point-in-time historical news articles/features CSV for model training")
+    parser.add_argument("--include-live-order-flow", action="store_true", help="Fetch live Alpaca top-of-book quote and minute-trend overlay")
+    parser.add_argument("--order-flow-json", default=None, help="Optional existing Alpaca stock snapshot JSON for order-flow overlay")
+    parser.add_argument("--order-flow-feed", default="iex", choices=["iex", "sip", "delayed_sip", "boats", "overnight", "otc"])
+    parser.add_argument("--order-flow-minutes", type=int, default=60, help="Recent 1-minute bars to use for live trend overlay")
     parser.add_argument("--train-window", type=int, default=189)
     parser.add_argument("--test-window", type=int, default=42)
+    parser.add_argument("--walk-forward-jobs", type=int, default=1, help="Parallel walk-forward workers; 1 keeps deterministic serial execution")
     parser.add_argument("--top-k", type=int, default=12)
     parser.add_argument("--include-fundamentals", action="store_true", help="Fetch yfinance fundamentals; slower and not strict point-in-time")
     parser.add_argument("--no-peer-events", action="store_true", help="Disable peer business-event features")
@@ -686,6 +883,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-exposure", type=float, default=1.0)
     parser.add_argument("--rule-quantile", type=float, default=0.55)
     parser.add_argument("--rule-max-filters", type=int, default=2)
+    parser.add_argument("--fast-rule-only", action="store_true", help="Skip diagnostic ML models; predictions remain rule-equivalent")
+    parser.add_argument("--model-params-json", default=None, help="Optional tuned sklearn/xgboost parameter overrides JSON")
+    parser.add_argument("--precision-rule-json", default=None, help="Optional strict PrecisionRule JSON from optimizer/selector")
     return parser.parse_args()
 
 
@@ -698,6 +898,7 @@ def main() -> None:
         lookback_months=args.lookback_months,
         train_window=args.train_window,
         test_window=args.test_window,
+        walk_forward_jobs=args.walk_forward_jobs,
         top_k_features=args.top_k,
         include_fundamentals=args.include_fundamentals,
         include_peer_events=not args.no_peer_events,
@@ -705,6 +906,9 @@ def main() -> None:
         max_exposure=args.max_exposure,
         rule_quantile=args.rule_quantile,
         rule_max_filters=args.rule_max_filters,
+        fast_rule_only=args.fast_rule_only,
+        model_params_path=args.model_params_json,
+        precision_rule_path=args.precision_rule_json,
     )
     payload = run(
         config,
@@ -715,6 +919,10 @@ def main() -> None:
         include_live_news=args.include_live_news,
         news_history_path=Path(args.news_history_csv) if args.news_history_csv else None,
         news_days=args.news_days,
+        include_live_order_flow=args.include_live_order_flow,
+        order_flow_json_path=Path(args.order_flow_json) if args.order_flow_json else None,
+        order_flow_feed=args.order_flow_feed,
+        order_flow_minutes=args.order_flow_minutes,
     )
     metrics = payload["metrics"]
     print("NVDA quantitative model complete")
@@ -748,6 +956,16 @@ def main() -> None:
             f"sentiment={float(news.get('sentiment_score', 0.0)):.3f}, "
             f"articles={news.get('article_count')}, "
             f"flags={news.get('risk_flags')}"
+        )
+    if payload.get("order_flow_overlay"):
+        order_flow = payload["order_flow_overlay"]
+        micro = order_flow.get("micro_signal", {})
+        trend = order_flow.get("minute_trend", {})
+        print(
+            "Order-flow overlay: "
+            f"{micro.get('label', 'neutral')} score={float(micro.get('score', 0.0)):.1f}, "
+            f"5m={float(trend.get('return_5m') or 0.0):.2%}, "
+            f"quote_imbalance={float((order_flow.get('top_of_book') or {}).get('quote_imbalance') or 0.0):.3f}"
         )
     print(f"Data status: {json.dumps(payload['data_status'], ensure_ascii=False)}")
 
