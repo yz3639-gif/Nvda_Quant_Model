@@ -22,7 +22,7 @@ from nvda_quant_model.precision_search import (
     MOMENTUM_FEATURES,
     write_summary,
 )
-from nvda_quant_model.optimizer_csv import append_rows_schema_safe
+from nvda_quant_model.optimizer_csv import append_rows_schema_safe, read_live_optimizer_csv
 
 
 FLAG_SETS: list[dict[str, bool]] = [
@@ -130,8 +130,8 @@ def _load_existing_best(results_path: Path) -> dict[str, Any] | None:
     if not results_path.exists():
         return None
     try:
-        rows = pd.read_csv(results_path)
-    except (ValueError, pd.errors.EmptyDataError):
+        rows = read_live_optimizer_csv(results_path)
+    except (ValueError, pd.errors.EmptyDataError, pd.errors.ParserError):
         return None
     if rows.empty or "high_sample_score" not in rows.columns:
         return None
@@ -314,11 +314,11 @@ def run_high_sample_optimizer(args: argparse.Namespace) -> dict[str, Any]:
     best_qualified_row: dict[str, Any] | None = None
     if args.resume and results_path.exists():
         try:
-            rows = pd.read_csv(results_path)
+            rows = read_live_optimizer_csv(results_path)
             qualified = rows[(rows["sample_gate"] == True) & (rows["quality_gate"] == True)]  # noqa: E712
             if not qualified.empty:
                 best_qualified_row = _row_to_dict(qualified.sort_values("high_sample_score", ascending=False).iloc[0])
-        except (ValueError, pd.errors.EmptyDataError, KeyError):
+        except (ValueError, pd.errors.EmptyDataError, pd.errors.ParserError, KeyError):
             best_qualified_row = None
 
     best_signals = pd.DataFrame()

@@ -23,7 +23,7 @@ from nvda_quant_model.precision_search import (
     latest_prediction_for_rule,
     write_summary,
 )
-from nvda_quant_model.optimizer_csv import append_rows_schema_safe
+from nvda_quant_model.optimizer_csv import append_rows_schema_safe, read_live_optimizer_csv
 
 
 FLAG_SETS: list[dict[str, bool]] = [
@@ -161,10 +161,10 @@ def _row_to_dict(row: pd.Series) -> dict[str, Any]:
 def _load_existing_best(output_dir: Path, results_path: Path) -> dict[str, Any] | None:
     if results_path.exists():
         try:
-            rows = pd.read_csv(results_path)
+            rows = read_live_optimizer_csv(results_path)
             if not rows.empty and "long_score" in rows.columns:
                 return _row_to_dict(rows.sort_values("long_score", ascending=False).iloc[0])
-        except (ValueError, pd.errors.EmptyDataError):
+        except (ValueError, pd.errors.EmptyDataError, pd.errors.ParserError):
             pass
     best_path = output_dir / "best_precision.json"
     if best_path.exists():
