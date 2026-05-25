@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import time
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +15,7 @@ from nvda_quant_model.candidate_promotion import (
     write_report,
 )
 from nvda_quant_model.config import PROJECT_ROOT
+from nvda_quant_model.optimizer_csv import read_live_optimizer_csv
 
 
 def _json_default(obj: Any) -> Any:
@@ -75,26 +75,6 @@ def _status_counts(summary: pd.DataFrame) -> dict[str, int]:
     if summary.empty or "status" not in summary:
         return {}
     return {str(key): int(value) for key, value in summary["status"].value_counts().items()}
-
-
-def read_live_optimizer_csv(path: str | Path, attempts: int = 5, delay_seconds: float = 0.25) -> pd.DataFrame:
-    """Read an optimizer CSV that may be actively appended by a long-running job."""
-
-    csv_path = Path(path)
-    last_error: Exception | None = None
-    for _ in range(max(1, attempts)):
-        try:
-            return pd.read_csv(csv_path)
-        except (OSError, pd.errors.ParserError) as exc:
-            last_error = exc
-            time.sleep(delay_seconds)
-
-    try:
-        return pd.read_csv(csv_path, engine="python", on_bad_lines="skip")
-    except Exception:
-        if last_error is not None:
-            raise last_error
-        raise
 
 
 def run_validation(args: argparse.Namespace) -> dict[str, Any]:

@@ -20,6 +20,7 @@ from nvda_quant_model.meta_decision_layer import MetaPolicy, build_meta_signals
 from nvda_quant_model.models.ml_model import build_candidate_models, load_model_parameter_overrides
 from nvda_quant_model.options_volatility import analyze_options
 from nvda_quant_model.order_flow_backtest import backtest_intraday_signals
+from nvda_quant_model.optimizer_csv import append_rows_schema_safe
 from nvda_quant_model.optimizer_monitor import (
     OptimizerSpec,
     is_optimizer_running,
@@ -574,6 +575,19 @@ def test_high_sample_validation_skips_partially_written_optimizer_rows(tmp_path)
 
     assert frame["label"].tolist() == ["good_a", "good_b"]
     assert frame["bt_num_trades"].tolist() == [60, 62]
+
+
+def test_optimizer_csv_append_migrates_schema_without_losing_rows(tmp_path) -> None:
+    path = tmp_path / "results.csv"
+    append_rows_schema_safe(path, [{"label": "old_rule", "score": 1.0}])
+    append_rows_schema_safe(path, [{"label": "new_rule", "score": 2.0, "calibration_bins": "[]"}])
+
+    frame = pd.read_csv(path)
+
+    assert frame["label"].tolist() == ["old_rule", "new_rule"]
+    assert frame["score"].tolist() == [1.0, 2.0]
+    assert pd.isna(frame.loc[0, "calibration_bins"])
+    assert frame.loc[1, "calibration_bins"] == "[]"
 
 
 def test_optimizer_monitor_detects_new_high_sample_validation_need() -> None:

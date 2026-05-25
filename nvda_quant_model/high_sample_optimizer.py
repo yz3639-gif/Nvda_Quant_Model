@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import random
 import time
@@ -23,6 +22,7 @@ from nvda_quant_model.precision_search import (
     MOMENTUM_FEATURES,
     write_summary,
 )
+from nvda_quant_model.optimizer_csv import append_rows_schema_safe
 
 
 FLAG_SETS: list[dict[str, bool]] = [
@@ -118,16 +118,7 @@ def _load_seen(path: Path) -> set[str]:
 
 
 def _append_rows(path: Path, rows: list[dict[str, Any]]) -> None:
-    if not rows:
-        return
-    path.parent.mkdir(parents=True, exist_ok=True)
-    exists = path.exists()
-    fieldnames = list(rows[0].keys())
-    with path.open("a", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore")
-        if not exists:
-            writer.writeheader()
-        writer.writerows(rows)
+    append_rows_schema_safe(path, rows)
 
 
 def _row_to_dict(row: pd.Series) -> dict[str, Any]:
