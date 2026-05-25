@@ -216,3 +216,22 @@
 - 当前 baseline 没有被替换；新候选只有 `promote_candidate` 才允许进入 production 讨论。
 
 当前状态：第一版已完成。smoke run 显示当前 high-sample 候选 `tw210_sw42_5d_return...` 被稳定验证器判为 `reject_long_window_failure`：24M/36M 强，但 60M 年化、Sharpe、回撤、胜率和交易数不达标；production baseline 继续保留。
+
+## P13：Baseline-preserving 60M Repair Optimizer
+
+问题：production baseline 的 24M/36M 很强，但 60M 只是刚过线。直接叠加高样本规则会增加交易数，却明显拖低近两年的胜率、Sharpe 和利润因子。
+
+解决方案：
+- 新增 `stable_repair_optimizer`，只做 baseline core + repair overlay。
+- Core 信号永远优先，repair 只能在 core 空仓时小仓位补充。
+- repair 复用 baseline 的 stop/take，避免把风控参数差异误认为入场信号提升。
+- 24M/36M 是硬约束：年化、Sharpe、最大回撤、胜率、利润因子不能低于当前 baseline。
+- 评分改为 60M-first：只有 24M/36M 不降后，才比较 60M 年化、Sharpe、胜率、PF、交易数和 rolling OOS。
+- 加入 `min_repair_prob`，避免低概率补仓信号稀释 baseline 精度。
+
+验收标准：
+- `promote_repair_candidate` 才能进入人工晋级讨论。
+- `watchlist_60m_lift_below_target` 只说明方向有效但幅度不足，不能替换 baseline。
+- `reject_recent_or_mid_degradation` 和 `reject_no_60m_improvement` 不能进入生产。
+
+当前状态：第一版已完成并跑真实小样本 probe。宽松 high-sample overlay 全部被 24M 硬约束挡掉；加入 `min_repair_prob` 后，60 个随机 repair 候选里有 4 个进入 `watchlist_60m_lift_below_target`，证明 constrained overlay 可以在不降低 24M/36M 的情况下微幅改善 60M，但幅度很小：最佳候选 60M 年化从 15.40% 到 15.48%，Sharpe 从 1.240 到 1.246，交易数 93 到 94，仍远低于 18%/1.40 的 production 目标。因此当前 baseline 不替换，下一步继续长跑该 repair optimizer。

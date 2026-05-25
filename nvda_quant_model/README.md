@@ -100,6 +100,25 @@ The audit checks hard-gate margins, train/validation degradation, stop/take
 parameter-neighborhood fragility, yearly regime weakness, probability
 calibration, and terminal-return interval coverage.
 
+Search for a baseline-preserving 60M repair overlay:
+
+```sh
+python3.13 -m nvda_quant_model.stable_repair_optimizer \
+  --hours 6 \
+  --resume \
+  --price-override 215.34 \
+  --output-dir nvda_quant_model/outputs/stable_repair_optimizer
+```
+
+This optimizer implements the constrained repair route: the audited production
+baseline remains the core signal, and a repair rule may only add small exposure
+when the core is flat. A candidate is rejected if 24M or 36M annualized return,
+Sharpe, max drawdown, win rate, or profit factor is worse than the current
+baseline. Only then is it scored on 60M lift and rolling OOS behavior. The
+repair overlay is a watchlist/search layer; it does not replace the production
+baseline unless a candidate later passes the full 24/36/60M and OOS promotion
+gates.
+
 Build the top-rules ensemble with market-regime gating, calibration output, and
 optional dynamic sizing:
 

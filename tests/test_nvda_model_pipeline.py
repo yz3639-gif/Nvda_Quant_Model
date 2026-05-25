@@ -45,6 +45,12 @@ from nvda_quant_model.stable_candidate_optimizer import (
     stable_score,
     summarize_stable_validation,
 )
+from nvda_quant_model.stable_repair_optimizer import (
+    baseline_constraint_failures,
+    combine_core_and_repair_signals,
+    sixty_month_first_score,
+    sixty_month_improvement_failures,
+)
 
 
 def _synthetic_prices(periods: int = 520) -> pd.DataFrame:
@@ -700,6 +706,186 @@ def test_optimizer_monitor_can_include_stable_optimizer(tmp_path) -> None:
     assert len(stable) == 1
     assert stable[0].state_path.name == "stable_state.json"
     assert stable[0].module == "nvda_quant_model.stable_candidate_optimizer"
+
+
+def test_optimizer_monitor_can_include_stable_repair_optimizer(tmp_path) -> None:
+    class Args:
+        strict_output_dir = str(tmp_path / "strict")
+        high_sample_output_dir = str(tmp_path / "high")
+        stable_output_dir = str(tmp_path / "stable")
+        repair_output_dir = str(tmp_path / "repair")
+        hours = 1.0
+        price_override = 215.34
+        include_stable = False
+        include_repair = True
+
+    specs = optimizer_specs(Args)
+    repair = [spec for spec in specs if spec.name == "stable_repair"]
+
+    assert len(repair) == 1
+    assert repair[0].state_path.name == "stable_repair_state.json"
+    assert repair[0].module == "nvda_quant_model.stable_repair_optimizer"
+
+
+def test_repair_overlay_only_adds_exposure_when_core_is_flat() -> None:
+    index = pd.bdate_range("2026-01-02", periods=4)
+    core = pd.DataFrame(
+        {
+            "position": [1.0, 0.0, 0.0, 1.0],
+            "direction": [1, 0, 0, 1],
+            "confidence": [0.7, 0.0, 0.0, 0.7],
+            "expected_return": [0.01, 0.0, 0.0, 0.01],
+            "prob_up": [0.7, 0.5, 0.5, 0.7],
+            "prob_down": [0.3, 0.5, 0.5, 0.3],
+        },
+        index=index,
+    )
+    repair = pd.DataFrame(
+        {
+            "position": [1.0, 1.0, 0.0, 1.0],
+            "direction": [1, 1, 0, 1],
+            "confidence": [0.6, 0.61, 0.0, 0.62],
+            "expected_return": [0.008, 0.009, 0.0, 0.01],
+            "prob_up": [0.6, 0.61, 0.5, 0.62],
+            "prob_down": [0.4, 0.39, 0.5, 0.38],
+        },
+        index=index,
+    )
+
+    combined = combine_core_and_repair_signals(core, repair, index, repair_exposure=0.35)
+
+    assert combined.loc[index[0], "position"] == 1.0
+    assert combined.loc[index[3], "position"] == 1.0
+    assert combined.loc[index[1], "position"] == 0.35
+    assert combined["repair_overlay_active"].tolist() == [0, 1, 0, 0]
+    assert combined.loc[index[1], "prob_up"] == 0.61
+
+
+def test_repair_overlay_respects_min_probability_filter() -> None:
+    index = pd.bdate_range("2026-01-02", periods=2)
+    core = pd.DataFrame(
+        {
+            "position": [0.0, 0.0],
+            "direction": [0, 0],
+            "confidence": [0.0, 0.0],
+            "expected_return": [0.0, 0.0],
+            "prob_up": [0.5, 0.5],
+            "prob_down": [0.5, 0.5],
+        },
+        index=index,
+    )
+    repair = pd.DataFrame(
+        {
+            "position": [1.0, 1.0],
+            "direction": [1, 1],
+            "confidence": [0.61, 0.67],
+            "expected_return": [0.01, 0.01],
+            "prob_up": [0.61, 0.67],
+            "prob_down": [0.39, 0.33],
+        },
+        index=index,
+    )
+
+    combined = combine_core_and_repair_signals(core, repair, index, repair_exposure=0.20, min_repair_prob=0.65)
+
+    assert combined["repair_overlay_active"].tolist() == [0, 1]
+    assert combined.loc[index[0], "position"] == 0.0
+    assert combined.loc[index[1], "position"] == 0.20
+
+
+def test_repair_constraints_block_recent_or_mid_degradation() -> None:
+    baseline = pd.Series(
+        {
+            "annualized_return": 0.27,
+            "sharpe_ratio": 2.4,
+            "max_drawdown": -0.03,
+            "win_rate": 0.75,
+            "profit_factor": 6.6,
+        }
+    )
+    candidate = pd.Series(
+        {
+            "annualized_return": 0.28,
+            "sharpe_ratio": 2.5,
+            "max_drawdown": -0.0315,
+            "win_rate": 0.74,
+            "profit_factor": 6.7,
+        }
+    )
+
+    failures = baseline_constraint_failures(candidate, baseline, months=24)
+
+    assert "24m_win_rate" in failures
+    assert "24m_max_drawdown" in failures
+
+
+def test_repair_improvement_requires_60m_to_beat_baseline_and_targets() -> None:
+    baseline = pd.Series(
+        {
+            "annualized_return": 0.154,
+            "sharpe_ratio": 1.24,
+            "max_drawdown": -0.133,
+            "win_rate": 0.57,
+            "profit_factor": 2.32,
+            "num_trades": 93,
+        }
+    )
+    candidate = pd.Series(
+        {
+            "annualized_return": 0.17,
+            "sharpe_ratio": 1.32,
+            "max_drawdown": -0.12,
+            "win_rate": 0.58,
+            "profit_factor": 2.5,
+            "num_trades": 110,
+        }
+    )
+
+    failures = sixty_month_improvement_failures(candidate, baseline, min_annualized_target=0.18, min_sharpe_target=1.40)
+
+    assert "60m_annualized_not_improved" not in failures
+    assert "60m_annualized_target" in failures
+    assert "60m_sharpe" in failures
+
+
+def test_repair_score_rewards_60m_improvement_after_constraints_pass() -> None:
+    stress = pd.DataFrame(
+        [
+            {"lookback_months": 24, "annualized_return": 0.28, "sharpe_ratio": 2.5, "max_drawdown": -0.02, "win_rate": 0.76, "profit_factor": 6.8},
+            {"lookback_months": 36, "annualized_return": 0.19, "sharpe_ratio": 1.7, "max_drawdown": -0.12, "win_rate": 0.64, "profit_factor": 3.3},
+            {
+                "lookback_months": 60,
+                "annualized_return": 0.20,
+                "sharpe_ratio": 1.45,
+                "max_drawdown": -0.12,
+                "win_rate": 0.59,
+                "profit_factor": 2.7,
+                "num_trades": 120,
+                "dir_active_days": 190,
+            },
+        ]
+    )
+    baseline = pd.DataFrame(
+        [
+            {"lookback_months": 24, "annualized_return": 0.27, "sharpe_ratio": 2.4, "max_drawdown": -0.03, "win_rate": 0.75, "profit_factor": 6.6},
+            {"lookback_months": 36, "annualized_return": 0.187, "sharpe_ratio": 1.59, "max_drawdown": -0.133, "win_rate": 0.63, "profit_factor": 3.17},
+            {
+                "lookback_months": 60,
+                "annualized_return": 0.154,
+                "sharpe_ratio": 1.24,
+                "max_drawdown": -0.133,
+                "win_rate": 0.57,
+                "profit_factor": 2.32,
+                "num_trades": 93,
+                "dir_active_days": 159,
+            },
+        ]
+    )
+    oos = pd.DataFrame({"sharpe_degradation": [0.05, 0.02]})
+
+    score = sixty_month_first_score(stress, baseline, oos, constraint_failures=[], improvement_failures=[])
+
+    assert score > 0
 
 
 def test_stable_candidate_summary_rejects_oos_degradation() -> None:

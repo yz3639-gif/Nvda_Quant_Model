@@ -132,6 +132,28 @@ def optimizer_specs(args: argparse.Namespace) -> list[OptimizerSpec]:
                 ),
             )
         )
+    if getattr(args, "include_repair", False):
+        specs.append(
+            OptimizerSpec(
+                name="stable_repair",
+                module="nvda_quant_model.stable_repair_optimizer",
+                screen_name="nvda_stable_repair",
+                output_dir=Path(args.repair_output_dir),
+                log_name="stable_repair_optimizer.log",
+                state_name="stable_repair_state.json",
+                extra_args=(
+                    "--hours",
+                    str(args.hours),
+                    "--resume",
+                    "--price-override",
+                    str(args.price_override),
+                    "--strict-results",
+                    str(strict_dir / "long_run_results.csv"),
+                    "--high-sample-results",
+                    str(high_dir / "high_sample_results.csv"),
+                ),
+            )
+        )
     return specs
 
 
@@ -323,9 +345,14 @@ def parse_args() -> argparse.Namespace:
         default=str(PROJECT_ROOT / "outputs" / "optimizer_monitor_repaired"),
     )
     parser.add_argument("--include-stable", action="store_true", help="Also monitor the stable 60M/OOS validator.")
+    parser.add_argument("--include-repair", action="store_true", help="Also monitor the baseline-preserving stable repair optimizer.")
     parser.add_argument(
         "--stable-output-dir",
         default=str(PROJECT_ROOT / "outputs" / "stable_candidate_optimizer"),
+    )
+    parser.add_argument(
+        "--repair-output-dir",
+        default=str(PROJECT_ROOT / "outputs" / "stable_repair_optimizer"),
     )
     return parser.parse_args()
 
