@@ -8,4 +8,8 @@ seaborn==0.13.2
 yfinance==0.2.66
 # Optional: install xgboost to include the XGBoost candidate model.
 # xgboost>=2.1
-
+# Optional: install datasets to use Hugging Face load_dataset directly.
+# datasets>=3.0
+# Optional: install transformers and torch to use FinBERT embeddings instead of TF-IDF.
+# transformers>=4.40
+# torch>=2.0

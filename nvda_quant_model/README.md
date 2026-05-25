@@ -156,6 +156,45 @@ python3.13 -m nvda_quant_model.main \
 Live news is intentionally treated as a current overlay unless a historical
 point-in-time cache is present.
 
+Train and validate the Hugging Face MTBench news impact overlay as a
+distribution-adjustment layer:
+
+```python
+from nvda_quant_model.news_impact_overlay import (
+    adjust_monte_carlo_distribution,
+    load_mtbench_finance_dataset,
+    predict_news_impact_scores,
+    train_news_impact_bundle,
+    walk_forward_news_overlay_validation,
+)
+
+df = load_mtbench_finance_dataset()
+bundle, metrics = train_news_impact_bundle(df, model_type="logistic", text_method="tfidf")
+scores = predict_news_impact_scores(bundle, df.tail(1)).iloc[0]
+adjusted = adjust_monte_carlo_distribution(
+    base_prob_up=0.52,
+    base_mu=0.10,
+    base_sigma=0.45,
+    option_implied_volatility=0.50,
+    news_scores=scores,
+)
+validation = walk_forward_news_overlay_validation(df)
+```
+
+This module uses only article text plus `input_window` / `input_timestamps`
+and parsed `technical` keys beginning with `in_`. It excludes `output_window`,
+`output_timestamps`, raw mixed `technical`, `out_*`, `overall_*`, `trend`, and
+`alignment` from the feature matrix. `trend` and `alignment` are label-only
+fields. The layer adjusts Monte Carlo drift and volatility with conservative
+parameters and does not emit buy/sell/hold decisions:
+
+```text
+adjusted_mu = base_mu + 0.05 * (news_bullish_score - news_bearish_score)
+adjusted_sigma = base_sigma * (1 + 0.25 * news_shock_strength)
+```
+
+Core principle: this module adjusts the distribution, not the trading decision.
+
 Fetch real-time top-of-book buy/sell pressure and recent 1-minute trend:
 
 ```sh
