@@ -90,6 +90,16 @@ to 4.0% passed the full threshold set across all three windows. That audited
 override lives in `production_model.py` and is applied when rows are converted
 back into executable precision rules.
 
+Run the overfit/fragility audit before promoting any new production rule:
+
+```sh
+python3.13 -m nvda_quant_model.overfit_audit
+```
+
+The audit checks hard-gate margins, train/validation degradation, stop/take
+parameter-neighborhood fragility, yearly regime weakness, probability
+calibration, and terminal-return interval coverage.
+
 Build the top-rules ensemble with market-regime gating, calibration output, and
 optional dynamic sizing:
 

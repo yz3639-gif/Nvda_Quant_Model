@@ -193,3 +193,14 @@
 - 60M：年化 15.40%，Sharpe 1.24，最大回撤 -13.32%，胜率 56.99%，利润因子 2.32，交易数 93。
 
 当前状态：第五版已完成。`production_model.py` 将这个复验过的 stop/take 作为显式 audited override，`rule_from_row()` 在把 optimizer row 转成可执行规则时自动应用。下一步继续优化时，必须用这个 production override 作为新的 baseline，而不是旧的 4.5% take-profit。
+
+## P11：过拟合与脆弱性审计
+
+问题：模型刚刚越过硬门槛，不代表已经稳健。尤其 60M 年化收益率只比 15% 门槛高约 0.40pct，且 stop/take 参数邻域里只有一个组合完整通过，存在参数脆弱性和多重搜索选择偏差。
+
+解决方案：
+- 新增 `overfit_audit` 模块，晋级前统一检查：24/36/60 硬门槛边际、train/validation 退化、stop/take 邻域通过数量、年份/状态弱点、概率校准误差、真实引擎区间覆盖。
+- 审计输出 `PASS_BUT_FRAGILE` / `PASS_WITH_WARNINGS` / `REJECT_HARD_GATE_FAILURE`，不允许只看一个漂亮回测表。
+- 明确控制项：新规则必须通过 24/36/60 复验；2022-like 高波动/弱趋势 regime 独立建模；概率校准未改善前不把 `prob_up` 用作仓位杠杆；未来 stop/take 改动必须有参数邻域证据。
+
+当前状态：第一版已完成。当前 production baseline 硬门槛通过，但审计状态是 `PASS_BUT_FRAGILE`，原因包括：60M 年化安全垫偏薄、参数邻域只有 1/9 通过、短窗口交易数不足 60、2022 年 precision 低于 50%、概率校准弱、95% 区间仍 under-covered。结论是可以继续作为生产 baseline，但不能升仓，也不能停止长跑优化。
