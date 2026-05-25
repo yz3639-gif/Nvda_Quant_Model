@@ -176,3 +176,20 @@
 - 对无法校准的期权 path 指标，宁可输出不可用，也不能输出伪精确数字。
 
 当前状态：第四版已完成。校准尺子已经从正态代理改为真实仿真引擎，且 realized return 与 engine terminal_returns 统一为 simple return 口径。NVDA 10 年、21 日 horizon、5 年训练窗、`n_sims=5000` 的真实引擎校准显示：`step=5` 下每个方法有 247 个窗口，historical bootstrap 的 80%/95% 覆盖率为 78.14%/91.90%，GBM normal 为 81.78%/92.31%，GBM Student-t 为 80.57%/93.12%；三者 PIT 均值均接近 0.5，PIT KS p-value 分别约 0.86/0.12/0.12。下一步应基于各引擎真实覆盖率选择尾部修正和 ensemble 权重，而不是用代理分布下结论。
+
+## P10：生产 baseline 参数复验
+
+问题：当前 baseline 在 24M/36M 表现稳健，但 60M 年化收益率约 14.67%，低于 15% 硬门槛一点点。直接加高样本规则会提高交易数，但会拖低 60M 胜率和 Sharpe，不能为了 sample size 牺牲生产质量。
+
+已测试方案：
+- Risk block：按 downtrend/high-vol/sector/macro/peer stress 投票屏蔽交易。结论是不采纳，收益下降大于风控收益。
+- High-sample add-on：baseline 空仓时加入高样本候选。结论是不采纳，交易数上升但胜率和 Sharpe 被拖累。
+- Dynamic risk budget：小幅改善，但不能单独解决 60M 年化门槛。
+- Stop/take retest：保留 2.5% stop-loss，把 take-profit 从 4.5% 收紧到 4.0%。结论是采纳。
+
+采纳结果：
+- 24M：年化 27.10%，Sharpe 2.41，最大回撤 -2.94%，胜率 75.00%，利润因子 6.64，交易数 32。
+- 36M：年化 18.71%，Sharpe 1.59，最大回撤 -13.32%，胜率 62.96%，利润因子 3.17，交易数 54。
+- 60M：年化 15.40%，Sharpe 1.24，最大回撤 -13.32%，胜率 56.99%，利润因子 2.32，交易数 93。
+
+当前状态：第五版已完成。`production_model.py` 将这个复验过的 stop/take 作为显式 audited override，`rule_from_row()` 在把 optimizer row 转成可执行规则时自动应用。下一步继续优化时，必须用这个 production override 作为新的 baseline，而不是旧的 4.5% take-profit。

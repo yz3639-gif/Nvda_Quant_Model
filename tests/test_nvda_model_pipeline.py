@@ -33,6 +33,8 @@ from nvda_quant_model.risk_off_guard import (
     apply_risk_off_guard,
     blocked_trade_diagnostics,
 )
+from nvda_quant_model.production_model import BASELINE_PRODUCTION_LABEL
+from nvda_quant_model.strict_model_selection import rule_from_row
 
 
 def _synthetic_prices(periods: int = 520) -> pd.DataFrame:
@@ -99,6 +101,41 @@ def test_backtest_engine_records_take_profit_trade_with_costs() -> None:
     assert result.trades.iloc[0]["exit_reason"] == "take_profit"
     assert np.isclose(result.daily_returns.iloc[1], 0.0485)
     assert result.daily_returns.iloc[2] == 0.0
+
+
+def test_rule_from_row_applies_audited_nvda_production_override() -> None:
+    row = pd.Series(
+        {
+            "label": BASELINE_PRODUCTION_LABEL,
+            "train_window": 147,
+            "test_window": 63,
+            "momentum_feature": "10d_return",
+            "momentum_quantile": 0.60,
+            "volume_quantile": 0.45,
+            "max_rsi": 75.0,
+            "min_price_60ma": 0.96,
+            "require_smh_positive": True,
+            "require_qqq_positive": False,
+            "require_sp500_positive": False,
+            "require_macd_positive": False,
+            "require_obv_positive": True,
+            "require_vol_calm": False,
+            "require_peer_breadth_positive": False,
+            "require_peer_mean_positive": False,
+            "require_peer_event_net_positive": False,
+            "require_no_peer_business_stress": False,
+            "vix_quantile_cap": 0.90,
+            "exclude_negative_pre_holiday": False,
+            "stop_loss_pct": 0.025,
+            "take_profit_pct": 0.045,
+            "max_exposure": 1.0,
+        }
+    )
+
+    rule = rule_from_row(row)
+
+    assert rule.stop_loss_pct == 0.025
+    assert rule.take_profit_pct == 0.040
 
 
 def test_backtest_engine_halts_without_fake_reentry_after_drawdown_limit() -> None:

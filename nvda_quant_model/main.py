@@ -62,6 +62,7 @@ def _check(value: float, threshold: float, op: str) -> str:
 
 def _load_precision_rule(path: str) -> Any:
     from nvda_quant_model.precision_search import PrecisionRule
+    from nvda_quant_model.production_model import apply_production_rule_overrides
 
     payload = json.loads(Path(path).expanduser().read_text(encoding="utf-8"))
     row = payload.get("best", payload)
@@ -86,6 +87,7 @@ def _load_precision_rule(path: str) -> Any:
         } and value is not None:
             value = float(value)
         fields[name] = value
+    fields = apply_production_rule_overrides(str(row.get("label", "")), fields)
     return PrecisionRule(**fields)
 
 

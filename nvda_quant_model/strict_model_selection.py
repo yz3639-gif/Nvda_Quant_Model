@@ -20,6 +20,7 @@ from nvda_quant_model.precision_search import (
     latest_prediction_for_rule,
     write_summary,
 )
+from nvda_quant_model.production_model import apply_production_rule_overrides
 
 
 def _json_default(obj: Any) -> Any:
@@ -74,6 +75,8 @@ def rule_from_row(row: pd.Series) -> PrecisionRule:
         } and value is not None:
             value = float(value)
         fields[name] = value
+    label = str(row.get("label", ""))
+    fields = apply_production_rule_overrides(label, fields)
     return PrecisionRule(**fields)
 
 

@@ -417,14 +417,15 @@ def _prepare_window(
     baseline: pd.Series,
 ) -> tuple[StrategyConfig, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     start, end, _ = resolve_data_window("auto", "latest", ticker=ticker, lookback_months=lookback_months)
+    baseline_rule = rule_from_row(baseline)
     config = StrategyConfig(
         ticker=ticker,
         start_date=start,
         end_date=end,
         lookback_months=lookback_months,
-        stop_loss_pct=float(baseline["stop_loss_pct"]),
-        take_profit_pct=float(baseline["take_profit_pct"]),
-        max_exposure=float(baseline["max_exposure"]),
+        stop_loss_pct=baseline_rule.stop_loss_pct,
+        take_profit_pct=baseline_rule.take_profit_pct,
+        max_exposure=baseline_rule.max_exposure,
         include_peer_events=True,
     )
     prices, external = load_market_data(config.ticker, config.start_date, config.end_date, cache_dir=PROJECT_ROOT / "cache")

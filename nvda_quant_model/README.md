@@ -78,6 +78,18 @@ It writes every evaluated rule to `long_run_results.csv`, continuously updates
 `best_precision.json`, and can resume without rechecking labels already present
 in the results file.
 
+Current audited production baseline:
+
+```text
+tw147_sw63_10d_return_mq0.60_vq0.45_smh++obv++rsi<75+p60>0.96+vix<0.9
+```
+
+The source optimizer row used a 2.5% stop and 4.5% take-profit. A 2026-05-25
+24/36/60M retest found that keeping the 2.5% stop and tightening take-profit
+to 4.0% passed the full threshold set across all three windows. That audited
+override lives in `production_model.py` and is applied when rows are converted
+back into executable precision rules.
+
 Build the top-rules ensemble with market-regime gating, calibration output, and
 optional dynamic sizing:
 
