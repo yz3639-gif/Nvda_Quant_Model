@@ -195,6 +195,42 @@ adjusted_sigma = base_sigma * (1 + 0.25 * news_shock_strength)
 
 Core principle: this module adjusts the distribution, not the trading decision.
 
+Build the NVDA Event Impact Overlay v1 on point-in-time event rows and pre-event
+market data:
+
+```python
+from nvda_quant_model.event_overlay import (
+    apply_event_overlay_to_distribution,
+    score_event_overlay,
+    train_event_overlay_model,
+    walk_forward_event_overlay_validation,
+)
+
+model, metrics = train_event_overlay_model(
+    events=nvda_events,
+    market_data=nvda_ohlcv,
+    external_data=market_context,
+    target_horizon=1,
+    text_method="tfidf",
+)
+overlay = score_event_overlay(model, nvda_events.tail(1), nvda_ohlcv, market_context).iloc[0]
+adjusted = apply_event_overlay_to_distribution(
+    base_prob_up=0.52,
+    base_mu=0.10,
+    base_sigma=0.45,
+    event_overlay=overlay,
+)
+validation = walk_forward_event_overlay_validation(nvda_events, nvda_ohlcv, market_context)
+```
+
+The event layer classifies event types such as earnings, guidance, analyst,
+product, supply-chain, export-control, competition, customer-capex, valuation,
+and macro AI trade. It builds labels from future returns only inside validation
+and training targets; those labels are blocked from feature matrices. The output
+contains event distribution adjustments (`event_mu_adjustment`,
+`event_sigma_multiplier`, `event_tail_risk_multiplier`) plus reason codes, and
+still never emits `signal` or `position`.
+
 Fetch real-time top-of-book buy/sell pressure and recent 1-minute trend:
 
 ```sh
