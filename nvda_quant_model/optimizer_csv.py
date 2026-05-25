@@ -52,7 +52,7 @@ def read_live_optimizer_csv(path: str | Path, attempts: int = 5, delay_seconds: 
     last_error: Exception | None = None
     for _ in range(max(1, attempts)):
         try:
-            return pd.read_csv(csv_path)
+            return pd.read_csv(csv_path, low_memory=False)
         except (OSError, pd.errors.ParserError) as exc:
             last_error = exc
             time.sleep(delay_seconds)
