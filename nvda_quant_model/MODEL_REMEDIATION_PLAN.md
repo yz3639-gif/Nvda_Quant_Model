@@ -142,3 +142,20 @@
 - 高样本候选必须在 repaired 输出下重新搜索，并重新跑 24/36/60 复验。
 
 当前状态：已完成代码维修，测试通过。旧 long_run/high_sample 进程已停止；已启动 `long_run_optimizer_repaired` 和 `high_sample_optimizer_repaired` 两条新长跑。`high_sample_validation_repaired` 已跑通，并自动修复一个损坏的 NVDA cache 文件。
+
+## P8：GitHub 同步纪律
+
+问题：用户要求每个有效进步都自动更新到 GitHub，但自动同步不能牺牲安全性或把旁路研究资料混进 NVDA 主线。
+
+解决方案：
+- 只同步 NVDA 主线相关变更：`nvda_quant_model/`、NVDA 测试、根 README/.gitignore 等必要工程文件。
+- 不同步密钥、`.env`、`data_source_credentials.yaml`、cache、原始 outputs、大型本地结果、`research_ai_supply_chain/`、SPY 旁路改动。
+- 每次有效代码/测试/文档进展后，先运行 `git diff --check` 和相关 `pytest`，通过后明确路径 `git add`、提交、推送 `origin/main`。
+- heartbeat 已加入 GitHub 同步规则：如果后续自动化产生可提交的 NVDA 进展，必须测试后推送；如果没有可提交 NVDA 变更，则保持静默。
+
+验收标准：
+- GitHub 上始终保留最新 NVDA 企业级模型代码和整改记录。
+- 不泄露 API 密钥或本地数据。
+- 不因自动同步上传无关研究目录。
+
+当前状态：已启用。当前 `origin/main` 最新提交为 `f25283b`，本地暂无未提交 NVDA 代码变更。
