@@ -1,0 +1,17 @@
+{
+  "execution_mode": "next_open",
+  "stop_reference": "entry",
+  "terminal_policy": "mark",
+  "intrabar_policy": "stop_first",
+  "cost_per_side": 0.0015,
+  "ledger_reconciled": true,
+  "open_trade": null,
+  "halted": true,
+  "cash": 96809.93086961865,
+  "shares": 0.0,
+  "cost_basis": 0.0,
+  "realized_pnl": -3190.069130381317,
+  "unrealized_pnl": 0.0,
+  "cumulative_fees": 16371.671029363331,
+  "equity": 96809.93086961865
+}

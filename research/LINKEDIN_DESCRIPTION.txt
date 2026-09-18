@@ -1,0 +1,1 @@
+Python research platform for NVDA with point-in-time validation, reconciled backtesting, probability calibration, and distribution diagnostics. Includes reproducible experiments, execution-sensitivity analysis, and transparent negative results.

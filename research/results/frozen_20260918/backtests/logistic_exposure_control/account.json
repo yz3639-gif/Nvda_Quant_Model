@@ -1,0 +1,24 @@
+{
+  "execution_mode": "next_open",
+  "stop_reference": "entry",
+  "terminal_policy": "mark",
+  "intrabar_policy": "stop_first",
+  "cost_per_side": 0.0015,
+  "ledger_reconciled": true,
+  "open_trade": {
+    "entry_date": "2025-05-15 00:00:00",
+    "entry_equity": 155788.3822927329,
+    "entry_price": 134.258351724734,
+    "position": 0.21719414642246854,
+    "gross_pnl": 9943.04364254848,
+    "fees": 597.525149253644
+  },
+  "halted": false,
+  "cash": 99220.21740144421,
+  "shares": 314.51059699529395,
+  "cost_basis": 209.57539750423666,
+  "realized_pnl": 65133.90078602789,
+  "unrealized_pnl": 3124.5360341951473,
+  "cumulative_fees": 1653.3133303322813,
+  "equity": 168258.43682022288
+}

@@ -10,6 +10,8 @@ The new controlled research uses only OHLCV-derived features. Legacy macro/funda
 
 ## Clocks and labels
 
+The table defines conceptual clocks; not every artifact emits every field. Fill CSVs retain session date, sequence, price and reason plus the execution convention in account metadata. Daily OHLC cannot establish an exact UTC intrabar fill timestamp, and the system does not invent one.
+
 | Field | Meaning |
 |---|---|
 | `published_at` / `timestamp` | Original publication timestamp, UTC normalized |

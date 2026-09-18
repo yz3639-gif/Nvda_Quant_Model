@@ -1,0 +1,2702 @@
+[
+  {
+    "fold": 0,
+    "family": "rule",
+    "fit_at": "2022-02-07 21:00:00+00:00",
+    "train_first": "2020-02-07 00:00:00",
+    "train_last": "2022-02-03 00:00:00",
+    "max_training_label_end_at": "2022-02-07 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-02-07 00:00:00",
+    "test_last": "2022-05-06 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.2436635739108267,
+        "log_loss": 0.6804220683426457,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25623194012318257,
+        "log_loss": 0.7057308696987792,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2563012457084552,
+        "log_loss": 0.7058677205397691,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.26462974267248845,
+        "log_loss": 0.7231223814688738,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2021-04-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2021-04-20 13:30:00+00:00",
+    "calibration_fit_at": "2021-09-13 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2021-09-13 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2021-11-22 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2021-11-22 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 0,
+    "family": "logistic",
+    "fit_at": "2022-02-07 21:00:00+00:00",
+    "train_first": "2020-02-07 00:00:00",
+    "train_last": "2022-02-03 00:00:00",
+    "max_training_label_end_at": "2022-02-07 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-02-07 00:00:00",
+    "test_last": "2022-05-06 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.24293825946706196,
+        "log_loss": 0.6780168899670654,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.24565712014468613,
+        "log_loss": 0.6830332624855033,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2627988264957031,
+        "log_loss": 0.7195385815344526,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2565869164596191,
+        "log_loss": 0.7064671151954508,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2663530045954535,
+        "log_loss": 0.7270237720377891,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2021-04-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2021-04-20 13:30:00+00:00",
+    "calibration_fit_at": "2021-09-13 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2021-09-13 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2021-11-22 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2021-11-22 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 0,
+    "family": "boosting",
+    "fit_at": "2022-02-07 21:00:00+00:00",
+    "train_first": "2020-02-07 00:00:00",
+    "train_last": "2022-02-03 00:00:00",
+    "max_training_label_end_at": "2022-02-07 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-02-07 00:00:00",
+    "test_last": "2022-05-06 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.24555747371000905,
+        "log_loss": 0.684339489143206,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2467667751520213,
+        "log_loss": 0.6872567890674456,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2551226306178872,
+        "log_loss": 0.704476414502423,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2546915891098564,
+        "log_loss": 0.7027661901523946,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2651643248281649,
+        "log_loss": 0.7243190153089778,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2021-04-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2021-04-20 13:30:00+00:00",
+    "calibration_fit_at": "2021-09-13 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2021-09-13 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2021-11-22 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2021-11-22 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 1,
+    "family": "rule",
+    "fit_at": "2022-05-09 20:00:00+00:00",
+    "train_first": "2020-05-08 00:00:00",
+    "train_last": "2022-05-05 00:00:00",
+    "max_training_label_end_at": "2022-05-09 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-05-09 00:00:00",
+    "test_last": "2022-08-08 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.2469065765067708,
+        "log_loss": 0.6869748911009625,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25629903816769584,
+        "log_loss": 0.7058619601069358,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2565413308091661,
+        "log_loss": 0.7063563432851515,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24990426810123878,
+        "log_loss": 0.6929557047626866,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2021-07-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2021-07-20 13:30:00+00:00",
+    "calibration_fit_at": "2021-12-10 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2021-12-10 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-02-23 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-02-23 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 1,
+    "family": "logistic",
+    "fit_at": "2022-05-09 20:00:00+00:00",
+    "train_first": "2020-05-08 00:00:00",
+    "train_last": "2022-05-05 00:00:00",
+    "max_training_label_end_at": "2022-05-09 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-05-09 00:00:00",
+    "test_last": "2022-08-08 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.2506933368567942,
+        "log_loss": 0.6942608108948102,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.25244531689057254,
+        "log_loss": 0.6976010303894009,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2568473736532953,
+        "log_loss": 0.7078326554513223,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25358639246265063,
+        "log_loss": 0.7003049218696108,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25166806233622424,
+        "log_loss": 0.696484473695369,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2021-07-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2021-07-20 13:30:00+00:00",
+    "calibration_fit_at": "2021-12-10 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2021-12-10 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-02-23 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-02-23 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 1,
+    "family": "boosting",
+    "fit_at": "2022-05-09 20:00:00+00:00",
+    "train_first": "2020-05-08 00:00:00",
+    "train_last": "2022-05-05 00:00:00",
+    "max_training_label_end_at": "2022-05-09 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-05-09 00:00:00",
+    "test_last": "2022-08-08 00:00:00",
+    "selected_parameter": 3,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.252483523442601,
+        "log_loss": 0.6980559473550284,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2511609424567128,
+        "log_loss": 0.6959268842091879,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.27087733476748843,
+        "log_loss": 0.7420637604557052,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25995500070029703,
+        "log_loss": 0.7139592733503486,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24696980868202387,
+        "log_loss": 0.6873007572891248,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2021-07-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2021-07-20 13:30:00+00:00",
+    "calibration_fit_at": "2021-12-10 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2021-12-10 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-02-23 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-02-23 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 2,
+    "family": "rule",
+    "fit_at": "2022-08-09 20:00:00+00:00",
+    "train_first": "2020-08-07 00:00:00",
+    "train_last": "2022-08-05 00:00:00",
+    "max_training_label_end_at": "2022-08-09 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-08-09 00:00:00",
+    "test_last": "2022-11-04 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.2476321208597161,
+        "log_loss": 0.6884049590597247,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2528330382806379,
+        "log_loss": 0.6988358046526046,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25277709279379174,
+        "log_loss": 0.6987211577464391,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2503325063237953,
+        "log_loss": 0.6938141782829242,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2021-10-18 20:00:00+00:00",
+    "max_inner_training_label_end": "2021-10-18 13:30:00+00:00",
+    "calibration_fit_at": "2022-03-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-03-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-05-24 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-05-24 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 2,
+    "family": "logistic",
+    "fit_at": "2022-08-09 20:00:00+00:00",
+    "train_first": "2020-08-07 00:00:00",
+    "train_last": "2022-08-05 00:00:00",
+    "max_training_label_end_at": "2022-08-09 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-08-09 00:00:00",
+    "test_last": "2022-11-04 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.2512882550298868,
+        "log_loss": 0.6966568872650715,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.2521873502029156,
+        "log_loss": 0.698626395209508,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2551936463637416,
+        "log_loss": 0.7036542926053212,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2507641811524327,
+        "log_loss": 0.6946058829777021,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2518966427424867,
+        "log_loss": 0.6971375348506618,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2021-10-18 20:00:00+00:00",
+    "max_inner_training_label_end": "2021-10-18 13:30:00+00:00",
+    "calibration_fit_at": "2022-03-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-03-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-05-24 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-05-24 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 2,
+    "family": "boosting",
+    "fit_at": "2022-08-09 20:00:00+00:00",
+    "train_first": "2020-08-07 00:00:00",
+    "train_last": "2022-08-05 00:00:00",
+    "max_training_label_end_at": "2022-08-09 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-08-09 00:00:00",
+    "test_last": "2022-11-04 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.25757745838710333,
+        "log_loss": 0.7117628286702753,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2612572033392202,
+        "log_loss": 0.7207825186290523,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25394761153542783,
+        "log_loss": 0.7010966616618434,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25024996278571326,
+        "log_loss": 0.6935587697163985,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2500421791980347,
+        "log_loss": 0.6932404961378452,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2021-10-18 20:00:00+00:00",
+    "max_inner_training_label_end": "2021-10-18 13:30:00+00:00",
+    "calibration_fit_at": "2022-03-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-03-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-05-24 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-05-24 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 3,
+    "family": "rule",
+    "fit_at": "2022-11-07 21:00:00+00:00",
+    "train_first": "2020-11-05 00:00:00",
+    "train_last": "2022-11-03 00:00:00",
+    "max_training_label_end_at": "2022-11-07 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-11-07 00:00:00",
+    "test_last": "2023-02-07 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.2545047498360431,
+        "log_loss": 0.7022011251361269,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2515893075980392,
+        "log_loss": 0.6963312198573174,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25178909233641994,
+        "log_loss": 0.696732479535096,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25150890045533236,
+        "log_loss": 0.6961697947141324,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-01-18 21:00:00+00:00",
+    "max_inner_training_label_end": "2022-01-18 14:30:00+00:00",
+    "calibration_fit_at": "2022-06-13 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-06-13 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-08-24 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-08-24 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 3,
+    "family": "logistic",
+    "fit_at": "2022-11-07 21:00:00+00:00",
+    "train_first": "2020-11-05 00:00:00",
+    "train_last": "2022-11-03 00:00:00",
+    "max_training_label_end_at": "2022-11-07 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-11-07 00:00:00",
+    "test_last": "2023-02-07 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.25556776087425875,
+        "log_loss": 0.705027192433537,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.2594610826669224,
+        "log_loss": 0.7134945202863874,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2592390894017687,
+        "log_loss": 0.7132112274721752,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25440072593927154,
+        "log_loss": 0.7022057257457631,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2744814959965509,
+        "log_loss": 0.7472389564481717,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-01-18 21:00:00+00:00",
+    "max_inner_training_label_end": "2022-01-18 14:30:00+00:00",
+    "calibration_fit_at": "2022-06-13 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-06-13 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-08-24 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-08-24 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 3,
+    "family": "boosting",
+    "fit_at": "2022-11-07 21:00:00+00:00",
+    "train_first": "2020-11-05 00:00:00",
+    "train_last": "2022-11-03 00:00:00",
+    "max_training_label_end_at": "2022-11-07 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2022-11-07 00:00:00",
+    "test_last": "2023-02-07 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.26665541893225364,
+        "log_loss": 0.7287865246251307,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.27918214649522816,
+        "log_loss": 0.7597170539691734,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.29500602684127375,
+        "log_loss": 0.7878341042703437,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2714856823415733,
+        "log_loss": 0.736794105050331,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2652170396410307,
+        "log_loss": 0.724066668444542,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-01-18 21:00:00+00:00",
+    "max_inner_training_label_end": "2022-01-18 14:30:00+00:00",
+    "calibration_fit_at": "2022-06-13 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-06-13 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-08-24 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-08-24 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 4,
+    "family": "rule",
+    "fit_at": "2023-02-08 21:00:00+00:00",
+    "train_first": "2021-02-08 00:00:00",
+    "train_last": "2023-02-06 00:00:00",
+    "max_training_label_end_at": "2023-02-08 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-02-08 00:00:00",
+    "test_last": "2023-05-09 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.25855568284678965,
+        "log_loss": 0.7103404327943775,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2567775348704714,
+        "log_loss": 0.7068750176115216,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2531760545042726,
+        "log_loss": 0.6995416731076515,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2596757059605804,
+        "log_loss": 0.7130208664727959,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-04-19 20:00:00+00:00",
+    "max_inner_training_label_end": "2022-04-19 13:30:00+00:00",
+    "calibration_fit_at": "2022-09-13 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-09-13 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-11-22 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-11-22 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 4,
+    "family": "logistic",
+    "fit_at": "2023-02-08 21:00:00+00:00",
+    "train_first": "2021-02-08 00:00:00",
+    "train_last": "2023-02-06 00:00:00",
+    "max_training_label_end_at": "2023-02-08 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-02-08 00:00:00",
+    "test_last": "2023-05-09 00:00:00",
+    "selected_parameter": 1.0,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.2482409025390887,
+        "log_loss": 0.6897878070722844,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.24707962880698403,
+        "log_loss": 0.6874266790430993,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25040318441451587,
+        "log_loss": 0.6947051282807362,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24596029406766157,
+        "log_loss": 0.6850407542278347,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2529803625956541,
+        "log_loss": 0.6991574718681952,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-04-19 20:00:00+00:00",
+    "max_inner_training_label_end": "2022-04-19 13:30:00+00:00",
+    "calibration_fit_at": "2022-09-13 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-09-13 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-11-22 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-11-22 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 4,
+    "family": "boosting",
+    "fit_at": "2023-02-08 21:00:00+00:00",
+    "train_first": "2021-02-08 00:00:00",
+    "train_last": "2023-02-06 00:00:00",
+    "max_training_label_end_at": "2023-02-08 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-02-08 00:00:00",
+    "test_last": "2023-05-09 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.27428941673802276,
+        "log_loss": 0.743726166307511,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.28927178975737433,
+        "log_loss": 0.7790127226693366,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25373477636880104,
+        "log_loss": 0.701783534329785,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24760968139650788,
+        "log_loss": 0.6883852591125005,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24835691767095802,
+        "log_loss": 0.6898542984537482,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-04-19 20:00:00+00:00",
+    "max_inner_training_label_end": "2022-04-19 13:30:00+00:00",
+    "calibration_fit_at": "2022-09-13 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-09-13 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2022-11-22 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2022-11-22 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 5,
+    "family": "rule",
+    "fit_at": "2023-05-10 20:00:00+00:00",
+    "train_first": "2021-05-10 00:00:00",
+    "train_last": "2023-05-08 00:00:00",
+    "max_training_label_end_at": "2023-05-10 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-05-10 00:00:00",
+    "test_last": "2023-08-09 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.250998163892477,
+        "log_loss": 0.6951506301556428,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2487724556109341,
+        "log_loss": 0.6906963363895979,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24835812626925305,
+        "log_loss": 0.6898627115849901,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25082375948637503,
+        "log_loss": 0.6947948491814268,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-07-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2022-07-20 13:30:00+00:00",
+    "calibration_fit_at": "2022-12-12 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-12-12 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-02-24 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-02-24 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 5,
+    "family": "logistic",
+    "fit_at": "2023-05-10 20:00:00+00:00",
+    "train_first": "2021-05-10 00:00:00",
+    "train_last": "2023-05-08 00:00:00",
+    "max_training_label_end_at": "2023-05-10 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-05-10 00:00:00",
+    "test_last": "2023-08-09 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.250845957720342,
+        "log_loss": 0.6962260983737604,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.25097795333080664,
+        "log_loss": 0.6975946073640087,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.26127349375103043,
+        "log_loss": 0.71697414214859,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2502009035673682,
+        "log_loss": 0.6935216181024316,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2519596595155547,
+        "log_loss": 0.6970683988946927,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-07-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2022-07-20 13:30:00+00:00",
+    "calibration_fit_at": "2022-12-12 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-12-12 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-02-24 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-02-24 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 5,
+    "family": "boosting",
+    "fit_at": "2023-05-10 20:00:00+00:00",
+    "train_first": "2021-05-10 00:00:00",
+    "train_last": "2023-05-08 00:00:00",
+    "max_training_label_end_at": "2023-05-10 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-05-10 00:00:00",
+    "test_last": "2023-08-09 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.26525288879569764,
+        "log_loss": 0.7243530491506158,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2739556950912921,
+        "log_loss": 0.7440982164138898,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.27240884273976496,
+        "log_loss": 0.7437053359530927,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2556319550877729,
+        "log_loss": 0.7049576433833675,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25123506617534347,
+        "log_loss": 0.6956176654752069,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-07-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2022-07-20 13:30:00+00:00",
+    "calibration_fit_at": "2022-12-12 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2022-12-12 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-02-24 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-02-24 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 6,
+    "family": "rule",
+    "fit_at": "2023-08-10 20:00:00+00:00",
+    "train_first": "2021-08-09 00:00:00",
+    "train_last": "2023-08-08 00:00:00",
+    "max_training_label_end_at": "2023-08-10 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-08-10 00:00:00",
+    "test_last": "2023-11-07 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.2507297382130798,
+        "log_loss": 0.6946068805388592,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.24854222046164431,
+        "log_loss": 0.6902266062579875,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24898401533548803,
+        "log_loss": 0.6911141720401747,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24804194607787372,
+        "log_loss": 0.6892377924121126,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-10-18 20:00:00+00:00",
+    "max_inner_training_label_end": "2022-10-18 13:30:00+00:00",
+    "calibration_fit_at": "2023-03-15 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-03-15 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-05-25 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-05-25 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 6,
+    "family": "logistic",
+    "fit_at": "2023-08-10 20:00:00+00:00",
+    "train_first": "2021-08-09 00:00:00",
+    "train_last": "2023-08-08 00:00:00",
+    "max_training_label_end_at": "2023-08-10 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-08-10 00:00:00",
+    "test_last": "2023-11-07 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.25113002963540404,
+        "log_loss": 0.696645758856444,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.2528325661150935,
+        "log_loss": 0.7017042000843956,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.276109735767491,
+        "log_loss": 0.7485561333568062,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2591938192095409,
+        "log_loss": 0.711792630440799,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24929239225063182,
+        "log_loss": 0.691758560886982,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-10-18 20:00:00+00:00",
+    "max_inner_training_label_end": "2022-10-18 13:30:00+00:00",
+    "calibration_fit_at": "2023-03-15 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-03-15 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-05-25 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-05-25 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 6,
+    "family": "boosting",
+    "fit_at": "2023-08-10 20:00:00+00:00",
+    "train_first": "2021-08-09 00:00:00",
+    "train_last": "2023-08-08 00:00:00",
+    "max_training_label_end_at": "2023-08-10 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-08-10 00:00:00",
+    "test_last": "2023-11-07 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.25259113022707763,
+        "log_loss": 0.698697339753387,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2539291512841733,
+        "log_loss": 0.7017252276499337,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2751489485439483,
+        "log_loss": 0.7451384798837969,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.26041145810597416,
+        "log_loss": 0.7141241615428223,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24552596256183273,
+        "log_loss": 0.684068785209629,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2022-10-18 20:00:00+00:00",
+    "max_inner_training_label_end": "2022-10-18 13:30:00+00:00",
+    "calibration_fit_at": "2023-03-15 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-03-15 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-05-25 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-05-25 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 7,
+    "family": "rule",
+    "fit_at": "2023-11-08 21:00:00+00:00",
+    "train_first": "2021-11-05 00:00:00",
+    "train_last": "2023-11-06 00:00:00",
+    "max_training_label_end_at": "2023-11-08 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-11-08 00:00:00",
+    "test_last": "2024-02-08 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.25252500000000005,
+        "log_loss": 0.6982175598418455,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2478075241973395,
+        "log_loss": 0.6887615810951527,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2481254457723998,
+        "log_loss": 0.6893977060966939,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25272874937570966,
+        "log_loss": 0.6986054649971972,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-01-19 21:00:00+00:00",
+    "max_inner_training_label_end": "2023-01-19 14:30:00+00:00",
+    "calibration_fit_at": "2023-06-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-06-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-08-25 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-08-25 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 7,
+    "family": "logistic",
+    "fit_at": "2023-11-08 21:00:00+00:00",
+    "train_first": "2021-11-05 00:00:00",
+    "train_last": "2023-11-06 00:00:00",
+    "max_training_label_end_at": "2023-11-08 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-11-08 00:00:00",
+    "test_last": "2024-02-08 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.2756228079395707,
+        "log_loss": 0.7489448891136117,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.27730230224479047,
+        "log_loss": 0.7540161173550034,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.24581145058659418,
+        "log_loss": 0.6852200213255892,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24541067491783616,
+        "log_loss": 0.6839937903192346,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25905297378110403,
+        "log_loss": 0.7112819277462081,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-01-19 21:00:00+00:00",
+    "max_inner_training_label_end": "2023-01-19 14:30:00+00:00",
+    "calibration_fit_at": "2023-06-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-06-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-08-25 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-08-25 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 7,
+    "family": "boosting",
+    "fit_at": "2023-11-08 21:00:00+00:00",
+    "train_first": "2021-11-05 00:00:00",
+    "train_last": "2023-11-06 00:00:00",
+    "max_training_label_end_at": "2023-11-08 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2023-11-08 00:00:00",
+    "test_last": "2024-02-08 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.26318145888920275,
+        "log_loss": 0.7206990823700223,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2633877879104679,
+        "log_loss": 0.7214213426165359,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.27181307520692105,
+        "log_loss": 0.7376372644293784,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2589163892106849,
+        "log_loss": 0.7110571123882746,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.26271502832979937,
+        "log_loss": 0.7186952999209025,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-01-19 21:00:00+00:00",
+    "max_inner_training_label_end": "2023-01-19 14:30:00+00:00",
+    "calibration_fit_at": "2023-06-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-06-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-08-25 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-08-25 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 8,
+    "family": "rule",
+    "fit_at": "2024-02-09 21:00:00+00:00",
+    "train_first": "2022-02-07 00:00:00",
+    "train_last": "2024-02-07 00:00:00",
+    "max_training_label_end_at": "2024-02-09 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-02-09 00:00:00",
+    "test_last": "2024-05-09 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.2500200169916139,
+        "log_loss": 0.693187191414567,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.24320085507196118,
+        "log_loss": 0.6795021449882364,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24441396283830263,
+        "log_loss": 0.6819637376319628,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.218584268836243,
+        "log_loss": 0.6292506136758634,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-04-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2023-04-20 13:30:00+00:00",
+    "calibration_fit_at": "2023-09-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-09-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-11-24 18:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-11-24 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 8,
+    "family": "logistic",
+    "fit_at": "2024-02-09 21:00:00+00:00",
+    "train_first": "2022-02-07 00:00:00",
+    "train_last": "2024-02-07 00:00:00",
+    "max_training_label_end_at": "2024-02-09 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-02-09 00:00:00",
+    "test_last": "2024-05-09 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.25819933584990024,
+        "log_loss": 0.7103322839886063,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.2613506658675268,
+        "log_loss": 0.7173583759658524,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.21960713014910818,
+        "log_loss": 0.6315123323551778,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2302017968425749,
+        "log_loss": 0.6533482570336077,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.22401067219477475,
+        "log_loss": 0.6412806389487625,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-04-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2023-04-20 13:30:00+00:00",
+    "calibration_fit_at": "2023-09-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-09-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-11-24 18:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-11-24 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 8,
+    "family": "boosting",
+    "fit_at": "2024-02-09 21:00:00+00:00",
+    "train_first": "2022-02-07 00:00:00",
+    "train_last": "2024-02-07 00:00:00",
+    "max_training_label_end_at": "2024-02-09 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-02-09 00:00:00",
+    "test_last": "2024-05-09 00:00:00",
+    "selected_parameter": 3,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.2483196370238982,
+        "log_loss": 0.6896883014871074,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.24571861798621064,
+        "log_loss": 0.6844893427427411,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25065159408767224,
+        "log_loss": 0.6961763576733145,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2449639542285017,
+        "log_loss": 0.683115292848799,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.21930388301232465,
+        "log_loss": 0.6308783310898408,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-04-20 20:00:00+00:00",
+    "max_inner_training_label_end": "2023-04-20 13:30:00+00:00",
+    "calibration_fit_at": "2023-09-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-09-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2023-11-24 18:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2023-11-24 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 9,
+    "family": "rule",
+    "fit_at": "2024-05-10 20:00:00+00:00",
+    "train_first": "2022-05-09 00:00:00",
+    "train_last": "2024-05-08 00:00:00",
+    "max_training_label_end_at": "2024-05-10 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-05-10 00:00:00",
+    "test_last": "2024-08-09 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.24960986163837465,
+        "log_loss": 0.6923756906321047,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.24703801307242798,
+        "log_loss": 0.6872181880097646,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24696749406117183,
+        "log_loss": 0.6870767435868445,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2609764887935818,
+        "log_loss": 0.7184531546948872,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-07-21 20:00:00+00:00",
+    "max_inner_training_label_end": "2023-07-21 13:30:00+00:00",
+    "calibration_fit_at": "2023-12-13 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-12-13 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-02-27 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-02-27 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 9,
+    "family": "logistic",
+    "fit_at": "2024-05-10 20:00:00+00:00",
+    "train_first": "2022-05-09 00:00:00",
+    "train_last": "2024-05-08 00:00:00",
+    "max_training_label_end_at": "2024-05-10 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-05-10 00:00:00",
+    "test_last": "2024-08-09 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.25312327833444015,
+        "log_loss": 0.6999652967035088,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.25534670950581656,
+        "log_loss": 0.7045969592456589,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2366022151934135,
+        "log_loss": 0.6660234771747505,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24115823350248816,
+        "log_loss": 0.6753708672031036,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2712737047092436,
+        "log_loss": 0.7436601093382327,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-07-21 20:00:00+00:00",
+    "max_inner_training_label_end": "2023-07-21 13:30:00+00:00",
+    "calibration_fit_at": "2023-12-13 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-12-13 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-02-27 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-02-27 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 9,
+    "family": "boosting",
+    "fit_at": "2024-05-10 20:00:00+00:00",
+    "train_first": "2022-05-09 00:00:00",
+    "train_last": "2024-05-08 00:00:00",
+    "max_training_label_end_at": "2024-05-10 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-05-10 00:00:00",
+    "test_last": "2024-08-09 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.25271540786655555,
+        "log_loss": 0.6988087552459616,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2564917471908858,
+        "log_loss": 0.7076968276357114,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25763905255967695,
+        "log_loss": 0.7093694123760342,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25052612956598996,
+        "log_loss": 0.694301984783316,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2672364752415202,
+        "log_loss": 0.7357834830348945,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-07-21 20:00:00+00:00",
+    "max_inner_training_label_end": "2023-07-21 13:30:00+00:00",
+    "calibration_fit_at": "2023-12-13 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2023-12-13 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-02-27 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-02-27 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 10,
+    "family": "rule",
+    "fit_at": "2024-08-12 20:00:00+00:00",
+    "train_first": "2022-08-09 00:00:00",
+    "train_last": "2024-08-08 00:00:00",
+    "max_training_label_end_at": "2024-08-12 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-08-12 00:00:00",
+    "test_last": "2024-11-07 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.24098305111121637,
+        "log_loss": 0.6750358426451052,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.24082921462073476,
+        "log_loss": 0.6747344569573184,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24068283069030086,
+        "log_loss": 0.6744397013276962,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24429950831671748,
+        "log_loss": 0.6817328091017862,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-10-19 20:00:00+00:00",
+    "max_inner_training_label_end": "2023-10-19 13:30:00+00:00",
+    "calibration_fit_at": "2024-03-15 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-03-15 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-05-28 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-05-28 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 10,
+    "family": "logistic",
+    "fit_at": "2024-08-12 20:00:00+00:00",
+    "train_first": "2022-08-09 00:00:00",
+    "train_last": "2024-08-08 00:00:00",
+    "max_training_label_end_at": "2024-08-12 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-08-12 00:00:00",
+    "test_last": "2024-11-07 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.23896525131973648,
+        "log_loss": 0.6717436513164003,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.241052759696652,
+        "log_loss": 0.6760253231563186,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.23533100115058334,
+        "log_loss": 0.6641462929888742,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.23683760188687336,
+        "log_loss": 0.6666427075569293,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24146129772507915,
+        "log_loss": 0.6760839926041278,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-10-19 20:00:00+00:00",
+    "max_inner_training_label_end": "2023-10-19 13:30:00+00:00",
+    "calibration_fit_at": "2024-03-15 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-03-15 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-05-28 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-05-28 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 10,
+    "family": "boosting",
+    "fit_at": "2024-08-12 20:00:00+00:00",
+    "train_first": "2022-08-09 00:00:00",
+    "train_last": "2024-08-08 00:00:00",
+    "max_training_label_end_at": "2024-08-12 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-08-12 00:00:00",
+    "test_last": "2024-11-07 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.24728822859263,
+        "log_loss": 0.6877406825076158,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.25344949684591794,
+        "log_loss": 0.7006115279498517,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2586086837661937,
+        "log_loss": 0.7106529811016096,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24679133340576098,
+        "log_loss": 0.6866912957800011,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24916016181178852,
+        "log_loss": 0.6914449452356056,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2023-10-19 20:00:00+00:00",
+    "max_inner_training_label_end": "2023-10-19 13:30:00+00:00",
+    "calibration_fit_at": "2024-03-15 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-03-15 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-05-28 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-05-28 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 11,
+    "family": "rule",
+    "fit_at": "2024-11-08 21:00:00+00:00",
+    "train_first": "2022-11-07 00:00:00",
+    "train_last": "2024-11-06 00:00:00",
+    "max_training_label_end_at": "2024-11-08 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-11-08 00:00:00",
+    "test_last": "2025-02-11 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.23964599609375,
+        "log_loss": 0.6723782837389323,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2512656855310064,
+        "log_loss": 0.6957562288476313,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25123472598023416,
+        "log_loss": 0.6956821361803843,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2508612006312934,
+        "log_loss": 0.6949157440867828,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-01-22 21:00:00+00:00",
+    "max_inner_training_label_end": "2024-01-22 14:30:00+00:00",
+    "calibration_fit_at": "2024-06-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-06-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-08-27 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-08-27 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 11,
+    "family": "logistic",
+    "fit_at": "2024-11-08 21:00:00+00:00",
+    "train_first": "2022-11-07 00:00:00",
+    "train_last": "2024-11-06 00:00:00",
+    "max_training_label_end_at": "2024-11-08 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-11-08 00:00:00",
+    "test_last": "2025-02-11 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.24632268779514582,
+        "log_loss": 0.6860523560543161,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.25124094360581206,
+        "log_loss": 0.696369822210524,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2553579884710528,
+        "log_loss": 0.7038857500225685,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2519251017603361,
+        "log_loss": 0.6969986264337452,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25186824927136925,
+        "log_loss": 0.6968436305628463,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-01-22 21:00:00+00:00",
+    "max_inner_training_label_end": "2024-01-22 14:30:00+00:00",
+    "calibration_fit_at": "2024-06-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-06-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-08-27 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-08-27 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 11,
+    "family": "boosting",
+    "fit_at": "2024-11-08 21:00:00+00:00",
+    "train_first": "2022-11-07 00:00:00",
+    "train_last": "2024-11-06 00:00:00",
+    "max_training_label_end_at": "2024-11-08 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2024-11-08 00:00:00",
+    "test_last": "2025-02-11 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.26316758525098344,
+        "log_loss": 0.7221446647398538,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2809246806439475,
+        "log_loss": 0.7615869581190724,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2773417904710202,
+        "log_loss": 0.7501049911459855,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.26236860436787524,
+        "log_loss": 0.7184232467995899,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2561171507957692,
+        "log_loss": 0.7056059729192294,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-01-22 21:00:00+00:00",
+    "max_inner_training_label_end": "2024-01-22 14:30:00+00:00",
+    "calibration_fit_at": "2024-06-14 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-06-14 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-08-27 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-08-27 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 12,
+    "family": "rule",
+    "fit_at": "2025-02-12 21:00:00+00:00",
+    "train_first": "2023-02-08 00:00:00",
+    "train_last": "2025-02-10 00:00:00",
+    "max_training_label_end_at": "2025-02-12 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-02-12 00:00:00",
+    "test_last": "2025-05-13 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.24054666578682624,
+        "log_loss": 0.6741288921576435,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25064563753122954,
+        "log_loss": 0.6944693654919969,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2510701062163589,
+        "log_loss": 0.6953407064396537,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2495205094203903,
+        "log_loss": 0.6921880882037756,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-04-22 20:00:00+00:00",
+    "max_inner_training_label_end": "2024-04-22 13:30:00+00:00",
+    "calibration_fit_at": "2024-09-16 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-09-16 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-11-25 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-11-25 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 12,
+    "family": "logistic",
+    "fit_at": "2025-02-12 21:00:00+00:00",
+    "train_first": "2023-02-08 00:00:00",
+    "train_last": "2025-02-10 00:00:00",
+    "max_training_label_end_at": "2025-02-12 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-02-12 00:00:00",
+    "test_last": "2025-05-13 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.24175758735434322,
+        "log_loss": 0.6770255130617125,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.24532657625873128,
+        "log_loss": 0.6855096277870147,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.274428397136435,
+        "log_loss": 0.7506458604150662,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.26029246267677264,
+        "log_loss": 0.7152493298870264,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2496948604906316,
+        "log_loss": 0.6925384113258637,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-04-22 20:00:00+00:00",
+    "max_inner_training_label_end": "2024-04-22 13:30:00+00:00",
+    "calibration_fit_at": "2024-09-16 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-09-16 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-11-25 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-11-25 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 12,
+    "family": "boosting",
+    "fit_at": "2025-02-12 21:00:00+00:00",
+    "train_first": "2023-02-08 00:00:00",
+    "train_last": "2025-02-10 00:00:00",
+    "max_training_label_end_at": "2025-02-12 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-02-12 00:00:00",
+    "test_last": "2025-05-13 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.25832200345661477,
+        "log_loss": 0.7113730479603129,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.26890775763789654,
+        "log_loss": 0.7340126830702512,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.26578195909820107,
+        "log_loss": 0.7293310012091143,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25569830893875795,
+        "log_loss": 0.7052895441001046,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2602200363503483,
+        "log_loss": 0.7140849828518365,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-04-22 20:00:00+00:00",
+    "max_inner_training_label_end": "2024-04-22 13:30:00+00:00",
+    "calibration_fit_at": "2024-09-16 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-09-16 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2024-11-25 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2024-11-25 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 13,
+    "family": "rule",
+    "fit_at": "2025-05-14 20:00:00+00:00",
+    "train_first": "2023-05-10 00:00:00",
+    "train_last": "2025-05-12 00:00:00",
+    "max_training_label_end_at": "2025-05-14 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-05-14 00:00:00",
+    "test_last": "2025-08-13 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.2532049449479439,
+        "log_loss": 0.6997808035804252,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2590727961989258,
+        "log_loss": 0.7114391729694569,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25987989919203164,
+        "log_loss": 0.7130935205966273,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2592527378720129,
+        "log_loss": 0.7118139264385202,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-07-23 20:00:00+00:00",
+    "max_inner_training_label_end": "2024-07-23 13:30:00+00:00",
+    "calibration_fit_at": "2024-12-13 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-12-13 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-02-28 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-02-28 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 13,
+    "family": "logistic",
+    "fit_at": "2025-05-14 20:00:00+00:00",
+    "train_first": "2023-05-10 00:00:00",
+    "train_last": "2025-05-12 00:00:00",
+    "max_training_label_end_at": "2025-05-14 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-05-14 00:00:00",
+    "test_last": "2025-08-13 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.25146701580021424,
+        "log_loss": 0.6962157020876706,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.25429105450576645,
+        "log_loss": 0.702193816123635,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25523889504019825,
+        "log_loss": 0.7040748007929393,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2566346386715147,
+        "log_loss": 0.7065540333171951,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2698636436223618,
+        "log_loss": 0.7339030628743167,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-07-23 20:00:00+00:00",
+    "max_inner_training_label_end": "2024-07-23 13:30:00+00:00",
+    "calibration_fit_at": "2024-12-13 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-12-13 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-02-28 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-02-28 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 13,
+    "family": "boosting",
+    "fit_at": "2025-05-14 20:00:00+00:00",
+    "train_first": "2023-05-10 00:00:00",
+    "train_last": "2025-05-12 00:00:00",
+    "max_training_label_end_at": "2025-05-14 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-05-14 00:00:00",
+    "test_last": "2025-08-13 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.26271992847088,
+        "log_loss": 0.71993811955018,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2633123624144407,
+        "log_loss": 0.7207747243027769,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2485247199089277,
+        "log_loss": 0.6916205437453028,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2518491516072268,
+        "log_loss": 0.6968757170413731,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2531464533498576,
+        "log_loss": 0.6994191626158702,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-07-23 20:00:00+00:00",
+    "max_inner_training_label_end": "2024-07-23 13:30:00+00:00",
+    "calibration_fit_at": "2024-12-13 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2024-12-13 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-02-28 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-02-28 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 14,
+    "family": "rule",
+    "fit_at": "2025-08-14 20:00:00+00:00",
+    "train_first": "2023-08-10 00:00:00",
+    "train_last": "2025-08-12 00:00:00",
+    "max_training_label_end_at": "2025-08-14 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-08-14 00:00:00",
+    "test_last": "2025-11-11 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.25640144790767505,
+        "log_loss": 0.706174271306102,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.23251028806584365,
+        "log_loss": 0.6576038989315216,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.23396353601314127,
+        "log_loss": 0.6607297684092973,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2465303080511159,
+        "log_loss": 0.6862052465271355,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-10-21 20:00:00+00:00",
+    "max_inner_training_label_end": "2024-10-21 13:30:00+00:00",
+    "calibration_fit_at": "2025-03-19 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-03-19 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-05-30 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-05-30 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 14,
+    "family": "logistic",
+    "fit_at": "2025-08-14 20:00:00+00:00",
+    "train_first": "2023-08-10 00:00:00",
+    "train_last": "2025-08-12 00:00:00",
+    "max_training_label_end_at": "2025-08-14 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-08-14 00:00:00",
+    "test_last": "2025-11-11 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.27233359880368563,
+        "log_loss": 0.7453689847290537,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.27613154963192527,
+        "log_loss": 0.7567462832163895,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2529523248874148,
+        "log_loss": 0.6990374820709918,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24247987706573762,
+        "log_loss": 0.6780549241544465,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24727090660159,
+        "log_loss": 0.6876880807555903,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-10-21 20:00:00+00:00",
+    "max_inner_training_label_end": "2024-10-21 13:30:00+00:00",
+    "calibration_fit_at": "2025-03-19 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-03-19 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-05-30 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-05-30 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 14,
+    "family": "boosting",
+    "fit_at": "2025-08-14 20:00:00+00:00",
+    "train_first": "2023-08-10 00:00:00",
+    "train_last": "2025-08-12 00:00:00",
+    "max_training_label_end_at": "2025-08-14 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-08-14 00:00:00",
+    "test_last": "2025-11-11 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.26612968084324584,
+        "log_loss": 0.7277069095709053,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2694337574456174,
+        "log_loss": 0.7353765081533594,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2374407194180093,
+        "log_loss": 0.6679120878529295,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2364523132360964,
+        "log_loss": 0.6658909233584868,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25526309081906273,
+        "log_loss": 0.7036733135586362,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2024-10-21 20:00:00+00:00",
+    "max_inner_training_label_end": "2024-10-21 13:30:00+00:00",
+    "calibration_fit_at": "2025-03-19 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-03-19 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-05-30 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-05-30 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 15,
+    "family": "rule",
+    "fit_at": "2025-11-12 21:00:00+00:00",
+    "train_first": "2023-11-08 00:00:00",
+    "train_last": "2025-11-10 00:00:00",
+    "max_training_label_end_at": "2025-11-12 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-11-12 00:00:00",
+    "test_last": "2026-02-12 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.24900544447401546,
+        "log_loss": 0.6911834092091625,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25177827130411423,
+        "log_loss": 0.6969298346873452,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24979015362523443,
+        "log_loss": 0.6928174121542678,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24921648240823382,
+        "log_loss": 0.6916411203619907,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2025-01-23 21:00:00+00:00",
+    "max_inner_training_label_end": "2025-01-23 14:30:00+00:00",
+    "calibration_fit_at": "2025-06-18 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-06-18 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-08-29 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-08-29 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 15,
+    "family": "logistic",
+    "fit_at": "2025-11-12 21:00:00+00:00",
+    "train_first": "2023-11-08 00:00:00",
+    "train_last": "2025-11-10 00:00:00",
+    "max_training_label_end_at": "2025-11-12 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-11-12 00:00:00",
+    "test_last": "2026-02-12 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.2477395009404124,
+        "log_loss": 0.6887292837916259,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.24984991093814163,
+        "log_loss": 0.6935121040056571,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2572101087020201,
+        "log_loss": 0.7094667183992381,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25161501396023067,
+        "log_loss": 0.6967657564431514,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2492825294906507,
+        "log_loss": 0.6917959741208299,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2025-01-23 21:00:00+00:00",
+    "max_inner_training_label_end": "2025-01-23 14:30:00+00:00",
+    "calibration_fit_at": "2025-06-18 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-06-18 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-08-29 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-08-29 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 15,
+    "family": "boosting",
+    "fit_at": "2025-11-12 21:00:00+00:00",
+    "train_first": "2023-11-08 00:00:00",
+    "train_last": "2025-11-10 00:00:00",
+    "max_training_label_end_at": "2025-11-12 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2025-11-12 00:00:00",
+    "test_last": "2026-02-12 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.2519904872893914,
+        "log_loss": 0.6981059274086596,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.2609338834301402,
+        "log_loss": 0.7168993056882517,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25768943208753897,
+        "log_loss": 0.7094248275201648,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2521793833620024,
+        "log_loss": 0.6977386510662084,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24932577879926332,
+        "log_loss": 0.6918599744442444,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2025-01-23 21:00:00+00:00",
+    "max_inner_training_label_end": "2025-01-23 14:30:00+00:00",
+    "calibration_fit_at": "2025-06-18 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-06-18 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-08-29 20:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-08-29 13:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 16,
+    "family": "rule",
+    "fit_at": "2026-02-13 21:00:00+00:00",
+    "train_first": "2024-02-09 00:00:00",
+    "train_last": "2026-02-11 00:00:00",
+    "max_training_label_end_at": "2026-02-13 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2026-02-13 00:00:00",
+    "test_last": "2026-05-14 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.2432334654662725,
+        "log_loss": 0.6794943100216058,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25071339395594405,
+        "log_loss": 0.6946420311516295,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2500863678464094,
+        "log_loss": 0.6933445928775277,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24857709361701008,
+        "log_loss": 0.6903003066057629,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2025-04-24 20:00:00+00:00",
+    "max_inner_training_label_end": "2025-04-24 13:30:00+00:00",
+    "calibration_fit_at": "2025-09-18 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-09-18 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-11-28 18:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-11-28 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 16,
+    "family": "logistic",
+    "fit_at": "2026-02-13 21:00:00+00:00",
+    "train_first": "2024-02-09 00:00:00",
+    "train_last": "2026-02-11 00:00:00",
+    "max_training_label_end_at": "2026-02-13 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2026-02-13 00:00:00",
+    "test_last": "2026-05-14 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "shrink",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.2593064250356329,
+        "log_loss": 0.7123389638527542,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.26351027750997036,
+        "log_loss": 0.7213092870600678,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25029697178290383,
+        "log_loss": 0.693775864475409,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2490669630578756,
+        "log_loss": 0.6912747930470164,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.2502044409617761,
+        "log_loss": 0.693555176305662,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2025-04-24 20:00:00+00:00",
+    "max_inner_training_label_end": "2025-04-24 13:30:00+00:00",
+    "calibration_fit_at": "2025-09-18 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-09-18 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-11-28 18:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-11-28 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 16,
+    "family": "boosting",
+    "fit_at": "2026-02-13 21:00:00+00:00",
+    "train_first": "2024-02-09 00:00:00",
+    "train_last": "2026-02-11 00:00:00",
+    "max_training_label_end_at": "2026-02-13 14:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2026-02-13 00:00:00",
+    "test_last": "2026-05-14 00:00:00",
+    "selected_parameter": 2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.2563883214472062,
+        "log_loss": 0.706177117135942,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.26199906942528817,
+        "log_loss": 0.7182754068784734,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25697614555093234,
+        "log_loss": 0.7070672146593652,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2526283012127882,
+        "log_loss": 0.6983963815442613,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24899779182048928,
+        "log_loss": 0.6911413971609235,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2025-04-24 20:00:00+00:00",
+    "max_inner_training_label_end": "2025-04-24 13:30:00+00:00",
+    "calibration_fit_at": "2025-09-18 20:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-09-18 13:30:00+00:00",
+    "calibrator_selection_fit_at": "2025-11-28 18:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2025-11-28 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 17,
+    "family": "rule",
+    "fit_at": "2026-05-15 20:00:00+00:00",
+    "train_first": "2024-05-10 00:00:00",
+    "train_last": "2026-05-13 00:00:00",
+    "max_training_label_end_at": "2026-05-15 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2026-05-15 00:00:00",
+    "test_last": "2026-05-20 00:00:00",
+    "selected_parameter": null,
+    "selected_calibrator": "raw",
+    "candidate_trials": [
+      {
+        "parameter": null,
+        "brier": 0.25461583358618767,
+        "log_loss": 0.7024643193637574,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.247365726893655,
+        "log_loss": 0.6878306687387532,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.24812288814250122,
+        "log_loss": 0.6893709279004493,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25035576418264377,
+        "log_loss": 0.6938768380267545,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2025-07-25 20:00:00+00:00",
+    "max_inner_training_label_end": "2025-07-25 13:30:00+00:00",
+    "calibration_fit_at": "2025-12-17 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-12-17 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2026-03-03 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2026-03-03 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 17,
+    "family": "logistic",
+    "fit_at": "2026-05-15 20:00:00+00:00",
+    "train_first": "2024-05-10 00:00:00",
+    "train_last": "2026-05-13 00:00:00",
+    "max_training_label_end_at": "2026-05-15 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2026-05-15 00:00:00",
+    "test_last": "2026-05-20 00:00:00",
+    "selected_parameter": 0.2,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 0.2,
+        "brier": 0.25052849934230714,
+        "log_loss": 0.6943057200255907,
+        "n": 100
+      },
+      {
+        "parameter": 1.0,
+        "brier": 0.2510997678516479,
+        "log_loss": 0.6955002485862551,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.25602834066478836,
+        "log_loss": 0.7052295385118424,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.25156864498827425,
+        "log_loss": 0.6962776445442621,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.25103608332677074,
+        "log_loss": 0.6952512476079675,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2025-07-25 20:00:00+00:00",
+    "max_inner_training_label_end": "2025-07-25 13:30:00+00:00",
+    "calibration_fit_at": "2025-12-17 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-12-17 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2026-03-03 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2026-03-03 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  },
+  {
+    "fold": 17,
+    "family": "boosting",
+    "fit_at": "2026-05-15 20:00:00+00:00",
+    "train_first": "2024-05-10 00:00:00",
+    "train_last": "2026-05-13 00:00:00",
+    "max_training_label_end_at": "2026-05-15 13:30:00+00:00",
+    "train_n": 503,
+    "test_first": "2026-05-15 00:00:00",
+    "test_last": "2026-05-20 00:00:00",
+    "selected_parameter": 3,
+    "selected_calibrator": "sigmoid",
+    "candidate_trials": [
+      {
+        "parameter": 2,
+        "brier": 0.25861382509035696,
+        "log_loss": 0.7112249176918938,
+        "n": 100
+      },
+      {
+        "parameter": 3,
+        "brier": 0.25651630016171856,
+        "log_loss": 0.7068409485542265,
+        "n": 100
+      }
+    ],
+    "calibration_trials": {
+      "raw": {
+        "brier": 0.2556222740002469,
+        "log_loss": 0.7043625463047055,
+        "n": 51
+      },
+      "shrink": {
+        "brier": 0.2505825670320631,
+        "log_loss": 0.6942003376031487,
+        "n": 51
+      },
+      "sigmoid": {
+        "brier": 0.24962637441670585,
+        "log_loss": 0.6924049789952558,
+        "n": 51
+      }
+    },
+    "tuning_fit_at": "2025-07-25 20:00:00+00:00",
+    "max_inner_training_label_end": "2025-07-25 13:30:00+00:00",
+    "calibration_fit_at": "2025-12-17 21:00:00+00:00",
+    "max_calibration_model_training_label_end": "2025-12-17 14:30:00+00:00",
+    "calibrator_selection_fit_at": "2026-03-03 21:00:00+00:00",
+    "max_sigmoid_selection_label_end": "2026-03-03 14:30:00+00:00",
+    "calibration_n": 101,
+    "calibration_status": "forward_inner_block_refit_transfer_requires_outer_validation"
+  }
+]

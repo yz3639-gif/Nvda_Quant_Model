@@ -1,0 +1,19 @@
+{
+  "initial_capital": 100000.0,
+  "final_equity": 135820.64537464702,
+  "total_return": 0.3582064537464702,
+  "annualized_return": 0.8358518440429574,
+  "sharpe_ratio": 4.218365643381459,
+  "sortino_ratio": 10.141326674485935,
+  "max_drawdown": -0.030977575448672745,
+  "calmar_ratio": 26.98248109920333,
+  "ulcer_index": 1.2526098617777206,
+  "win_rate": 0.0,
+  "profit_factor": 0.0,
+  "avg_win": 0.0,
+  "avg_loss": 0.0,
+  "num_trades": 0,
+  "total_fees": 268.63897832764445,
+  "realized_pnl": 24186.195770696737,
+  "unrealized_pnl": 11634.449603950246
+}

@@ -1,0 +1,77 @@
+{
+  "checks": {
+    "predictions.csv": {
+      "rows": 3225,
+      "sha256_identical": true
+    },
+    "strategy_summary.csv": {
+      "rows": 17,
+      "sha256_identical": true
+    },
+    "probability_scores.csv": {
+      "rows": 15,
+      "sha256_identical": true
+    },
+    "probability_uncertainty.csv": {
+      "rows": 15,
+      "sha256_identical": true
+    },
+    "distribution_summary.csv": {
+      "rows": 54,
+      "sha256_identical": true
+    },
+    "distribution_windows.csv": {
+      "rows": 3030,
+      "sha256_identical": true
+    },
+    "cost_stress.csv": {
+      "rows": 51,
+      "sha256_identical": true
+    },
+    "parameter_neighborhood.csv": {
+      "rows": 36,
+      "sha256_identical": true
+    },
+    "stratified_results.csv": {
+      "rows": 119,
+      "sha256_identical": true
+    },
+    "block_uncertainty.csv": {
+      "rows": 16,
+      "sha256_identical": true
+    },
+    "daily_returns.csv": {
+      "rows": 1076,
+      "sha256_identical": true
+    },
+    "reliability.csv": {
+      "rows": 56,
+      "sha256_identical": true
+    },
+    "source_hash_match": true
+  },
+  "numerical_tolerance": 1e-12,
+  "independent_second_run": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/runs/frozen_repro_check",
+  "artifact_integrity": "all3completedrunartifactmapsverified",
+  "full_offline_tests": {
+    "passed": 196,
+    "command": "NVDA_OFFLINE_TESTS=1 .venv-research/bin/python -B -m pytest -q -p no:cacheprovider",
+    "source_commit": "11c9cd1e40044a03169598fe257698aec6aee9d2"
+  },
+  "extracted_package_tests": {
+    "passed": 103,
+    "synthetic_cli": "complete",
+    "cache_dependency": false
+  },
+  "independent_audit": {
+    "artifact_hashes": 242,
+    "checkpoint_hash_comparisons": 807,
+    "maturity_checks": 216,
+    "corrected_ledgers": 25,
+    "marked_bars": 24320,
+    "fills": 5435,
+    "closed_trades": 1347,
+    "max_account_residual": 2.63e-10,
+    "remote_ci_run": false
+  }
+}

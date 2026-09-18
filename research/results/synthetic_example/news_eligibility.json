@@ -1,0 +1,6 @@
+{
+  "status": "insufficient_point_in_time_sample",
+  "events": 0,
+  "serious_backtest_ready": false,
+  "reason": "No point-in-time historical event store supplied; synthetic examples do not invent news evidence."
+}

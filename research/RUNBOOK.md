@@ -75,3 +75,7 @@ Provenance binds the exact `prices_sha256`, `data_kind` (`observed_market` or `s
 ## Files to review
 
 `manifest.json`, `folds.json`, `predictions.csv`, probability scores/reliability, distribution windows/summary, strategy summary, cost/parameter stresses, yearly/regime strata, block uncertainty, and each strategy's fill/account/equity files. Figures read these files directly. The model card and technical brief explain assumptions and unsuccessful results; use them alongside the LinkedIn image.
+
+## Build the compact package
+
+Run `python scripts/build_nvda_repro_pack.py --output nvda-research-v2.zip`. The archive includes runnable source, pinned dependencies, a synthetic fixture, focused regression tests and compact market result evidence. Full market-run manifests refer to additional ledgers retained in the source repository; the compact archive does not contain the personal historical cache.

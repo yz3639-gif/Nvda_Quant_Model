@@ -1,0 +1,24 @@
+{
+  "execution_mode": "next_open",
+  "stop_reference": "entry",
+  "terminal_policy": "mark",
+  "intrabar_policy": "stop_first",
+  "cost_per_side": 0.0015,
+  "ledger_reconciled": true,
+  "open_trade": {
+    "entry_date": "2020-09-18 00:00:00",
+    "entry_equity": 116046.05453170135,
+    "entry_price": 145.9251901109,
+    "position": 0.8481795515358234,
+    "gross_pnl": 129.4292448605658,
+    "fees": 175.91483075629787
+  },
+  "halted": false,
+  "cash": 6626.894449696549,
+  "shares": 748.4817299819969,
+  "cost_basis": 146.12604438419598,
+  "realized_pnl": 15999.568945805579,
+  "unrealized_pnl": 3688.1430795225983,
+  "cumulative_fees": 12056.64322586623,
+  "equity": 119687.71202532822
+}

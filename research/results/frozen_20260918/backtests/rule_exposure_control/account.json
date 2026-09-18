@@ -1,0 +1,24 @@
+{
+  "execution_mode": "next_open",
+  "stop_reference": "entry",
+  "terminal_policy": "mark",
+  "intrabar_policy": "stop_first",
+  "cost_per_side": 0.0015,
+  "ledger_reconciled": true,
+  "open_trade": {
+    "entry_date": "2026-05-18 00:00:00",
+    "entry_equity": 145483.00419647872,
+    "entry_price": 229.8699951171875,
+    "position": 0.1756750685404737,
+    "gross_pnl": -9.582279227292274,
+    "fees": 40.37898814072589
+  },
+  "halted": false,
+  "cash": 119201.09450712931,
+  "shares": 114.31701619671499,
+  "cost_basis": 229.46669966299558,
+  "realized_pnl": 45433.04292911082,
+  "unrealized_pnl": -1138.2208246026207,
+  "cumulative_fees": 1668.1371222402713,
+  "equity": 144294.8221045081
+}

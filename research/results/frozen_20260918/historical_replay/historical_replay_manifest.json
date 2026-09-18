@@ -1,0 +1,86 @@
+{
+  "created_at": "2026-09-18T22:48:12.070041+00:00",
+  "replay_scope": "frozen_signal_execution_only",
+  "caveats": [
+    "Frozen precomputed signals only; no feature, training, parameter-selection or signal-generation reconstruction.",
+    "Historical development data and selected strategies; not an untouched holdout and not evidence of prospective alpha.",
+    "Corrected close changes accounting and gap fills; next-open plus entry additionally changes execution and stop semantics.",
+    "Cached adjusted OHLC is replayed as stored; original vendor vintage and corporate-action availability are not independently reconstructed.",
+    "Near matches are explicitly not exact reproductions; small differences may reflect cache vintages or numeric processing, with attribution unproven."
+  ],
+  "runs": [
+    {
+      "experiment_id": "strict_baseline_24m",
+      "variant": "legacy_close_daily_reset",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/manifest.json",
+      "manifest_sha256": "0c07c46e35d905edd1c15a8ca1266e3bfaac0bcadb8adf4419399ba50f628bbf"
+    },
+    {
+      "experiment_id": "strict_baseline_24m",
+      "variant": "corrected_close_daily_reset",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/manifest.json",
+      "manifest_sha256": "4befaf44bfb479b263e2d947b535a311613ca462626c9445004aac37e542ce4a"
+    },
+    {
+      "experiment_id": "strict_baseline_24m",
+      "variant": "corrected_next_open_entry",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/manifest.json",
+      "manifest_sha256": "b7e5b65dbe1ff3ad915576f3529e0fe08e8d82b9bf889e5a13ce8f6c9be3ed8f"
+    },
+    {
+      "experiment_id": "strict_baseline_36m",
+      "variant": "legacy_close_daily_reset",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/manifest.json",
+      "manifest_sha256": "9c107b7a11e1da12a3ab30a200e89dfacbd0525942471a7995ad756b1341d0f0"
+    },
+    {
+      "experiment_id": "strict_baseline_36m",
+      "variant": "corrected_close_daily_reset",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/manifest.json",
+      "manifest_sha256": "d52cc7a0105e03a7eebd3cda60b64b218ee91741bda3a9a1da2a0343a321621c"
+    },
+    {
+      "experiment_id": "strict_baseline_36m",
+      "variant": "corrected_next_open_entry",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/manifest.json",
+      "manifest_sha256": "b64c92444319de0f4e50bb56a5a0c3fa7e83e4f442d838907f956ce291e178f2"
+    },
+    {
+      "experiment_id": "strict_baseline_60m",
+      "variant": "legacy_close_daily_reset",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/manifest.json",
+      "manifest_sha256": "9533b29bc038cfe86f439bdb7e49063328e2c70367aea7b069c6ac13f5fdb533"
+    },
+    {
+      "experiment_id": "strict_baseline_60m",
+      "variant": "corrected_close_daily_reset",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/manifest.json",
+      "manifest_sha256": "5dabf7b55d4c1063d53b885ec69a72b3cfd22173e134b5495662c23a62246966"
+    },
+    {
+      "experiment_id": "strict_baseline_60m",
+      "variant": "corrected_next_open_entry",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/manifest.json",
+      "manifest_sha256": "233a29dd31f8e8657beb07cf4e2b15e2f527e6ca67993b624a4760b89193df1b"
+    },
+    {
+      "experiment_id": "default_model_24m",
+      "variant": "legacy_close_daily_reset",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/manifest.json",
+      "manifest_sha256": "344340d041ef2e67d1328f2f83af076ec9319eae528ae38e948fe8fedd107d3f"
+    },
+    {
+      "experiment_id": "default_model_24m",
+      "variant": "corrected_close_daily_reset",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/manifest.json",
+      "manifest_sha256": "aa1a80b8d723c923cb7f293cf5e2fabb901ca25b8b02e3bd3ecdebe3feaec3f0"
+    },
+    {
+      "experiment_id": "default_model_24m",
+      "variant": "corrected_next_open_entry",
+      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/manifest.json",
+      "manifest_sha256": "ac11236bc91c46ae2f0f33278edc2ad819a3f1a4cc2f507ff06baa2a1fa90eea"
+    }
+  ],
+  "summary_sha256": "1571271a9a6c1e2ba59b66301e72bac35c13d291537877298379383ade5be1d9"
+}

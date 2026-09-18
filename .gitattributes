@@ -1,0 +1,4 @@
+# Preserve byte-level evidence and collapse generated research outputs in reviews.
+research/results/** -text linguist-generated=true
+# Matplotlib uses harmless trailing blanks in SVG path coordinate lists.
+research/results/**/*.svg whitespace=-blank-at-eol

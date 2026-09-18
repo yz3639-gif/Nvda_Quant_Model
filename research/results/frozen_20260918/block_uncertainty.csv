@@ -1,0 +1,17 @@
+model,comparison,mean,low,high,n,block,repetitions,inference
+boosting_raw,daily_net_return_minus_buy_hold,-0.0027579497222146947,-0.004583309042030289,-0.0008300832630343392,1076,21,1000,descriptive_not_selection_adjusted
+boosting_calibrated,daily_net_return_minus_buy_hold,-0.0027445920605556023,-0.004581360002252639,-0.0008383157121036162,1076,21,1000,descriptive_not_selection_adjusted
+boosting_vol_target,daily_net_return_minus_buy_hold,-0.0027725983599199634,-0.004608971728988515,-0.0007448623146947993,1076,21,1000,descriptive_not_selection_adjusted
+boosting_fixed_risk_control,daily_net_return_minus_buy_hold,-0.0027797034223793534,-0.004659429132509164,-0.000769067774564346,1076,21,1000,descriptive_not_selection_adjusted
+boosting_exposure_control,daily_net_return_minus_buy_hold,-0.002147185442790955,-0.0037636654246446582,-0.0005302064997628811,1076,21,1000,descriptive_not_selection_adjusted
+logistic_raw,daily_net_return_minus_buy_hold,-0.0027293353190373684,-0.004580190573842974,-0.000783223305367247,1076,21,1000,descriptive_not_selection_adjusted
+logistic_calibrated,daily_net_return_minus_buy_hold,-0.002732469870961795,-0.004560549785063654,-0.000816960925531213,1076,21,1000,descriptive_not_selection_adjusted
+logistic_vol_target,daily_net_return_minus_buy_hold,-0.0026345932365677968,-0.004380925966541707,-0.0007262887776312554,1076,21,1000,descriptive_not_selection_adjusted
+logistic_fixed_risk_control,daily_net_return_minus_buy_hold,-0.0025537528385073524,-0.00429639777713571,-0.0005952615399297336,1076,21,1000,descriptive_not_selection_adjusted
+logistic_exposure_control,daily_net_return_minus_buy_hold,-0.0020492440943307715,-0.0036201407148911575,-0.00043640189266367225,1076,21,1000,descriptive_not_selection_adjusted
+rule_raw,daily_net_return_minus_buy_hold,-0.0027376541922169975,-0.004546068162868867,-0.0008315870585648274,1076,21,1000,descriptive_not_selection_adjusted
+rule_calibrated,daily_net_return_minus_buy_hold,-0.0027376541922169975,-0.004546068162868867,-0.0008315870585648274,1076,21,1000,descriptive_not_selection_adjusted
+rule_vol_target,daily_net_return_minus_buy_hold,-0.002778172882906838,-0.004579175761196001,-0.0008441474197093396,1076,21,1000,descriptive_not_selection_adjusted
+rule_fixed_risk_control,daily_net_return_minus_buy_hold,-0.0027613531522755826,-0.004582946624433559,-0.0007464442079763782,1076,21,1000,descriptive_not_selection_adjusted
+rule_exposure_control,daily_net_return_minus_buy_hold,-0.0021668667043727814,-0.0038712381494374767,-0.0004522688099497251,1076,21,1000,descriptive_not_selection_adjusted
+trend,daily_net_return_minus_buy_hold,-0.0027506915700673917,-0.004567855278976484,-0.000901467179489673,1076,21,1000,descriptive_not_selection_adjusted

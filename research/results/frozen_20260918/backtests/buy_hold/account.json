@@ -1,0 +1,24 @@
+{
+  "execution_mode": "next_open",
+  "stop_reference": "entry",
+  "terminal_policy": "mark",
+  "intrabar_policy": "stop_first",
+  "cost_per_side": 0.0015,
+  "ledger_reconciled": true,
+  "open_trade": {
+    "entry_date": "2022-02-08 00:00:00",
+    "entry_equity": 100000.0,
+    "entry_price": 24.310585923042694,
+    "position": 0.998502246630055,
+    "gross_pnl": 0.0,
+    "fees": 149.77533699450825
+  },
+  "halted": false,
+  "cash": -1.4551915228366852e-11,
+  "shares": 4107.273472514821,
+  "cost_basis": 24.310585923042694,
+  "realized_pnl": -149.77533699450825,
+  "unrealized_pnl": 801737.3527267958,
+  "cumulative_fees": 149.77533699450825,
+  "equity": 901587.5773898013
+}

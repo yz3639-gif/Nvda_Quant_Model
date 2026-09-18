@@ -1,0 +1,16 @@
+{
+  "status": "insufficient_point_in_time_sample",
+  "events": 26,
+  "months": 3.252566735112936,
+  "source_max_share": 0.07692307692307693,
+  "available_at_verified": false,
+  "serious_backtest_ready": false,
+  "reasons": [
+    "Fewer than 250 events; minimum gate is not a statistical-power guarantee.",
+    "Less than 24 months coverage.",
+    "Historical availability provenance is missing; publication date alone does not establish ingestion availability."
+  ],
+  "source_file": "research/baseline/historical_outputs/event_overlay_backtest/classified_events_with_labels.csv",
+  "source_sha256": "e90c1172a93332598da7a6671fa2ee2988c271e88771e18b81ce15e0f16b1ccc",
+  "conclusion": "News remains explanatory context. No incremental alpha claim."
+}
