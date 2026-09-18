@@ -1,0 +1,49 @@
+{
+  "label": "tw147_sw63_10d_return_mq0.60_vq0.45_smh++obv++rsi<75+p60>0.96+vix<0.9",
+  "overall_status": "PASS_BUT_FRAGILE",
+  "hard_gates_pass": true,
+  "min_annualized_margin": 0.0040145250634744944,
+  "min_sharpe_margin": 0.2403466103776839,
+  "max_drawdown_margin": 0.06679367314071341,
+  "min_win_rate_margin": 0.019892473118279574,
+  "min_profit_factor_margin": 0.8192637596030994,
+  "min_num_trades": 32,
+  "parameter_sensitivity": {
+    "variant": "baseline",
+    "production_stop_loss_pct": 0.025,
+    "production_take_profit_pct": 0.04,
+    "grid_rows": 45,
+    "grid_pass_count": 1,
+    "near_rows": 9,
+    "near_pass_count": 1,
+    "exact_found": true,
+    "exact_min_annualized_return": 0.1540145250634745,
+    "exact_min_annualized_margin": 0.0040145250634744944
+  },
+  "engine_calibration": {
+    "methods": [
+      "gbm_normal",
+      "gbm_student_t",
+      "historical_bootstrap"
+    ],
+    "best_95_method": "gbm_student_t",
+    "best_95_coverage": 0.931174089068826,
+    "best_95_coverage_error": -0.018825910931174,
+    "min_pit_ks_pvalue": 0.1199930173076083
+  },
+  "warnings": [
+    "Annualized return passes, but the minimum margin is below 1 percentage point.",
+    "Only one nearby stop/take parameter set passes all hard gates; parameter fragility is elevated.",
+    "Shorter windows still have fewer than 60 trades; use 24M/36M as supporting evidence, not sole proof.",
+    "At least one yearly regime has precision below 50%; 2022-like regimes need separate handling.",
+    "Probability calibration is weak in at least one window; direction signal is better than prob_up scale.",
+    "Terminal-return engine 95% interval remains under-covered; tail risk is still understated."
+  ],
+  "recommended_controls": [
+    "Keep the audited production override, but do not promote any new rule without 24/36/60 stress validation.",
+    "Treat 2022-like/high-volatility regimes as a separate model bucket before increasing exposure.",
+    "Do not use prob_up as a sizing scalar until calibration error is reduced.",
+    "Require parameter-neighborhood evidence before future stop/take changes become production."
+  ],
+  "report": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/overfit_audit/overfit_audit_report.md"
+}

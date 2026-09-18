@@ -4,12 +4,13 @@ import numpy as np
 import pandas as pd
 
 from nvda_quant_model.event_overlay.event_classifier import classify_events
+from nvda_quant_model.data.session_calendar import as_utc, session_labels, session_schedule
 from nvda_quant_model.event_overlay.schema import EVENT_TYPES, assert_no_event_feature_leakage
 
 
 def _safe_prices(prices: pd.DataFrame) -> pd.DataFrame:
     data = prices.copy()
-    data.index = pd.to_datetime(data.index).tz_localize(None)
+    data.index = session_labels(data.index)
     required = {"Close"}
     missing = required - set(data.columns)
     if missing:
@@ -20,10 +21,9 @@ def _safe_prices(prices: pd.DataFrame) -> pd.DataFrame:
 
 
 def _history_before(prices: pd.DataFrame, published_at: pd.Timestamp) -> pd.DataFrame:
-    """Use only daily bars whose session date is strictly before the event date."""
-
-    event_date = pd.Timestamp(published_at).normalize()
-    return prices.loc[prices.index.normalize() < event_date]
+    """Use completed exchange sessions available by the event decision instant."""
+    closes = session_schedule(prices.index, allow_non_sessions=True)["market_close"]
+    return prices.loc[closes.notna() & (closes <= as_utc(published_at))]
 
 
 def _pct(close: pd.Series, days: int) -> float:
@@ -121,8 +121,8 @@ def _external_features(external_data: pd.DataFrame | None, published_at: pd.Time
     if external_data is None or external_data.empty:
         return out
     data = external_data.copy()
-    data.index = pd.to_datetime(data.index).tz_localize(None)
-    hist = data.loc[data.index.normalize() < pd.Timestamp(published_at).normalize()].sort_index()
+    data.index = session_labels(data.index)
+    hist = _history_before(data, published_at).sort_index()
     if hist.empty:
         return out
     for ticker, key in [("SMH", "SMH_return_5d"), ("QQQ", "QQQ_return_5d"), ("SPY", "SPY_return_5d")]:
@@ -149,9 +149,9 @@ def build_event_feature_frame(
     prices = _safe_prices(market_data)
     rows: list[dict[str, float]] = []
     for _, row in classified.iterrows():
-        history = _history_before(prices, row["published_at"])
+        history = _history_before(prices, row["available_at"])
         features = _market_context_features(history)
-        features.update(_external_features(external_data, row["published_at"]))
+        features.update(_external_features(external_data, row["available_at"]))
         if include_event_context:
             features["source_quality"] = float(row["source_quality"])
             features["nvda_relevance"] = float(row["nvda_relevance"])
@@ -162,6 +162,7 @@ def build_event_feature_frame(
         rows.append(features)
     out = pd.DataFrame(rows, index=classified.index).replace([np.inf, -np.inf], np.nan).fillna(0.0)
     assert_no_event_feature_leakage(list(out.columns))
+    out.attrs["availability_provenance"] = {"daily_prices": "assumed_session_close", "external": "unverified_cached_daily_observations" if external_data is not None and not external_data.empty else "not_used"}
     return out
 
 

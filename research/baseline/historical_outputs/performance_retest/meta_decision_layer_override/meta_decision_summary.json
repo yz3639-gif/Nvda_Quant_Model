@@ -1,0 +1,224 @@
+{
+  "baseline_label": "tw147_sw63_10d_return_mq0.60_vq0.45_smh++obv++rsi<75+p60>0.96+vix<0.9",
+  "window_count": 3,
+  "strict_pass_windows": 3,
+  "research_pass_windows": 3,
+  "production_decision": "meta_orchestrator_ready_baseline_only",
+  "reaction_validation_pass": false,
+  "risk_global_decision": "watchlist_only",
+  "allow_watchlist_overlays": false,
+  "windows": [
+    {
+      "lookback_months": 24,
+      "split": {
+        "train_start": "2024-05-22",
+        "train_end": "2025-09-10",
+        "validation_start": "2025-09-11",
+        "validation_end": "2026-05-22",
+        "train_days": 326,
+        "validation_days": 176
+      },
+      "strict_pass": true,
+      "research_pass": true,
+      "reaction_latest": {
+        "date": "2026-05-26",
+        "as_of_date": "2026-05-22",
+        "baseline_signal": 0,
+        "reaction_alert": 0,
+        "active_watchlist_rules": 1,
+        "weighted_prob_up": 0.51,
+        "expected_return": 0.0,
+        "target_price": 215.34,
+        "current_price": 215.34,
+        "reason": "no reaction alert; baseline is active or watchlist consensus is insufficient",
+        "watchlist_rows": [
+          {
+            "label": "tw189_sw21_20d_return_mq0.60_vq0.45_rsi<72+p60>1+vix<0.7",
+            "status": "watchlist_recent_only",
+            "signal": 1,
+            "prob_up": 0.51,
+            "expected_return": 0.0005,
+            "weight": 0.34134790789461666
+          },
+          {
+            "label": "tw147_sw63_10d_return_mq0.60_vq0.50_smh++peer_mean++rsi<78+p60>0.96+vix<0.8",
+            "status": "watchlist_strong_recent_mid",
+            "signal": 0,
+            "prob_up": 0.5,
+            "expected_return": 0.0,
+            "weight": 0.28786613080229245
+          },
+          {
+            "label": "tw210_sw42_10d_return_mq0.60_vq0.45_smh++no_negative_pre_holiday+rsi<75+p60>0.94+vix<0.9",
+            "status": "watchlist_strong_recent_mid",
+            "signal": 0,
+            "prob_up": 0.5,
+            "expected_return": 0.0,
+            "weight": 0.2755536196924143
+          },
+          {
+            "label": "tw168_sw28_20d_return_mq0.60_vq0.50_rsi<75+p60>0.96+vix<0.7",
+            "status": "watchlist_strong_recent_mid",
+            "signal": 0,
+            "prob_up": 0.5,
+            "expected_return": 0.0,
+            "weight": 0.36654358928680764
+          }
+        ],
+        "validation_pass": false,
+        "diagnostic_active_days": 0
+      },
+      "risk_rule": "peer_stress_votes>=2_sector_negative_peer_weak_peer_stress_trend_break_mneg3_breadth<0.5_pstress0.7_vixq0.8_volx1",
+      "risk_production_ready": false,
+      "risk_watchlist_ready": false
+    },
+    {
+      "lookback_months": 36,
+      "split": {
+        "train_start": "2023-05-22",
+        "train_end": "2025-05-05",
+        "validation_start": "2025-05-06",
+        "validation_end": "2026-05-22",
+        "train_days": 490,
+        "validation_days": 264
+      },
+      "strict_pass": true,
+      "research_pass": true,
+      "reaction_latest": {
+        "date": "2026-05-26",
+        "as_of_date": "2026-05-22",
+        "baseline_signal": 0,
+        "reaction_alert": 0,
+        "active_watchlist_rules": 1,
+        "weighted_prob_up": 0.51,
+        "expected_return": 0.0,
+        "target_price": 215.34,
+        "current_price": 215.34,
+        "reason": "no reaction alert; baseline is active or watchlist consensus is insufficient",
+        "watchlist_rows": [
+          {
+            "label": "tw189_sw21_20d_return_mq0.60_vq0.45_rsi<72+p60>1+vix<0.7",
+            "status": "watchlist_recent_only",
+            "signal": 1,
+            "prob_up": 0.51,
+            "expected_return": 0.0005,
+            "weight": 0.34134790789461666
+          },
+          {
+            "label": "tw147_sw63_10d_return_mq0.60_vq0.50_smh++peer_mean++rsi<78+p60>0.96+vix<0.8",
+            "status": "watchlist_strong_recent_mid",
+            "signal": 0,
+            "prob_up": 0.5,
+            "expected_return": 0.0,
+            "weight": 0.28786613080229245
+          },
+          {
+            "label": "tw210_sw42_10d_return_mq0.60_vq0.45_smh++no_negative_pre_holiday+rsi<75+p60>0.94+vix<0.9",
+            "status": "watchlist_strong_recent_mid",
+            "signal": 0,
+            "prob_up": 0.5,
+            "expected_return": 0.0,
+            "weight": 0.2755536196924143
+          },
+          {
+            "label": "tw168_sw28_20d_return_mq0.60_vq0.50_rsi<75+p60>0.96+vix<0.7",
+            "status": "watchlist_strong_recent_mid",
+            "signal": 0,
+            "prob_up": 0.5,
+            "expected_return": 0.0,
+            "weight": 0.36654358928680764
+          }
+        ],
+        "validation_pass": false,
+        "diagnostic_active_days": 0
+      },
+      "risk_rule": "high_vol_break_votes>=2_high_vix_regime_vix_jump_macro_negative_vol_expansion_trend_break_mneg2_breadth<0.4_pstress0.7_vixq0.7_volx1.1",
+      "risk_production_ready": false,
+      "risk_watchlist_ready": false
+    },
+    {
+      "lookback_months": 60,
+      "split": {
+        "train_start": "2021-05-24",
+        "train_end": "2024-08-20",
+        "validation_start": "2024-08-21",
+        "validation_end": "2026-05-22",
+        "train_days": 816,
+        "validation_days": 440
+      },
+      "strict_pass": true,
+      "research_pass": true,
+      "reaction_latest": {
+        "date": "2026-05-26",
+        "as_of_date": "2026-05-22",
+        "baseline_signal": 0,
+        "reaction_alert": 0,
+        "active_watchlist_rules": 1,
+        "weighted_prob_up": 0.51,
+        "expected_return": 0.0,
+        "target_price": 215.34,
+        "current_price": 215.34,
+        "reason": "no reaction alert; baseline is active or watchlist consensus is insufficient",
+        "watchlist_rows": [
+          {
+            "label": "tw189_sw21_20d_return_mq0.60_vq0.45_rsi<72+p60>1+vix<0.7",
+            "status": "watchlist_recent_only",
+            "signal": 1,
+            "prob_up": 0.51,
+            "expected_return": 0.0005,
+            "weight": 0.34134790789461666
+          },
+          {
+            "label": "tw147_sw63_10d_return_mq0.60_vq0.50_smh++peer_mean++rsi<78+p60>0.96+vix<0.8",
+            "status": "watchlist_strong_recent_mid",
+            "signal": 0,
+            "prob_up": 0.5,
+            "expected_return": 0.0,
+            "weight": 0.28786613080229245
+          },
+          {
+            "label": "tw210_sw42_10d_return_mq0.60_vq0.45_smh++no_negative_pre_holiday+rsi<75+p60>0.94+vix<0.9",
+            "status": "watchlist_strong_recent_mid",
+            "signal": 0,
+            "prob_up": 0.5,
+            "expected_return": 0.0,
+            "weight": 0.2755536196924143
+          },
+          {
+            "label": "tw168_sw28_20d_return_mq0.60_vq0.50_rsi<75+p60>0.96+vix<0.7",
+            "status": "watchlist_strong_recent_mid",
+            "signal": 0,
+            "prob_up": 0.5,
+            "expected_return": 0.0,
+            "weight": 0.36654358928680764
+          }
+        ],
+        "validation_pass": false,
+        "diagnostic_active_days": 2
+      },
+      "risk_rule": "composite_risk_votes>=3_downtrend_high_vix_regime_macro_negative_sector_negative_peer_weak_peer_stress_vol_expansion_trend_break_mneg2_breadth<0.4_pstress0.7_vixq0.7_volx1",
+      "risk_production_ready": false,
+      "risk_watchlist_ready": true
+    }
+  ],
+  "latest_decision": {
+    "date": "2026-05-26",
+    "weekday": "Tuesday",
+    "as_of_date": "2026-05-22",
+    "current_price": 215.34,
+    "decision": "NO_TRADE",
+    "position": 0.0,
+    "prob_up": 0.5,
+    "expected_return": 0.0,
+    "target_price": 215.34,
+    "stop_loss": 209.9565,
+    "take_profit": 223.9536,
+    "source_layer": "none",
+    "baseline_signal": 0,
+    "risk_off": 0,
+    "reaction_monitor": 0,
+    "live_overlay_flags": [],
+    "live_overlays": {}
+  },
+  "report_path": "nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_report.md"
+}

@@ -1,0 +1,17 @@
+roles,label,latest_date,signal,position,prob_up,expected_return,target_price,stop_loss,take_profit
+current_baseline+strict30_best_score+strict30_best_sharpe+strict30_best_profit_factor,tw147_sw63_10d_return_mq0.60_vq0.45_smh++obv++rsi<75+p60>0.96+vix<0.9,2026-05-26,0,0.0,0.5,0.0,215.34,209.9565,223.9536
+sample40_best_return,tw210_sw28_20d_return_mq0.55_vq0.55_rsi<75+p60>0.98+vix<0.8,2026-05-26,1,1.0,0.51,0.0005,215.4477,206.7264,225.0303
+sample40_best_score,tw252_sw42_20d_return_mq0.50_vq0.45_sp500++rsi<75+vix<0.8,2026-05-26,0,0.0,0.5,0.0,215.34,209.9565,230.4138
+sample40_best_score,tw252_sw63_20d_return_mq0.50_vq0.45_qqq++rsi<75+p60>1,2026-05-26,0,0.0,0.5,0.0,215.34,206.7264,232.5672
+sample40_best_score,tw126_sw63_10d_return_mq0.55_vq0.45_sp500++p60>0.94,2026-05-26,0,0.0,0.5,0.0,215.34,208.8798,227.1837
+sample50_best_score,tw84_sw63_10d_return_mq0.55_vq0.45_rsi<75+p60>1+vix<0.8,2026-05-26,0,0.0,0.5,0.0,215.34,209.9565,222.8769
+sample50_best_score+sample50_best_return,tw252_sw42_20d_return_mq0.50_vq0.45_p60>1.02,2026-05-26,0,0.0,0.5,0.0,215.34,206.7264,227.1837
+sample50_best_score+sample50_best_return+sample60_best_score+sample60_best_return,tw252_sw21_20d_return_mq0.50_vq0.45_p60>1.02,2026-05-26,0,0.0,0.5,0.0,215.34,209.9565,227.1837
+strict30_best_profit_factor,tw315_sw63_20d_return_mq0.55_vq0.45_sp500++rsi<82+p60>1.04+vix<0.8,2026-05-26,0,0.0,0.5,0.0,215.34,209.9565,230.4138
+strict30_best_return+sample40_best_return,tw210_sw28_20d_return_mq0.55_vq0.50_rsi<78+p60>1,2026-05-26,1,1.0,0.51,0.0005,215.4477,206.7264,232.5672
+strict30_best_return+sample40_best_return+sample50_best_return,tw147_sw28_20d_return_mq0.50_vq0.45_rsi<75,2026-05-26,1,1.0,0.51,0.0005,215.4477,206.7264,226.107
+strict30_best_score+strict30_best_return+strict30_best_win_rate,tw168_sw28_20d_return_mq0.60_vq0.50_rsi<75+p60>0.96+vix<0.7,2026-05-26,0,0.0,0.5,0.0,215.34,204.573,228.2604
+strict30_best_score+strict30_best_win_rate+strict30_best_profit_factor,tw147_sw63_10d_return_mq0.60_vq0.50_smh++peer_mean++rsi<78+p60>0.96+vix<0.8,2026-05-26,0,0.0,0.5,0.0,215.34,209.9565,222.8769
+strict30_best_sharpe,tw189_sw21_20d_return_mq0.60_vq0.45_rsi<72+p60>1+vix<0.7,2026-05-26,1,1.0,0.51,0.0005,215.4477,205.6497,227.1837
+strict30_best_sharpe,tw210_sw42_10d_return_mq0.60_vq0.45_smh++no_negative_pre_holiday+rsi<75+p60>0.94+vix<0.9,2026-05-26,0,0.0,0.5,0.0,215.34,211.0332,222.8769
+strict30_best_win_rate,tw168_sw42_10d_return_mq0.55_vq0.50_qqq++p60>1+vix<0.7,2026-05-26,0,0.0,0.5,0.0,215.34,209.9565,226.107

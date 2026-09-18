@@ -1,0 +1,505 @@
+{
+  "config": {
+    "ticker": "NVDA",
+    "benchmark": "^GSPC",
+    "start_date": "2024-07-24",
+    "end_date": "2026-07-24",
+    "lookback_months": 24,
+    "initial_capital": 100000.0,
+    "position_unit": 0.1,
+    "max_exposure": 1.0,
+    "commission": 0.001,
+    "slippage": 0.0005,
+    "stop_loss_pct": 0.04,
+    "take_profit_pct": 0.05,
+    "max_drawdown_limit": 0.2,
+    "train_window": 189,
+    "test_window": 42,
+    "walk_forward_jobs": 1,
+    "top_k_features": 12,
+    "include_fundamentals": false,
+    "include_peer_events": true,
+    "signal_threshold": 0.5,
+    "min_expected_return": 0.00025,
+    "rule_quantile": 0.55,
+    "rule_max_filters": 2,
+    "fast_rule_only": false,
+    "model_params_path": null,
+    "precision_rule_path": null,
+    "random_state": 42
+  },
+  "data_status": {
+    "status": "FRESH",
+    "requested_start": "auto",
+    "requested_end": "latest",
+    "resolved_start": "2024-07-24",
+    "resolved_end": "2026-07-24",
+    "start_source": "rolling_24_months",
+    "end_source": "latest_yfinance_daily",
+    "lookback_months": 24,
+    "include_fundamentals": false,
+    "include_peer_events": true,
+    "last_price_date": "2026-07-24",
+    "last_price_close": 206.84,
+    "latest_daily_close_from_resolver": 206.83999633789062,
+    "external_last_dates": {
+      "^IXIC": "2026-07-24",
+      "HYG": "2026-07-24",
+      "ARM": "2026-07-24",
+      "ASML": "2026-07-24",
+      "DX-Y.NYB": "2026-07-24",
+      "INTC": "2026-07-24",
+      "QQQ": "2026-07-24",
+      "SMH": "2026-07-24",
+      "UUP": "2026-07-24",
+      "TSM": "2026-07-24",
+      "^VIX": "2026-07-24",
+      "QCOM": "2026-07-24",
+      "AMD": "2026-07-24",
+      "^TNX": "2026-07-24",
+      "LQD": "2026-07-24",
+      "MU": "2026-07-24",
+      "XLK": "2026-07-24",
+      "AVGO": "2026-07-24",
+      "^GSPC": "2026-07-24"
+    },
+    "price_source": "latest_daily_close",
+    "price_override": null,
+    "warnings": []
+  },
+  "data_quality": {
+    "csv": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/data_quality.csv",
+    "json": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/data_quality.json"
+  },
+  "metrics": {
+    "initial_capital": 100000.0,
+    "final_equity": 106459.27504170583,
+    "total_return": 0.06459275041705825,
+    "annualized_return": 0.03191969792968696,
+    "sharpe_ratio": 0.29934378861648886,
+    "sortino_ratio": 0.20393640183344733,
+    "max_drawdown": -0.1747093841344256,
+    "calmar_ratio": 0.1827016796368945,
+    "ulcer_index": 8.710056997195165,
+    "win_rate": 0.6097560975609756,
+    "profit_factor": 1.3671087387439296,
+    "avg_win": 2005.1720231521817,
+    "avg_loss": -2291.757193399182,
+    "num_trades": 41
+  },
+  "benchmark_metrics": {
+    "initial_capital": 100000.0,
+    "final_equity": 136572.73992911424,
+    "total_return": 0.3657273992911423,
+    "annualized_return": 0.16936922649082864,
+    "sharpe_ratio": 1.031529470885311,
+    "sortino_ratio": 1.3408809530335604,
+    "max_drawdown": -0.18902206184283998,
+    "calmar_ratio": 0.8960288806480619,
+    "ulcer_index": 3.784284776382664,
+    "win_rate": 0.0,
+    "profit_factor": 0.0,
+    "avg_win": 0.0,
+    "avg_loss": 0.0,
+    "num_trades": 0
+  },
+  "statistical_tests": {
+    "t_stat": 0.5599620503001512,
+    "p_value": 0.2886726920303175,
+    "positive_return_t": 0.4220742364714243,
+    "positive_return_p": 0.33657594577322103,
+    "excess_two_sided_t": -0.9302740432900098,
+    "excess_two_sided_p": 0.3526772365861097,
+    "active_excess_t": 0.5599620503001512,
+    "active_excess_p": 0.2886726920303175,
+    "strategy_sharpe": 0.29934378861648886,
+    "benchmark_sharpe": 1.031529470885311,
+    "shapiro_p": 5.716100767170932e-19,
+    "durbin_watson": 2.0807973361765213,
+    "conclusion": "策略无显著性，可能是随机波动"
+  },
+  "robustness": {
+    "observed_sharpe": 0.29934378861648875,
+    "bootstrap_sharpe_p05": -0.889548327588738,
+    "bootstrap_sharpe_p50": 0.2516950667688232,
+    "bootstrap_mdd_p95": 0.30203065727960876
+  },
+  "oos": {
+    "sharpe_degradation": 1.0,
+    "passes_20pct_rule": false
+  },
+  "prediction_next_day": {
+    "date": "2026-07-27",
+    "weekday": "Monday",
+    "as_of_date": "2026-07-24",
+    "model_close": 206.84,
+    "current_price": 206.84,
+    "price_source": "latest_daily_close",
+    "price_delta_vs_model_close": 0.0,
+    "signal": 0,
+    "position": 0.0,
+    "confidence": 0.5,
+    "expected_return": 0.0,
+    "target_price": 206.84,
+    "stop_loss": 198.5664,
+    "take_profit": 217.182,
+    "factor_signals": {
+      "momentum": 1,
+      "mean_reversion": 0,
+      "ema_trend": 1,
+      "bollinger": 0,
+      "volatility": 0,
+      "correlation": -1,
+      "holiday_sentiment": 0
+    },
+    "holiday_context": {
+      "pre_holiday_session": false,
+      "post_holiday_session": false,
+      "next_session_gap_days": 3,
+      "next_session_has_holiday": false,
+      "pre_holiday_momentum": 0.0
+    },
+    "probability": {
+      "prob_up": 0.5,
+      "prob_down": 0.5
+    },
+    "news_overlay": {
+      "signal": 0,
+      "sentiment_score": 0.0479,
+      "article_count": 356,
+      "risk_flags": [],
+      "confidence_adjustment": 0.0096
+    }
+  },
+  "precision_rule": null,
+  "options_volatility": {
+    "as_of_date": "2026-05-22",
+    "underlying_price": 206.84,
+    "source": "alpaca_option_snapshot_mcp",
+    "feed": "indicative",
+    "realized_volatility": {
+      "hv_10d": 0.3616344823479304,
+      "hv_20d": 0.3473594816246985,
+      "hv_60d": 0.40600946016721257
+    },
+    "near_week": {
+      "expiration": "2026-05-29",
+      "days_to_expiry": 7,
+      "atm_strike": 210.0,
+      "atm_call_iv": 0.4593,
+      "atm_put_iv": 0.3578,
+      "atm_iv_avg": 0.40854999999999997,
+      "atm_straddle_mid": 9.56,
+      "straddle_expected_move_pct": 0.04621929994198414,
+      "straddle_low": 197.28,
+      "straddle_high": 216.4,
+      "iv_expected_move_pct": 0.056578027525092604,
+      "iv_low": 195.13740078670986,
+      "iv_high": 218.54259921329017,
+      "skew_25d_put_minus_call_iv": -0.06669999999999998,
+      "skew_10d_put_minus_call_iv": -0.012800000000000034,
+      "call_25d": {
+        "symbol": "NVDA260529C00220000",
+        "strike": 220.0,
+        "type": "call",
+        "mid": 2.435,
+        "iv": 0.4245,
+        "delta": 0.3278
+      },
+      "put_25d": {
+        "symbol": "NVDA260529P00210000",
+        "strike": 210.0,
+        "type": "put",
+        "mid": 2.0700000000000003,
+        "iv": 0.3578,
+        "delta": -0.3172
+      },
+      "call_10d": {
+        "symbol": "NVDA260529C00230000",
+        "strike": 230.0,
+        "type": "call",
+        "mid": 0.685,
+        "iv": 0.4484,
+        "delta": 0.1165
+      },
+      "put_10d": {
+        "symbol": "NVDA260529P00200000",
+        "strike": 200.0,
+        "type": "put",
+        "mid": 0.59,
+        "iv": 0.4356,
+        "delta": -0.1014
+      }
+    },
+    "two_week": {
+      "expiration": "2026-06-12",
+      "days_to_expiry": 21,
+      "atm_strike": 210.0,
+      "atm_call_iv": 0.4122,
+      "atm_put_iv": 0.3715,
+      "atm_iv_avg": 0.39185000000000003,
+      "atm_straddle_mid": 15.955,
+      "straddle_expected_move_pct": 0.07713691742409592,
+      "straddle_low": 190.88500000000002,
+      "straddle_high": 222.795,
+      "iv_expected_move_pct": 0.09399030658997083,
+      "iv_low": 187.39904498493044,
+      "iv_high": 226.28095501506957,
+      "skew_25d_put_minus_call_iv": -0.01589999999999997,
+      "skew_10d_put_minus_call_iv": -0.05109999999999998,
+      "call_25d": {
+        "symbol": "NVDA260612C00230000",
+        "strike": 230.0,
+        "type": "call",
+        "mid": 2.83,
+        "iv": 0.4023,
+        "delta": 0.2471
+      },
+      "put_25d": {
+        "symbol": "NVDA260612P00200000",
+        "strike": 200.0,
+        "type": "put",
+        "mid": 2.31,
+        "iv": 0.3864,
+        "delta": -0.2034
+      },
+      "call_10d": {
+        "symbol": "NVDA260612C00250000",
+        "strike": 250.0,
+        "type": "call",
+        "mid": 0.7150000000000001,
+        "iv": 0.4375,
+        "delta": 0.0756
+      },
+      "put_10d": {
+        "symbol": "NVDA260612P00200000",
+        "strike": 200.0,
+        "type": "put",
+        "mid": 2.31,
+        "iv": 0.3864,
+        "delta": -0.2034
+      }
+    },
+    "iv_vs_hv20": 1.1280820611753761,
+    "volatility_signal": "implied_vol_fair",
+    "skew_signal": "balanced",
+    "distribution_assessment": {
+      "terminal_range_source": "atm_straddle_and_iv_overlay",
+      "risk_neutral_density_status": "not_reconstructed_from_snapshot",
+      "path_dependent_metrics_status": "unavailable",
+      "barrier_probabilities": null,
+      "drawdown_estimates": null,
+      "warning": "This option snapshot overlay estimates terminal range and skew only. It must not be interpreted as calibrated barrier-touch or drawdown probabilities."
+    },
+    "model_range": {
+      "stress_low": 182.0692653581953,
+      "base_low": 196.3898256038553,
+      "median_low": 204.57814467844543,
+      "median_high": 228.7795945701019,
+      "base_high": 238.205161050642,
+      "optimistic_high": 249.68864124089384
+    },
+    "fused_two_week_range": {
+      "low_base": 193.63741280192767,
+      "high_base": 230.50008052532098,
+      "low_stress": 184.73415517156286,
+      "high_optimistic": 237.98479812798172
+    },
+    "expiries": [
+      {
+        "expiration": "2026-05-29",
+        "days_to_expiry": 7,
+        "atm_strike": 210.0,
+        "atm_call_iv": 0.4593,
+        "atm_put_iv": 0.3578,
+        "atm_iv_avg": 0.40854999999999997,
+        "atm_straddle_mid": 9.56,
+        "straddle_expected_move_pct": 0.04621929994198414,
+        "straddle_low": 197.28,
+        "straddle_high": 216.4,
+        "iv_expected_move_pct": 0.056578027525092604,
+        "iv_low": 195.13740078670986,
+        "iv_high": 218.54259921329017,
+        "skew_25d_put_minus_call_iv": -0.06669999999999998,
+        "skew_10d_put_minus_call_iv": -0.012800000000000034,
+        "call_25d": {
+          "symbol": "NVDA260529C00220000",
+          "strike": 220.0,
+          "type": "call",
+          "mid": 2.435,
+          "iv": 0.4245,
+          "delta": 0.3278
+        },
+        "put_25d": {
+          "symbol": "NVDA260529P00210000",
+          "strike": 210.0,
+          "type": "put",
+          "mid": 2.0700000000000003,
+          "iv": 0.3578,
+          "delta": -0.3172
+        },
+        "call_10d": {
+          "symbol": "NVDA260529C00230000",
+          "strike": 230.0,
+          "type": "call",
+          "mid": 0.685,
+          "iv": 0.4484,
+          "delta": 0.1165
+        },
+        "put_10d": {
+          "symbol": "NVDA260529P00200000",
+          "strike": 200.0,
+          "type": "put",
+          "mid": 0.59,
+          "iv": 0.4356,
+          "delta": -0.1014
+        }
+      },
+      {
+        "expiration": "2026-06-12",
+        "days_to_expiry": 21,
+        "atm_strike": 210.0,
+        "atm_call_iv": 0.4122,
+        "atm_put_iv": 0.3715,
+        "atm_iv_avg": 0.39185000000000003,
+        "atm_straddle_mid": 15.955,
+        "straddle_expected_move_pct": 0.07713691742409592,
+        "straddle_low": 190.88500000000002,
+        "straddle_high": 222.795,
+        "iv_expected_move_pct": 0.09399030658997083,
+        "iv_low": 187.39904498493044,
+        "iv_high": 226.28095501506957,
+        "skew_25d_put_minus_call_iv": -0.01589999999999997,
+        "skew_10d_put_minus_call_iv": -0.05109999999999998,
+        "call_25d": {
+          "symbol": "NVDA260612C00230000",
+          "strike": 230.0,
+          "type": "call",
+          "mid": 2.83,
+          "iv": 0.4023,
+          "delta": 0.2471
+        },
+        "put_25d": {
+          "symbol": "NVDA260612P00200000",
+          "strike": 200.0,
+          "type": "put",
+          "mid": 2.31,
+          "iv": 0.3864,
+          "delta": -0.2034
+        },
+        "call_10d": {
+          "symbol": "NVDA260612C00250000",
+          "strike": 250.0,
+          "type": "call",
+          "mid": 0.7150000000000001,
+          "iv": 0.4375,
+          "delta": 0.0756
+        },
+        "put_10d": {
+          "symbol": "NVDA260612P00200000",
+          "strike": 200.0,
+          "type": "put",
+          "mid": 2.31,
+          "iv": 0.3864,
+          "delta": -0.2034
+        }
+      }
+    ]
+  },
+  "news_overlay": {
+    "article_count": 356,
+    "sentiment_score": 0.047893870422577936,
+    "signal": 0,
+    "confidence_adjustment": 0.009578774084515587,
+    "event_scores": {
+      "earnings": 0.042816205313802265,
+      "analyst": 0.00687016316865324,
+      "regulatory": 0.04765193378445433,
+      "product": 0.10340253234031105,
+      "competition": 0.07739223573720866,
+      "bullish": 0.07898586582217278,
+      "bearish": 0.031091995399594848
+    },
+    "risk_flags": [],
+    "top_articles": [
+      {
+        "published_at": "2026-07-25",
+        "source": "HotHardware",
+        "title": "NVIDIA Secures SK Hynix HBM Memory In $500B AI Infrastructure Deal - HotHardware",
+        "sentiment_score": 0.0,
+        "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQVTdvYWRzX1FHN1VWcE10ZzMzMnJxZGR6SndfTkpTLUZRMFpYWXdIektxMGtyamY3cXFqbXdEZ2J0WXNHMURyMVY5N3ByZjVaT055enNzczhKMHdsaVUzUldGd0lmVWRLeE4xUF9iWFAwbXh1M0JoNzktLXNHWXlEZTh3a3ppYXRqbUdPenpMeEo4bmprV3c?oc=5"
+      },
+      {
+        "published_at": "2026-07-25",
+        "source": "GuruFocus",
+        "title": "NVIDIA Leads Open Source AI Advocacy Amidst Industry Debates (NV - GuruFocus",
+        "sentiment_score": 0.0,
+        "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQLTc4VjBjcWdYVFR2QVFWd1VZZ3NhQW9MSGpaUHlnS21jcUNtX2R3ZVhNa2x5Y3dhZTVnQUo3azI1TDgxSURYNmJqQnFIamZnRm5ZMWxENEREdlFMM0dyMzAySkQzMzJXYklUVlR3WXA2c1NKaWFEeFQ0QlVVMUJfZDFZUkZPZHpFR0FZR2ZBWkxZQnZEd0JNQmRwOXhXZXNGQld2Z3h3WQ?oc=5"
+      },
+      {
+        "published_at": "2026-07-25",
+        "source": "The New Stack",
+        "title": "Microsoft, Nvidia, Meta and 22 others defended open weights. Anthropic and OpenAI didn't sign. - The New Stack",
+        "sentiment_score": 0.0,
+        "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTFA0cEhGd2U3XzhCSTBJQTRodk1GMl9XRGM5YkRYaVhPZHZ1aEJ5LXp0QXE3ZE5UdGNEcmpoZDh6a2xHVlhIYk1HX20yY0lJQUNRTUkwQ3VkYjQ0X0tuZGRQVEkxdVRsWUtKczBPZGtndw?oc=5"
+      },
+      {
+        "published_at": "2026-07-25",
+        "source": "AD HOC NEWS",
+        "title": "Nvidia’s Valuation Hits a Five-Year Low Even as Revenue Soars to $81.6 Billion - AD HOC NEWS",
+        "sentiment_score": 0.0,
+        "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPcEduclZqMXgwTV9pS3I0N0p2ckpCVFdxTHJ2TFNaSjRRNHk2T1djdDVxczcyWXdkaGZ3ZjlOTjU1VnNxVlNtQVI1aXl1eUxBUDVBQnY0Z3k1RU4xZW1JRlRXSExGeVU2Vk1MU1ZkX0JQQ3djRVZpYmNQUlhYYnZxZ2J0by1SbzY5YnF3eXpTZ2FDa3pCQ2p5S29kekQ0ZGZ3ZTZyVHcwQUpfSmdDQlJkdnRIencyOFVJV2pXSUk0dHkta1BoVUVB?oc=5"
+      },
+      {
+        "published_at": "2026-07-25",
+        "source": "ANI News",
+        "title": "NVIDIA, SK Group announce AI, semiconductor partnership worth over $500 billion - ANI News",
+        "sentiment_score": 0.197375320224904,
+        "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPdmV6WlRSanBHbFI3VjBLSTZON1dPcEhrb0pKMVU5dkdmMzh2Qzl6SEJBTV9BZWlCLXBGZlUwc0g4NEdZaHIxVnNmRC1NWDdEeTdlcWhqU3ZZdi14ZHN2emZwN242aDQ0UTYzTUx3c2s1cndzUEdjOUlsckI5RVZwTS05V19rdnRaMVo3b3pBMVJtNm1VYnV0NHZmR3ZGdkU1ak1ZbHpTenROMWYtenBoQlpNR2M3c01vLXRiOXpybU9YXzNmNXc?oc=5"
+      },
+      {
+        "published_at": "2026-07-25",
+        "source": "The Motley Fool",
+        "title": "Jensen Huang Signed Toyota, Fanuc, Kioxia, and 5 Other Japanese Industrial Giants Into Nvidia's Physical AI Coalition This Week. Nvidia Has $1 Trillion in Confirmed Demand Through 2027. - The Motley Fool",
+        "sentiment_score": 0.0,
+        "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQTEhUX2ZGZTBYbUFvOEdQb0F6SnJHRTZjSy1nQS1DcXVpWVF2Qm8xM29XdHZqOE9IcVZoZGpJSVE1U0huVklvZF8tT2ZnVEZtV3IwaEpfY0pucHJKSzRNNF9zLWI0SG14UGYyUVRTaFVrLXBGRzk3blgzN0hyY2dOUlQ0VEtxMXRPc2ZSSmJB?oc=5"
+      },
+      {
+        "published_at": "2026-07-25",
+        "source": "Yahoo Finance",
+        "title": "Jensen Huang Signed Toyota, Fanuc, Kioxia, and 5 Other Japanese Industrial Giants Into Nvidia's Physical AI Coalition This Week. Nvidia Has $1 Trillion in Confirmed Demand Through 2027. - Yahoo Finance",
+        "sentiment_score": 0.0,
+        "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPRDNrNGlWTDhVVzJwaVlQTXpodDczdm1ndFlNT3phdjFFM0h2SzAyVUlsUXdmaG5LWDVsVjNoUVhlOFlWTzJoTzF2RzJMM1Ntd0JuYkZXT1IzNXNIWExPamkxWFVLekFOLWk4ckxyenFueGVmSktmeFkwcmpPWDdTS2F0UTY4MHlPa2tjMDh6Z3FGTmx1ZlZUTzFEQ3U?oc=5"
+      },
+      {
+        "published_at": "2026-07-25",
+        "source": "The News International",
+        "title": "How Samsung Electronics $200 billion Broadcom deal could reshape the AI chip market - The News International",
+        "sentiment_score": 0.0,
+        "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQOGlkOHduMng2VVJTUm5sS29zUlpLTEpyU2xMY3Vkd2UyZG1qQzRoRmU1aXNvRmw1b18xdkFxQ3JEQ2s5cUdVenhzX3dSV0c2RkxzX3Zqelh0R3o4QlRiLVYxLVo3MU5QWjdWTmlSR1dLNVF5RXlUXzF3M24tSEZMZEpqQVFfclZTYS1nSDNqZGlpd0YzQmJtU3A1TnBuTFNYNmYtaG9KbXZhLWFtZFZFR1htQW5tUE5SLVUtLW9oM3N6QQ?oc=5"
+      },
+      {
+        "published_at": "2026-07-25",
+        "source": "finance.biggo.com",
+        "title": "Nvidia's Record Revenue Meets a Flat Stock: Why History Points to a Pre-Earnings Rally - finance.biggo.com",
+        "sentiment_score": 0.4218990052500079,
+        "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBLVzZHeEwzUFdCZFhSTFJyUTN1RG96dWJleTZYVHdCR0R3bEt6RWJwb1ByV3Nsd085SVBlWnVEbFJoQldTTVpIVmV0dnNrbDV4bHIwc3hXNEpwa25UdUpPNE8tOTczVXdUUFphcGw2MVBKdDIzV0E?oc=5"
+      },
+      {
+        "published_at": "2026-07-25",
+        "source": "Reuters",
+        "title": "Samsung Elec wins $200 billion Broadcom AI chip partnership, boosting foundry push - Reuters",
+        "sentiment_score": 0.47576820238326967,
+        "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQVVhSemYyWk9XZmJzMXhYLXFvUm1rdElNNW0zYVktUlBGVFdtbHNJa1NBX2gwSGNVbEZpbnlYVi1CcnBvT1BiZEtNSHdDSDllMTNYQXVKMDN2UEdTS2ZOb1FPNzFBMEhpRERtOXVkODJ5ZEEycTVnRXpaTzlsX2Y5ZXdmUndUakpPUlAtaHY3NzIxczd5X3k4ODk0dW9Fenk0TzlCQ2dQaml2aURvTEgtNENFNTVodmcybEVlTGQ5Nmt4Nm9LUTJNOXV2U05jV3ByVzB5cU85OExDRWlKRjlJ?oc=5"
+      }
+    ]
+  },
+  "order_flow_overlay": null,
+  "report_path": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/report.md",
+  "charts": {
+    "equity_curve": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/equity_curve.png",
+    "drawdown": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/drawdown.png",
+    "monthly_returns": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/monthly_returns_heatmap.png",
+    "rolling_sharpe": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/rolling_sharpe.png"
+  }
+}

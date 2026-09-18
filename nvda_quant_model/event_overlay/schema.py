@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import dataclass, field
@@ -7,6 +8,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+from nvda_quant_model.data.session_calendar import as_utc
 
 
 EVENT_TYPES = (
@@ -46,6 +48,9 @@ LABEL_COLUMNS = (
 )
 
 LEAKAGE_EXACT_FIELDS = {
+    "label_end_at",
+    "fit_at",
+    "decision_at",
     "output_window",
     "output_timestamps",
     "future_return",
@@ -126,13 +131,23 @@ def normalize_event_frame(events: pd.DataFrame) -> pd.DataFrame:
         metadata = parse_metadata(row.get("metadata", {}))
         headline = _clean_text(row.get("headline", row.get("title", "")))
         body = _clean_text(row.get("body", row.get("summary", row.get("content", ""))))
-        published_at = pd.Timestamp(row.get("published_at", row.get("date", pd.NaT))).tz_localize(None)
+        raw_published = pd.Timestamp(row.get("published_at", row.get("date", pd.NaT)))
+        published_at = as_utc(raw_published)
+        available_at = as_utc(row.get("available_at", published_at))
+        if pd.notna(published_at) and pd.notna(available_at) and available_at < published_at:
+            raise ValueError("Event available_at cannot precede published_at")
+        fingerprint = hashlib.sha256((str(published_at.date()) + "|" + headline.lower()).encode()).hexdigest()[:20]
+        cluster = row.get("cluster_id", metadata.get("cluster_id", fingerprint))
         source = _clean_text(row.get("source", "unknown")) or "unknown"
         event_id = _clean_text(row.get("event_id", row.get("id", ""))) or f"event_{idx}"
         rows.append(
             {
                 "event_id": event_id,
                 "published_at": published_at,
+                "available_at": available_at,
+                "availability_basis": row.get("availability_basis", "supplied" if "available_at" in row else "publication_time_assumption"),
+                "timestamp_basis": row.get("timestamp_basis", "naive_assumed_UTC" if raw_published.tzinfo is None else "timezone_supplied"),
+                "cluster_id": str(cluster),
                 "source": source,
                 "headline": headline,
                 "body": body,
@@ -147,12 +162,15 @@ def normalize_event_frame(events: pd.DataFrame) -> pd.DataFrame:
     out = pd.DataFrame(rows)
     if out.empty:
         return pd.DataFrame(columns=list(REQUIRED_EVENT_COLUMNS) + ["metadata"])
-    out["published_at"] = pd.to_datetime(out["published_at"]).dt.tz_localize(None)
+    if out["event_id"].duplicated().any():
+        raise ValueError("Event IDs must be unique; assign distinct IDs and shared cluster_id to duplicate stories")
+    out["published_at"] = pd.to_datetime(out["published_at"], utc=True)
+    out["available_at"] = pd.to_datetime(out["available_at"], utc=True)
     out["event_type"] = out["event_type"].where(out["event_type"].isin(EVENT_TYPES), "neutral")
     out["source_quality"] = out["source_quality"].clip(0.0, 1.0)
     out["nvda_relevance"] = out["nvda_relevance"].clip(0.0, 1.0)
     out["event_importance"] = out["event_importance"].clip(0.0, 1.0)
-    return out.sort_values("published_at", kind="mergesort").reset_index(drop=True)
+    return out.sort_values(["available_at", "published_at"], kind="mergesort").reset_index(drop=True)
 
 
 def assert_no_event_feature_leakage(feature_columns: list[str]) -> None:

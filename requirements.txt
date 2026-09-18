@@ -6,3 +6,4 @@ yfinance==0.2.66
 pytest==8.4.2
 PyYAML==6.0.3
 xlrd==2.0.1
+exchange-calendars==4.11.2

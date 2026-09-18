@@ -54,6 +54,8 @@ def build_data_status(
             )
 
     return {
+        "availability_warnings": ["Historical macro/fundamental release and revision times are unknown; cached values are not verified point-in-time."],
+        "availability_provenance": {"prices": "session_close_assumption", "macro": "unknown", "fundamentals": "unknown"},
         "status": "FRESH" if not warnings else "CHECK_WARNINGS",
         "requested_start": date_metadata.get("requested_start"),
         "requested_end": date_metadata.get("requested_end"),

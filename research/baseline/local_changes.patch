@@ -1,0 +1,35 @@
+diff --git a/nvda_quant_model/ensemble_research.py b/nvda_quant_model/ensemble_research.py
+index 996fe9b..b103151 100644
+--- a/nvda_quant_model/ensemble_research.py
++++ b/nvda_quant_model/ensemble_research.py
+@@ -339,9 +339,27 @@ def run_ensemble(args: argparse.Namespace) -> dict[str, Any]:
+     latest = latest_ensemble_prediction(signals, frame.loc[frame.index <= pd.Timestamp(base.end_date)], args.price_override)
+     news_overlay = None
+     if args.include_live_news:
+-        articles = fetch_live_news(days=args.news_days)
+-        news_payload = save_news_outputs(articles, output_dir / "news_live", price_index=report_prices.index)
+-        news_overlay = news_payload["overlay"]
++        news_dir = output_dir / "news_live"
++        overlay_path = news_dir / "live_news_overlay.json"
++        try:
++            articles = fetch_live_news(days=args.news_days)
++            if not articles and overlay_path.exists():
++                news_overlay = json.loads(overlay_path.read_text(encoding="utf-8"))
++                news_overlay["fetch_error"] = "live_news_fetch_returned_zero_articles"
++            else:
++                news_payload = save_news_outputs(articles, news_dir, price_index=report_prices.index)
++                news_overlay = news_payload["overlay"]
++        except Exception as exc:
++            if overlay_path.exists():
++                news_overlay = json.loads(overlay_path.read_text(encoding="utf-8"))
++                news_overlay["fetch_error"] = str(exc)
++            else:
++                news_overlay = {
++                    "article_count": 0,
++                    "sentiment_score": 0.0,
++                    "signal": 0,
++                    "risk_flags": [f"news_fetch_failed:{exc}"],
++                }
+         latest["news_overlay"] = {
+             "signal": news_overlay.get("signal", 0),
+             "sentiment_score": round(float(news_overlay.get("sentiment_score", 0.0)), 4),

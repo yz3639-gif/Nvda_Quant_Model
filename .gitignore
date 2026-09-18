@@ -22,6 +22,9 @@ __pycache__/
 .ruff_cache/
 .venv/
 venv/
+.venv-research/
+.mplconfig/
+research/runs/
 
 # Node/runtime dependencies
 node_modules/

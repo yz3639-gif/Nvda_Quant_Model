@@ -115,7 +115,10 @@ def test_backtest_engine_records_take_profit_trade_with_costs() -> None:
     assert result.metrics["final_equity"] > 100_000.0
     assert result.metrics["num_trades"] == 1
     assert result.trades.iloc[0]["exit_reason"] == "take_profit"
-    assert np.isclose(result.daily_returns.iloc[1], 0.0485)
+    # Exit fee is paid on the actual 105 notional; the initial entry also pays a fee.
+    assert np.isclose(result.daily_returns.iloc[1], 0.048425)
+    assert result.daily_returns.iloc[0] < 0
+    assert np.isclose(result.trades.pnl.sum(), result.metrics['final_equity']-100_000)
     assert result.daily_returns.iloc[2] == 0.0
 
 
@@ -216,7 +219,10 @@ def test_build_model_frame_adds_adaptive_regime_features_without_target_leakage(
     ]:
         assert column in frame.columns
         assert column in feature_columns
-        assert frame[column].notna().all()
+        # Raw feature construction must not fit medians across the full frame.
+        from nvda_quant_model.data.data_validation import TrainingPreprocessor
+        fitted = TrainingPreprocessor(feature_columns).fit(frame.iloc[:30])
+        assert fitted.transform(frame)[column].notna().all()
 
     sample_date = prices.index[360]
     expected_next_return = prices["Close"].pct_change().shift(-1).loc[sample_date]

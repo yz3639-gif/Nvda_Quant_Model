@@ -15,7 +15,7 @@ from nvda_quant_model.config import MACRO_TICKERS, PROJECT_ROOT, StrategyConfig
 from nvda_quant_model.data.feature_engineering import build_model_frame
 from nvda_quant_model.data.load_data import load_market_data, load_peer_ohlcv_panel, resolve_data_window, warmup_start
 from nvda_quant_model.main import factor_signals, next_us_trading_day
-from nvda_quant_model.news_sentiment import fetch_live_news, save_news_outputs
+from nvda_quant_model.news_sentiment import get_live_news_overlay
 from nvda_quant_model.precision_search import build_walk_forward_rule_signals
 from nvda_quant_model.strict_model_selection import rule_from_row
 
@@ -339,17 +339,10 @@ def run_ensemble(args: argparse.Namespace) -> dict[str, Any]:
     latest = latest_ensemble_prediction(signals, frame.loc[frame.index <= pd.Timestamp(base.end_date)], args.price_override)
     news_overlay = None
     if args.include_live_news:
-        articles = fetch_live_news(days=args.news_days)
-        news_payload = save_news_outputs(articles, output_dir / "news_live", price_index=report_prices.index)
-        news_overlay = news_payload["overlay"]
-        latest["news_overlay"] = {
-            "signal": news_overlay.get("signal", 0),
-            "sentiment_score": round(float(news_overlay.get("sentiment_score", 0.0)), 4),
-            "article_count": int(news_overlay.get("article_count", 0)),
-            "risk_flags": news_overlay.get("risk_flags", []),
-            "confidence_adjustment": round(float(news_overlay.get("confidence_adjustment", 0.0)), 4),
-        }
-        if latest["signal"] == 1 and news_overlay.get("signal") == -1:
+        news_dir = output_dir / "news_live"
+        news_overlay = get_live_news_overlay(news_dir, days=args.news_days, price_index=report_prices.index)
+        latest["news_overlay"] = dict(news_overlay)
+        if latest["signal"] == 1 and news_overlay.get("eligible_for_signal", False) and news_overlay.get("signal") == -1:
             latest["news_adjusted_signal"] = 0
             latest["news_adjustment_reason"] = "Live news layer blocks a long signal because bearish/risk news is active."
         else:

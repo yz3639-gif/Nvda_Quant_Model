@@ -1,0 +1,33 @@
+{
+  "experiment_id": "nvda_daily_research_v2",
+  "seed": 42,
+  "train_sessions": 504,
+  "test_sessions": 63,
+  "min_train_sessions": 252,
+  "max_folds": null,
+  "probability_threshold": 0.55,
+  "max_exposure": 1.0,
+  "target_volatility": 0.25,
+  "commission": 0.001,
+  "slippage": 0.0005,
+  "stop_loss_pct": 0.025,
+  "take_profit_pct": 0.04,
+  "max_drawdown_limit": 0.20,
+  "distribution_train_sessions": 504,
+  "distribution_horizons": [21, 5],
+  "distribution_simulations": 5000,
+  "bootstrap_repetitions": 1000,
+  "bootstrap_block_sessions": 21,
+  "candidate_budget": 11,
+  "evaluation_status": "historically_researched_development_evaluation",
+  "hypotheses": {
+    "A": "Simple ML adds repeatable probability and net return information beyond fixed volume/momentum and trend controls.",
+    "B": "Chronological out-of-fit probability calibration improves Brier/log loss; volatility sizing is compared with a training-exposure-matched control.",
+    "C": "EWMA scaling improves interval score and tail behavior versus rolling volatility, not coverage alone.",
+    "D": "Historical news adds information only after availability, event diversity and time-coverage eligibility gates pass."
+  },
+  "primary_metrics": {"A": "outer Brier relative to training base rate, net results reported without automatic promotion", "B": "outer Brier and log loss", "C": "mean interval score with coverage, tails and width", "D": "eligibility before incremental probability evaluation"},
+  "candidate_models": ["fixed_volume_momentum", "logistic_C_0.2", "logistic_C_1", "boosting_depth_2", "boosting_depth_3", "bootstrap_rolling", "bootstrap_ewma", "normal_rolling", "normal_ewma", "student_t_rolling", "student_t_ewma"],
+  "fixed_ablations": ["raw/shrink/sigmoid probability mappings selected only within training", "fixed/vol_target/training_exposure_matched sizing", "1x/2x/4x single-side costs", "0.8x/1x/1.2x stop and take neighborhoods"],
+  "promotion_policy": "No automatic promotion on previously searched history. Require prospective shadow evidence; record all failed and negative results."
+}

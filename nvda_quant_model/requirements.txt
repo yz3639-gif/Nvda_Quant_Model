@@ -6,6 +6,7 @@ statsmodels==0.14.5
 matplotlib==3.10.6
 seaborn==0.13.2
 yfinance==0.2.66
+exchange-calendars==4.11.2
 # Optional: install xgboost to include the XGBoost candidate model.
 # xgboost>=2.1
 # Optional: install datasets to use Hugging Face load_dataset directly.

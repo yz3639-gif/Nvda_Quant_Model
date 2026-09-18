@@ -5,12 +5,16 @@ import pandas as pd
 
 
 def max_drawdown(equity: pd.Series) -> tuple[float, pd.Series]:
+    if equity.empty:
+        return 0.0, equity.astype(float)
     running_max = equity.cummax()
     drawdown = equity / running_max - 1.0
     return float(drawdown.min()), drawdown
 
 
 def ulcer_index(equity: pd.Series) -> float:
+    if equity.empty:
+        return 0.0
     running_max = equity.cummax()
     pct_drawdown = (equity / running_max - 1.0).clip(upper=0.0) * 100
     return float(np.sqrt(np.mean(np.square(pct_drawdown))))
@@ -21,6 +25,8 @@ def calculate_metrics(
     strategy_returns: pd.Series,
     trades: pd.DataFrame,
     initial_capital: float,
+    *,
+    include_initial_equity: bool = False,
 ) -> dict[str, float]:
     returns = strategy_returns.replace([np.inf, -np.inf], np.nan).dropna()
     days = max(len(returns), 1)
@@ -31,7 +37,11 @@ def calculate_metrics(
     sharpe = np.sqrt(252) * returns.mean() / vol if vol and not np.isnan(vol) else 0.0
     downside = returns[returns < 0].std(ddof=0)
     sortino = np.sqrt(252) * returns.mean() / downside if downside and not np.isnan(downside) else 0.0
-    mdd, _ = max_drawdown(equity)
+    # Corrected accounting includes the initial entry fee in the drawdown;
+    # retain the historical metric default for frozen legacy replay.
+    drawdown_equity = (pd.Series(np.r_[initial_capital, equity.to_numpy(dtype=float)])
+                       if include_initial_equity else equity)
+    mdd, _ = max_drawdown(drawdown_equity)
     calmar = annualized_return / abs(mdd) if mdd < 0 else np.inf
 
     if trades.empty:
@@ -59,7 +69,7 @@ def calculate_metrics(
         "sortino_ratio": float(sortino),
         "max_drawdown": float(mdd),
         "calmar_ratio": float(calmar),
-        "ulcer_index": ulcer_index(equity),
+        "ulcer_index": ulcer_index(drawdown_equity),
         "win_rate": float(win_rate),
         "profit_factor": float(profit_factor),
         "avg_win": float(avg_win),
@@ -73,4 +83,3 @@ def benchmark_metrics(close: pd.Series, initial_capital: float) -> tuple[dict[st
     equity = initial_capital * (1 + returns).cumprod()
     metrics = calculate_metrics(equity, returns, pd.DataFrame(), initial_capital)
     return metrics, equity, returns
-

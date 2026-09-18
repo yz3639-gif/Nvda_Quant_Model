@@ -40,6 +40,9 @@ MAX_SINGLE_SOURCE_SHARE = 0.75
 HISTORICAL_EVENT_COLUMNS = (
     "event_id",
     "published_at_utc",
+    "available_at_utc",
+    "availability_basis",
+    "cluster_id",
     "source",
     "url",
     "headline",
@@ -141,12 +144,19 @@ def normalize_historical_event_frame(
             row.get("event_importance"),
             infer_event_importance(text, event_type, relevance, source_quality),
         )
+        available = _first_valid_timestamp(row, ("available_at_utc", "available_at"))
+        if pd.notna(available) and available < published:
+            raise ValueError("Historical available_at cannot precede published_at")
+        original_ingested = _first_valid_timestamp(row, ("ingested_at_utc", "ingested_at"))
         canonical_hash = _canonical_hash(source, url, headline, published)
         event_id = _clean_text(row.get("event_id", row.get("id", ""))) or f"nvda_event_{canonical_hash[:16]}"
         rows.append(
             {
                 "event_id": event_id,
                 "published_at_utc": published,
+                "available_at_utc": available,
+                "availability_basis": _clean_text(row.get("availability_basis", "supplied_unverified" if pd.notna(available) else "unknown")),
+                "cluster_id": _clean_text(row.get("cluster_id", "")) or hashlib.sha256((str(published.date()) + "|" + headline.lower()).encode()).hexdigest()[:20],
                 "source": source,
                 "url": url,
                 "headline": headline,
@@ -156,7 +166,7 @@ def normalize_historical_event_frame(
                 "source_quality": source_quality,
                 "nvda_relevance": relevance,
                 "event_importance": importance,
-                "ingested_at_utc": ingested,
+                "ingested_at_utc": original_ingested if pd.notna(original_ingested) else ingested,
                 "canonical_hash": canonical_hash,
             }
         )
@@ -165,6 +175,7 @@ def normalize_historical_event_frame(
 
     frame = pd.DataFrame(rows)
     frame["published_at_utc"] = pd.to_datetime(frame["published_at_utc"], utc=True)
+    frame["available_at_utc"] = pd.to_datetime(frame["available_at_utc"], utc=True)
     frame["ingested_at_utc"] = pd.to_datetime(frame["ingested_at_utc"], utc=True)
     frame = frame.drop_duplicates("canonical_hash", keep="first")
     frame = frame.sort_values(["published_at_utc", "source", "headline"], kind="mergesort").reset_index(drop=True)
@@ -193,7 +204,10 @@ def to_event_overlay_frame(history_events: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(
         {
             "event_id": history["event_id"],
-            "published_at": pd.to_datetime(history["published_at_utc"], utc=True).dt.tz_convert(None),
+            "published_at": pd.to_datetime(history["published_at_utc"], utc=True),
+            "available_at": pd.to_datetime(history["available_at_utc"], utc=True),
+            "availability_basis": history["availability_basis"],
+            "cluster_id": history["cluster_id"],
             "source": history["source"],
             "headline": history["headline"],
             "body": history["body_excerpt"],
@@ -215,7 +229,10 @@ def to_legacy_news_article_frame(history_events: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(
         {
             "id": history["event_id"],
-            "published_at": pd.to_datetime(history["published_at_utc"], utc=True).dt.tz_convert(None),
+            "published_at": pd.to_datetime(history["published_at_utc"], utc=True),
+            "available_at": pd.to_datetime(history["available_at_utc"], utc=True),
+            "availability_basis": history["availability_basis"],
+            "cluster_id": history["cluster_id"],
             "source": history["source"],
             "title": history["headline"],
             "summary": history["body_excerpt"],
@@ -264,6 +281,10 @@ def audit_event_store_for_backtest(
     source_share = float(history["source"].value_counts(normalize=True).max()) if not history.empty else 0.0
     labeled_events = _labeled_event_count(labels) if labels is not None else int(len(history))
     reasons = []
+    if history["available_at_utc"].isna().any():
+        reasons.append("historical_available_at_missing")
+    if not history["availability_basis"].isin(["verified_ingestion_log", "verified_vendor_release"]).all():
+        reasons.append("historical_availability_provenance_unverified")
     if labeled_events < min_events:
         reasons.append(f"labeled_events<{min_events}")
     if month_count < min_months:

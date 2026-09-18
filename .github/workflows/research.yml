@@ -1,0 +1,33 @@
+name: Offline research checks
+on:
+  push:
+  pull_request:
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NVDA_OFFLINE_TESTS: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      LOKY_MAX_CPU_COUNT: '2'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: research/environment.lock.txt
+      - run: python -m pip install -r research/environment.lock.txt
+      - name: Syntax checks
+        run: python -m compileall -q nvda_quant_model methods utils
+      - name: Offline regression tests
+        run: python -m pytest -q -p no:cacheprovider
+      - name: Reproducible synthetic example
+        run: python -m nvda_quant_model.research.runner --synthetic --output research/runs/ci-example
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-research-example
+          path: research/runs/ci-example

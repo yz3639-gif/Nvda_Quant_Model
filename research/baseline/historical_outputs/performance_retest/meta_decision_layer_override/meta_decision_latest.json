@@ -1,0 +1,19 @@
+{
+  "date": "2026-05-26",
+  "weekday": "Tuesday",
+  "as_of_date": "2026-05-22",
+  "current_price": 215.34,
+  "decision": "NO_TRADE",
+  "position": 0.0,
+  "prob_up": 0.5,
+  "expected_return": 0.0,
+  "target_price": 215.34,
+  "stop_loss": 209.9565,
+  "take_profit": 223.9536,
+  "source_layer": "none",
+  "baseline_signal": 0,
+  "risk_off": 0,
+  "reaction_monitor": 0,
+  "live_overlay_flags": [],
+  "live_overlays": {}
+}

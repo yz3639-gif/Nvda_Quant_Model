@@ -1,0 +1,119 @@
+{
+  "dataset": "local news_live/live_news_articles.csv",
+  "event_count": 26,
+  "price_start": "2025-10-20",
+  "price_end": "2026-05-22",
+  "warning": "Small local NVDA/AI event cache; not a full enterprise point-in-time historical news library.",
+  "walk_forward": {
+    "config": {
+      "min_train_size": 10,
+      "test_size": 4,
+      "step": 4,
+      "horizon": "1d"
+    },
+    "summary": [
+      {
+        "model": "core_event_overlay",
+        "split": 1.0,
+        "train_size": 14.0,
+        "test_size": 3.0,
+        "accuracy": 0.3333333333333333,
+        "brier_score": 0.5661088212998103,
+        "auc": 0.3333333333333333,
+        "log_loss": 1.748266095082366,
+        "expected_move_coverage": 1.0,
+        "var_95_coverage": 1.0,
+        "downside_tail_recall": 0.0
+      },
+      {
+        "model": "core_only",
+        "split": 1.0,
+        "train_size": 14.0,
+        "test_size": 3.0,
+        "accuracy": 0.3333333333333333,
+        "brier_score": 0.3477144703178198,
+        "auc": 0.0,
+        "log_loss": 0.9791500952684368,
+        "expected_move_coverage": 1.0,
+        "var_95_coverage": 1.0,
+        "downside_tail_recall": 0.0
+      }
+    ],
+    "windows": 6
+  },
+  "train_holdout_metrics": {
+    "accuracy": 1.0,
+    "brier_score": 0.02907118427352202,
+    "auc": 1.0,
+    "log_loss": 0.18470806512247448
+  },
+  "latest_scores": [
+    {
+      "event_id": "cebaa0bdebb716eb",
+      "published_at": "2026-05-25 05:00:00",
+      "event_type": "earnings",
+      "event_bullish_score": 0.716969718043558,
+      "event_bearish_score": 0.2012238002896558,
+      "event_importance": 0.9725565890695819,
+      "event_mu_adjustment": 0.41892921448642023,
+      "event_sigma_multiplier": 1.0003759094219247,
+      "event_tail_risk_multiplier": 1.0057182098966866,
+      "volatility_shock_probability": 0.0015426134304536649,
+      "downside_tail_probability": 0.014079435422957942,
+      "reason_codes": [
+        "event_type:earnings",
+        "positive_event_language"
+      ]
+    },
+    {
+      "event_id": "251826ec2587d83e",
+      "published_at": "2026-05-25 07:33:00",
+      "event_type": "product",
+      "event_bullish_score": 0.06291127532497855,
+      "event_bearish_score": 0.9169945222022367,
+      "event_importance": 0.72,
+      "event_mu_adjustment": -0.5551541104702178,
+      "event_sigma_multiplier": 1.0019491909346268,
+      "event_tail_risk_multiplier": 1.078686054770513,
+      "volatility_shock_probability": 0.009995850946803511,
+      "downside_tail_probability": 0.24211093775542505,
+      "reason_codes": [
+        "event_type:product"
+      ]
+    },
+    {
+      "event_id": "406690fc45d790b1",
+      "published_at": "2026-05-25 10:00:00",
+      "event_type": "export_control",
+      "event_bullish_score": 0.7181398502024384,
+      "event_bearish_score": 0.2307008791610576,
+      "event_importance": 0.9863025475063268,
+      "event_mu_adjustment": 0.4207335687312992,
+      "event_sigma_multiplier": 1.0008609809561344,
+      "event_tail_risk_multiplier": 1.0025030700654198,
+      "volatility_shock_probability": 0.0033249519611652785,
+      "downside_tail_probability": 0.0057998409816067825,
+      "reason_codes": [
+        "event_type:export_control",
+        "high_source_quality",
+        "negative_event_language"
+      ]
+    },
+    {
+      "event_id": "d44014cc41b45e10",
+      "published_at": "2026-05-25 15:00:00",
+      "event_type": "earnings",
+      "event_bullish_score": 0.6301299188739762,
+      "event_bearish_score": 0.27994990423869603,
+      "event_importance": 0.86,
+      "event_mu_adjustment": 0.2647360910642718,
+      "event_sigma_multiplier": 1.000894522779517,
+      "event_tail_risk_multiplier": 1.0066947761016782,
+      "volatility_shock_probability": 0.00394410396612386,
+      "downside_tail_probability": 0.017711047888037536,
+      "reason_codes": [
+        "event_type:earnings"
+      ]
+    }
+  ]
+}

@@ -50,7 +50,9 @@ def estimate_gbm_parameters(returns: np.ndarray) -> GBMParameters:
     return GBMParameters(
         mean_daily=mean_daily,
         std_daily=std_daily,
-        mu_annual=mean_daily * TRADING_DAYS_PER_YEAR,
+        # Input is log return. GBM simulator subtracts sigma^2/2, so convert
+        # estimated log drift to the arithmetic SDE drift before calling it.
+        mu_annual=(mean_daily + 0.5 * std_daily**2) * TRADING_DAYS_PER_YEAR,
         sigma_annual=std_daily * np.sqrt(TRADING_DAYS_PER_YEAR),
     )
 

@@ -18,6 +18,7 @@ import pandas as pd
 import requests
 
 from nvda_quant_model.config import PROJECT_ROOT
+from nvda_quant_model.data.session_calendar import session_schedule
 
 
 DEFAULT_QUERIES = [
@@ -112,6 +113,16 @@ class NewsArticle:
     query: str
     sentiment_score: float
     event_scores: dict[str, float]
+    fetched_at: str | None = None
+    available_at: str | None = None
+
+
+class NewsFetchResult(list):
+    """List-compatible batch carrying partial failures and actual retrieval time."""
+    def __init__(self, articles=(), *, fetched_at=None, errors=()):
+        super().__init__(articles)
+        self.fetched_at = fetched_at
+        self.errors = list(errors)
 
 
 def _json_default(obj: Any) -> Any:
@@ -157,11 +168,11 @@ def parse_google_source(item: ET.Element) -> tuple[str, str]:
 
 def parse_published_at(text: str | None) -> pd.Timestamp:
     if not text:
-        return pd.Timestamp.utcnow().tz_localize(None)
+        return pd.NaT
     try:
         return pd.Timestamp(parsedate_to_datetime(text)).tz_convert(None)
     except Exception:
-        return pd.Timestamp.utcnow().tz_localize(None)
+        return pd.NaT
 
 
 def score_text(title: str, summary: str, source: str = "") -> tuple[float, dict[str, float]]:
@@ -191,6 +202,7 @@ def fetch_google_news(query: str, days: int = 7, timeout: int = 20) -> list[News
     response = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
     response.raise_for_status()
     root = ET.fromstring(response.content)
+    fetched_at = pd.Timestamp.now(tz="UTC").isoformat()
     articles: list[NewsArticle] = []
     for item in root.findall(".//item"):
         title = _normalize_text(item.findtext("title", default=""))
@@ -210,6 +222,8 @@ def fetch_google_news(query: str, days: int = 7, timeout: int = 20) -> list[News
                 query=query,
                 sentiment_score=score,
                 event_scores=event_scores,
+                fetched_at=fetched_at,
+                available_at=fetched_at,
             )
         )
     return articles
@@ -223,6 +237,7 @@ def fetch_live_news(
     queries = queries or DEFAULT_QUERIES
     seen: set[str] = set()
     articles: list[NewsArticle] = []
+    errors: list[str] = []
     for query in queries:
         try:
             for article in fetch_google_news(query, days=days):
@@ -231,9 +246,10 @@ def fetch_live_news(
                 seen.add(article.id)
                 articles.append(article)
         except Exception as exc:
-            print(f"news fetch failed for {query!r}: {exc}", flush=True)
+            errors.append(f"{query}: {type(exc).__name__}: {exc}")
         time.sleep(sleep_seconds)
-    return sorted(articles, key=lambda item: item.published_at, reverse=True)
+    return NewsFetchResult(sorted(articles, key=lambda item: item.published_at, reverse=True),
+                           fetched_at=pd.Timestamp.now(tz="UTC").isoformat(), errors=errors)
 
 
 def articles_to_frame(articles: list[NewsArticle]) -> pd.DataFrame:
@@ -247,7 +263,7 @@ def articles_to_frame(articles: list[NewsArticle]) -> pd.DataFrame:
     frame = pd.DataFrame(rows)
     if frame.empty:
         return frame
-    frame["published_at"] = pd.to_datetime(frame["published_at"]).dt.tz_localize(None)
+    frame["published_at"] = pd.to_datetime(frame["published_at"], utc=True, errors="coerce").dt.tz_localize(None)
     return frame.sort_values("published_at")
 
 
@@ -265,7 +281,31 @@ def build_daily_news_features(
         return out
 
     articles = articles.copy()
-    articles["date"] = pd.to_datetime(articles["published_at"]).dt.normalize()
+    published = pd.to_datetime(articles["published_at"], utc=True, errors="coerce")
+    if "available_at" in articles:
+        available = pd.to_datetime(articles["available_at"], utc=True, errors="coerce")
+    else:
+        available = pd.Series(pd.NaT, index=articles.index, dtype="datetime64[ns, UTC]")
+    unverified = available.isna()
+    # Legacy history remains usable only under this explicit publication-time assumption.
+    available = available.fillna(published)
+    available = available.where(available >= published, published)
+    schedule = session_schedule(price_index, allow_non_sessions=True)
+    closes = schedule["market_close"].dropna()
+    valid = available.notna() & published.notna()
+    articles = articles.loc[valid].copy()
+    locations = closes.searchsorted(available.loc[valid], side="left")
+    in_range = locations < len(closes)
+    articles = articles.iloc[np.flatnonzero(in_range)].copy()
+    articles["date"] = closes.index.take(locations[in_range])
+    for event in [*EVENT_TERMS, "bullish", "bearish"]:
+        if f"event_{event}" not in articles:
+            articles[f"event_{event}"] = 0.0
+    out.attrs["news_time_contract"] = {
+        "decision_at": "XNYS_session_close", "available_at_fallback": "published_at_assumption",
+        "unverified_availability_articles": int(unverified.sum()),
+        "point_in_time_verified": bool(not unverified.any()),
+    }
     daily = articles.groupby("date").agg(
         news_count=("id", "count"),
         news_sentiment_sum=("sentiment_score", "sum"),
@@ -301,7 +341,16 @@ def build_daily_news_features(
     return out.fillna(0.0)
 
 
-def live_news_overlay(articles: pd.DataFrame) -> dict[str, Any]:
+def live_news_overlay(articles: pd.DataFrame, *, as_of=None, max_article_age_hours: float = 168.0) -> dict[str, Any]:
+    now = _utc_timestamp(as_of) if as_of is not None else pd.Timestamp.now(tz="UTC")
+    if not articles.empty:
+        articles = articles.copy()
+        published = pd.to_datetime(articles["published_at"], utc=True, errors="coerce")
+        valid = published.notna() & (published <= now) & (published >= now - pd.Timedelta(hours=max_article_age_hours))
+        available = pd.to_datetime(articles.get("available_at", pd.Series(None, index=articles.index)), utc=True, errors="coerce")
+        valid &= available.notna() & (available <= now) & (available >= published)
+        articles = articles.loc[valid].copy()
+        articles["published_at"] = published.loc[valid].dt.tz_localize(None)
     if articles.empty:
         return {
             "article_count": 0,
@@ -311,7 +360,7 @@ def live_news_overlay(articles: pd.DataFrame) -> dict[str, Any]:
             "risk_flags": [],
             "top_articles": [],
         }
-    now = pd.Timestamp.utcnow().tz_localize(None)
+    now = now.tz_localize(None)
     scoped = articles.copy()
     age_hours = ((now - scoped["published_at"]).dt.total_seconds() / 3600.0).clip(lower=0.0)
     weights = np.exp(-age_hours / 72.0)
@@ -338,7 +387,7 @@ def live_news_overlay(articles: pd.DataFrame) -> dict[str, Any]:
     }
 
 
-def save_news_outputs(articles: list[NewsArticle], output_dir: Path, price_index: pd.DatetimeIndex | None = None) -> dict[str, Any]:
+def save_news_outputs(articles: list[NewsArticle], output_dir: Path, price_index: pd.DatetimeIndex | None = None, *, as_of=None, ttl_hours: float = 24.0, source: str = "live") -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     frame = articles_to_frame(articles)
     raw_path = output_dir / "live_news_articles.json"
@@ -346,13 +395,24 @@ def save_news_outputs(articles: list[NewsArticle], output_dir: Path, price_index
     overlay_path = output_dir / "live_news_overlay.json"
     raw_path.write_text(json.dumps([asdict(article) for article in articles], indent=2, ensure_ascii=False, default=_json_default), encoding="utf-8")
     frame.to_csv(csv_path, index=False)
-    overlay = live_news_overlay(frame)
-    overlay_path.write_text(json.dumps(overlay, indent=2, ensure_ascii=False, default=_json_default), encoding="utf-8")
+    now = _utc_timestamp(as_of) if as_of is not None else pd.Timestamp.now(tz="UTC")
+    overlay = live_news_overlay(frame, as_of=now)
+    fetched_times = [_utc_timestamp(article.fetched_at) for article in articles]
+    available_times = [_utc_timestamp(article.available_at) for article in articles]
+    fetched = getattr(articles, "fetched_at", None)
+    if fetched is None and fetched_times and all(t is not None for t in fetched_times):
+        fetched = max(fetched_times).isoformat()
+    available = max(available_times).isoformat() if available_times and all(t is not None for t in available_times) else None
+    overlay.update(generated_at=now.isoformat(), fetched_at=fetched, available_at=available,
+                   fetch_errors=list(getattr(articles, "errors", [])))
+    overlay = assess_news_freshness(overlay, source=source, as_of=now, ttl_hours=ttl_hours)
     feature_path = None
     if price_index is not None:
         features = build_daily_news_features(frame, price_index)
         feature_path = output_dir / "live_news_features.csv"
         features.to_csv(feature_path)
+        overlay["historical_features_time_contract"] = features.attrs.get("news_time_contract", {})
+    overlay_path.write_text(json.dumps(overlay, indent=2, ensure_ascii=False, default=_json_default), encoding="utf-8")
     return {
         "articles_json": str(raw_path),
         "articles_csv": str(csv_path),
@@ -362,10 +422,92 @@ def save_news_outputs(articles: list[NewsArticle], output_dir: Path, price_index
     }
 
 
+DEFAULT_NEWS_TTL_HOURS = 24.0
+
+
+def _utc_timestamp(value):
+    try:
+        stamp = pd.Timestamp(value) if value is not None else None
+        if stamp is None or pd.isna(stamp):
+            return None
+        return stamp.tz_localize("UTC") if stamp.tzinfo is None else stamp.tz_convert("UTC")
+    except (ValueError, TypeError, OverflowError):
+        return None
+
+
+def assess_news_freshness(overlay: dict[str, Any], *, source: str, as_of=None,
+                          ttl_hours: float = DEFAULT_NEWS_TTL_HOURS) -> dict[str, Any]:
+    """Unknown/future/expired timestamps fail closed; preserve context separately."""
+    if source not in {"live", "cache", "neutral"}:
+        raise ValueError("Invalid news source")
+    if not np.isfinite(ttl_hours) or ttl_hours <= 0:
+        raise ValueError("ttl_hours must be positive and finite")
+    now = _utc_timestamp(as_of) if as_of is not None else pd.Timestamp.now(tz="UTC")
+    if now is None:
+        raise ValueError("Invalid as_of timestamp")
+    result = dict(overlay)
+    stamps = [_utc_timestamp(result.get(key)) for key in ("fetched_at", "generated_at", "available_at")]
+    age = None
+    reason = "fresh"
+    if source == "neutral" or not result.get("article_count", 0):
+        reason = "empty"
+    elif any(stamp is None for stamp in stamps):
+        reason = "missing_timestamp"
+    elif any(stamp > now for stamp in stamps):
+        reason = "future_timestamp"
+    else:
+        age = max((now - stamp).total_seconds() / 3600 for stamp in stamps)
+        if age > ttl_hours:
+            reason = "expired"
+    eligible = reason == "fresh"
+    result.update(source=source, freshness=reason, is_stale=not eligible,
+                  eligible_for_signal=eligible, age_hours=age, ttl_hours=float(ttl_hours),
+                  checked_at=now.isoformat())
+    if not eligible:
+        result["historical_context"] = result.get("historical_context", {
+            key: result[key] for key in ("signal", "sentiment_score", "confidence_adjustment", "risk_flags", "event_scores", "top_articles") if key in result
+        })
+        result.update(signal=0, sentiment_score=0.0, confidence_adjustment=0.0, risk_flags=[], event_scores={})
+    if result.get("fetch_errors"):
+        result["fetch_error"] = "; ".join(result["fetch_errors"])
+    return result
+
+
+def get_live_news_overlay(output_dir: Path, *, days: int = 7,
+                          price_index: pd.DatetimeIndex | None = None, as_of=None,
+                          ttl_hours: float = DEFAULT_NEWS_TTL_HOURS, fetcher=None) -> dict[str, Any]:
+    """Retain the user's cache fallback, but never reuse stale news as a signal."""
+    errors: list[str] = []
+    try:
+        articles = (fetcher or fetch_live_news)(days=days)
+        errors.extend(getattr(articles, "errors", []))
+        if articles:
+            overlay = save_news_outputs(articles, output_dir, price_index=price_index, as_of=as_of, ttl_hours=ttl_hours)["overlay"]
+            return assess_news_freshness(overlay, source="live", as_of=as_of, ttl_hours=ttl_hours)
+        errors.append("live_news_fetch_returned_zero_articles")
+    except Exception as exc:
+        errors.append(f"{type(exc).__name__}: {exc}")
+    cache_path = output_dir / "live_news_overlay.json"
+    cache_error = None
+    if cache_path.exists():
+        try:
+            cached = json.loads(cache_path.read_text(encoding="utf-8"))
+            if not isinstance(cached, dict) or not isinstance(cached.get("article_count"), (int, float)):
+                raise ValueError("news cache must be an overlay object with article_count")
+            cached["fetch_errors"] = errors
+            return assess_news_freshness(cached, source="cache", as_of=as_of, ttl_hours=ttl_hours)
+        except (OSError, ValueError, TypeError) as exc:
+            cache_error = f"{type(exc).__name__}: {exc}"
+    neutral = dict(article_count=0, signal=0, sentiment_score=0.0, confidence_adjustment=0.0,
+                   risk_flags=[], top_articles=[], fetched_at=None, generated_at=None, available_at=None,
+                   fetch_errors=errors, cache_error=cache_error)
+    return assess_news_freshness(neutral, source="neutral", as_of=as_of, ttl_hours=ttl_hours)
+
+
 def load_news_feature_cache(path: Path, price_index: pd.DatetimeIndex) -> pd.DataFrame:
     data = pd.read_csv(path)
     if {"published_at", "title"}.issubset(data.columns):
-        data["published_at"] = pd.to_datetime(data["published_at"]).dt.tz_localize(None)
+        data["published_at"] = pd.to_datetime(data["published_at"], utc=True, errors="coerce")
         if "id" not in data:
             data["id"] = [
                 _article_id(str(row.get("title", "")), str(row.get("link", "")))
@@ -380,7 +522,10 @@ def load_news_feature_cache(path: Path, price_index: pd.DatetimeIndex) -> pd.Dat
             data["event_bearish"] = [item[1]["bearish"] for item in scored]
         return build_daily_news_features(data, price_index)
     data = pd.read_csv(path, parse_dates=["Date"], index_col="Date")
-    return data.sort_index().reindex(price_index).ffill().fillna(0.0)
+    result = data.sort_index().reindex(price_index).ffill().fillna(0.0)
+    result.attrs["news_time_contract"] = {"point_in_time_verified": False,
+        "availability_status": "legacy_precomputed_features_without_article_timestamps"}
+    return result
 
 
 def parse_args() -> argparse.Namespace:
@@ -413,10 +558,9 @@ def _articles_from_input_json(path: Path) -> list[NewsArticle]:
         summary = str(raw.get("summary", "")).strip()
         query = str(raw.get("query", "")).strip() or "offline"
         published_at_raw = str(raw.get("published_at", "")).strip()
-        try:
-            published_at = pd.Timestamp(published_at_raw).tz_localize(None)
-        except Exception:
-            published_at = pd.Timestamp.utcnow().tz_localize(None)
+        published_at = _utc_timestamp(published_at_raw)
+        if published_at is None:
+            published_at = pd.NaT
         score, event_scores = score_text(title, summary, source)
         override_event_scores = raw.get("event_scores")
         articles.append(
@@ -430,6 +574,8 @@ def _articles_from_input_json(path: Path) -> list[NewsArticle]:
                 query=query,
                 sentiment_score=float(raw.get("sentiment_score", score)),
                 event_scores=override_event_scores if isinstance(override_event_scores, dict) else event_scores,
+                fetched_at=raw.get("fetched_at"),
+                available_at=raw.get("available_at"),
             )
         )
     return sorted(articles, key=lambda item: item.published_at, reverse=True)
@@ -445,7 +591,8 @@ def main() -> None:
         articles = _articles_from_input_json(Path(args.input_json))
     else:
         articles = fetch_live_news(queries=queries, days=args.days)
-    payload = save_news_outputs(articles, Path(args.output_dir), price_index=price_index)
+    payload = save_news_outputs(articles, Path(args.output_dir), price_index=price_index,
+                                source="cache" if args.input_json else "live")
     print(json.dumps(payload, indent=2, ensure_ascii=False, default=_json_default))
 
 

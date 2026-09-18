@@ -35,12 +35,34 @@ class StrategyConfig:
     rule_max_filters: int = 2
     fast_rule_only: bool = False
     model_params_path: str | None = None
+    prediction_mode: str = "rule"
     precision_rule_path: str | None = None
     random_state: int = 42
 
     @property
-    def round_trip_cost(self) -> float:
+    def effective_prediction_mode(self) -> str:
+        """Resolve the legacy precision-path bypass without relabeling it as rule/ML."""
+        if self.prediction_mode not in {"rule", "precision_rule", "ml_ensemble"}:
+            raise ValueError(f"Unknown prediction_mode: {self.prediction_mode!r}")
+        if self.precision_rule_path:
+            if self.prediction_mode == "ml_ensemble":
+                raise ValueError("ml_ensemble cannot also select precision_rule_path")
+            return "precision_rule"
+        if self.prediction_mode == "precision_rule":
+            raise ValueError("precision_rule requires precision_rule_path")
+        if self.prediction_mode == "ml_ensemble" and self.fast_rule_only:
+            raise ValueError("fast_rule_only cannot be used with ml_ensemble")
+        return self.prediction_mode
+
+    @property
+    def cost_per_side(self) -> float:
+        """Proportional commission plus slippage per absolute traded notional."""
         return self.commission + self.slippage
+
+    @property
+    def round_trip_cost(self) -> float:
+        """Legacy misnamed alias: this is a SINGLE-SIDE rate, not a round trip."""
+        return self.cost_per_side
 
 
 MACRO_TICKERS = {

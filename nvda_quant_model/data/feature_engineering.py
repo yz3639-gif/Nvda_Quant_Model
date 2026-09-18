@@ -2,11 +2,10 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
-from pandas.tseries.holiday import USFederalHolidayCalendar
-from pandas.tseries.offsets import CustomBusinessDay
 
 from nvda_quant_model.config import MACRO_TICKERS, PEER_TICKERS, SECTOR_TICKERS
 from nvda_quant_model.data.data_validation import clean_model_frame, validate_ohlcv
+from nvda_quant_model.data.session_calendar import attach_daily_time_contract, session_dates
 from nvda_quant_model.data.load_data import fetch_nvda_fundamentals
 
 
@@ -113,19 +112,13 @@ def build_holiday_features(index: pd.DatetimeIndex, close: pd.Series) -> pd.Data
     example, 2025-05-23 knows the next trading session is 2025-05-27 and that
     2025-05-26 is a US holiday.
     """
-    holidays = USFederalHolidayCalendar().holidays(
-        start=index.min() - pd.Timedelta(days=10),
-        end=index.max() + pd.Timedelta(days=10),
-    )
-    holiday_dates = set(pd.to_datetime(holidays).normalize())
+    calendar = session_dates(index.min() - pd.Timedelta(days=15), index.max() + pd.Timedelta(days=15))
+    weekdays = pd.bdate_range(calendar.min(), calendar.max())
+    holiday_dates = set(weekdays.difference(calendar))
     out = pd.DataFrame(index=index)
-
-    us_bday = CustomBusinessDay(calendar=USFederalHolidayCalendar())
     current = pd.Series(index, index=index)
-    next_values = list(index[1:]) + [index[-1] + us_bday]
-    prev_values = [index[0] - us_bday] + list(index[:-1])
-    next_session = pd.Series(pd.DatetimeIndex(next_values), index=index)
-    prev_session = pd.Series(pd.DatetimeIndex(prev_values), index=index)
+    next_session = pd.Series([calendar[calendar.searchsorted(day, side="right")] for day in index], index=index)
+    prev_session = pd.Series([calendar[calendar.searchsorted(day, side="left") - 1] for day in index], index=index)
     out["next_session_gap_days"] = (next_session - current).dt.days.fillna(1).clip(lower=1)
     out["prev_session_gap_days"] = (current - prev_session).dt.days.fillna(1).clip(lower=1)
 
@@ -426,5 +419,12 @@ def build_model_frame(
         raw.update({"price_to_revenue", "pe_ratio", "earnings_surprise", "revenue_growth_yoy"})
     feature_columns = [col for col in frame.columns if col not in raw and pd.api.types.is_numeric_dtype(frame[col])]
     frame = clean_model_frame(frame, feature_columns, require_target=False)
+    frame = attach_daily_time_contract(frame)
+    frame.attrs["availability_provenance"] = {
+        "prices": "assumed_available_at_session_close",
+        "external": "unknown_historical_release_or_revision_times" if not external.empty else "not_used",
+        "fundamentals": "unknown_historical_release_or_revision_times" if include_fundamentals else "not_used",
+        "point_in_time_verified": False,
+    }
     frame = frame.loc[(frame.index >= pd.Timestamp(start_date) - pd.Timedelta(days=370)) & (frame.index <= pd.Timestamp(end_date))]
     return frame, feature_columns

@@ -7,6 +7,7 @@ import pandas as pd
 from nvda_quant_model.backtest.backtest_engine import BacktestEngine
 from nvda_quant_model.config import StrategyConfig
 from nvda_quant_model.models.ensemble_model import EnsembleModel
+from nvda_quant_model.data.data_validation import purge_immature_labels
 
 
 def _walk_forward_windows(
@@ -33,8 +34,15 @@ def _walk_forward_period(
     data, feature_columns, config, start_idx, end_idx = args
     train = data.iloc[start_idx - config.train_window : start_idx]
     test = data.iloc[start_idx:end_idx]
+    fit_at = test["decision_at"].iloc[0]
+    train = purge_immature_labels(train, fit_at)
     model = EnsembleModel(config).fit(train, feature_columns)
+    model.fit_at_ = fit_at
     pred = model.predict(test)
+    pred["fit_at"] = fit_at
+    pred["decision_at"] = test["decision_at"]
+    pred["available_at"] = test["available_at"]
+    pred["label_end_at"] = test["label_end_at"]
     engine = BacktestEngine(config)
     result = engine.backtest(pred, test[["Open", "High", "Low", "Close"]])
     period = {
@@ -89,5 +97,8 @@ def walk_forward_signals(
 
 
 def train_latest_model(data: pd.DataFrame, feature_columns: list[str], config: StrategyConfig) -> EnsembleModel:
-    train = data.tail(config.train_window)
-    return EnsembleModel(config).fit(train, feature_columns)
+    fit_at = data["decision_at"].max()
+    train = purge_immature_labels(data, fit_at).tail(config.train_window)
+    model = EnsembleModel(config).fit(train, feature_columns)
+    model.fit_at_ = fit_at
+    return model

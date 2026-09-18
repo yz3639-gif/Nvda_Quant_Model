@@ -18,7 +18,7 @@ from nvda_quant_model.backtest.backtest_engine import BacktestEngine
 from nvda_quant_model.backtest.metrics import benchmark_metrics
 from nvda_quant_model.backtest.walk_forward import train_latest_model, walk_forward_signals
 from nvda_quant_model.config import MACRO_TICKERS, PROJECT_ROOT, StrategyConfig
-from nvda_quant_model.news_sentiment import fetch_live_news, save_news_outputs
+from nvda_quant_model.news_sentiment import get_live_news_overlay
 from nvda_quant_model.options_volatility import analyze_options
 from nvda_quant_model.pipeline import prepare_model_inputs
 
@@ -643,6 +643,7 @@ def run(
     order_flow_feed: str = "iex",
     order_flow_minutes: int = 60,
 ) -> dict[str, Any]:
+    config.effective_prediction_mode  # Validate before any data fetch or file write.
     output_dir.mkdir(parents=True, exist_ok=True)
     cache_dir = PROJECT_ROOT / "cache"
     inputs = prepare_model_inputs(
@@ -733,31 +734,17 @@ def run(
         latest_signal = apply_signal_policy(latest_raw, selected_config).iloc[-1]
         prediction = build_prediction(latest_signal, latest_row.iloc[-1], latest_row.index[-1], selected_config, price_override)
         model_comparison = latest_model.model_comparison_frame()
+    model_metadata = ({
+        "prediction_mode": "precision_rule", "signal_model": "Strict_Precision_Rule",
+        "signal_models": ["Strict_Precision_Rule"], "diagnostic_models": [],
+        "signal_weights": {"Strict_Precision_Rule": 1.0}, "probability_status": "uncalibrated_score",
+    } if precision_rule is not None else latest_model.prediction_metadata())
+    prediction.update(model_metadata)
     news_overlay = None
     if include_live_news:
         news_dir = output_dir / "news_live"
-        overlay_path = news_dir / "live_news_overlay.json"
-        try:
-            articles = fetch_live_news(days=news_days)
-            if not articles and overlay_path.exists():
-                news_overlay = json.loads(overlay_path.read_text(encoding="utf-8"))
-                news_overlay["fetch_error"] = "live_news_fetch_returned_zero_articles"
-            else:
-                news_payload = save_news_outputs(articles, news_dir, price_index=report_prices.index)
-                news_overlay = news_payload["overlay"]
-        except Exception as exc:
-            if overlay_path.exists():
-                news_overlay = json.loads(overlay_path.read_text(encoding="utf-8"))
-                news_overlay["fetch_error"] = str(exc)
-            else:
-                news_overlay = {"article_count": 0, "sentiment_score": 0.0, "signal": 0, "risk_flags": [f"news_fetch_failed:{exc}"]}
-        prediction["news_overlay"] = {
-            "signal": news_overlay.get("signal", 0),
-            "sentiment_score": round(float(news_overlay.get("sentiment_score", 0.0)), 4),
-            "article_count": int(news_overlay.get("article_count", 0)),
-            "risk_flags": news_overlay.get("risk_flags", []),
-            "confidence_adjustment": round(float(news_overlay.get("confidence_adjustment", 0.0)), 4),
-        }
+        news_overlay = get_live_news_overlay(news_dir, days=news_days, price_index=report_prices.index)
+        prediction["news_overlay"] = dict(news_overlay)
     order_flow_overlay = None
     if include_live_order_flow or order_flow_json_path is not None:
         from nvda_quant_model.live_order_flow import analyze_order_flow, fetch_live_order_flow
@@ -843,18 +830,22 @@ def run(
     signals.to_csv(output_dir / "signals.csv")
     result.equity_curve.to_csv(output_dir / "equity_curve.csv")
     result.trades.to_csv(output_dir / "trades.csv", index=False)
+    result.fills.to_csv(output_dir / "fills.csv", index=False)
     wf.to_csv(output_dir / "walk_forward.csv", index=False)
     feature_importance.rename("importance").to_csv(output_dir / "feature_importance.csv")
     model_comparison.to_csv(output_dir / "model_comparison.csv", index=False)
 
     payload = {
         "config": asdict(selected_config),
+        **model_metadata,
         "data_status": data_status,
         "data_quality": {
             "csv": str(data_quality_csv),
             "json": str(data_quality_json),
         },
         "metrics": result.metrics,
+        "execution_account": result.account,
+        "execution_note": "Corrected close/daily-reset diagnostic. Use research.runner for after-close decisions executed next open.",
         "benchmark_metrics": bench_metrics,
         "statistical_tests": stats,
         "robustness": robustness,
@@ -899,6 +890,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rule-quantile", type=float, default=0.55)
     parser.add_argument("--rule-max-filters", type=int, default=2)
     parser.add_argument("--fast-rule-only", action="store_true", help="Skip diagnostic ML models; predictions remain rule-equivalent")
+    parser.add_argument("--prediction-mode", choices=["rule", "precision_rule", "ml_ensemble"], default="rule")
     parser.add_argument("--model-params-json", default=None, help="Optional tuned sklearn/xgboost parameter overrides JSON")
     parser.add_argument("--precision-rule-json", default=None, help="Optional strict PrecisionRule JSON from optimizer/selector")
     return parser.parse_args()
@@ -922,6 +914,7 @@ def main() -> None:
         rule_quantile=args.rule_quantile,
         rule_max_filters=args.rule_max_filters,
         fast_rule_only=args.fast_rule_only,
+        prediction_mode=args.prediction_mode,
         model_params_path=args.model_params_json,
         precision_rule_path=args.precision_rule_json,
     )

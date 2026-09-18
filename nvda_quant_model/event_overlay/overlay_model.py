@@ -17,6 +17,8 @@ from nvda_quant_model.event_overlay.event_classifier import classify_events
 from nvda_quant_model.event_overlay.feature_builder import build_event_feature_frame
 from nvda_quant_model.event_overlay.labels import build_event_labels
 from nvda_quant_model.event_overlay.schema import assert_no_event_feature_leakage, event_text
+from nvda_quant_model.data.data_validation import purge_immature_labels
+from nvda_quant_model.data.session_calendar import session_schedule
 
 
 @dataclass
@@ -95,6 +97,7 @@ class EventImpactOverlayModel:
     volatility_classifier: Any
     tail_classifier: Any
     direction_classes: list[str]
+    fit_at: pd.Timestamp | None = None
 
 
 def _classifier(model_type: str, random_state: int) -> Any:
@@ -143,12 +146,16 @@ def train_event_overlay_model(
     text_method: Literal["tfidf", "finbert", "none"] = "tfidf",
     include_event_context: bool = True,
     random_state: int = 7,
+    fit_at: pd.Timestamp | str | None = None,
 ) -> tuple[EventImpactOverlayModel, dict[str, float]]:
     classified = classify_events(events)
-    labels = build_event_labels(classified, market_data, horizons=(1, 3, 5))
+    labels = build_event_labels(classified, market_data, horizons=tuple(sorted({1, 3, 5, target_horizon})))
     target_col = f"future_{target_horizon}d_direction"
     training = classified.join(labels.set_index("event_id"), on="event_id")
-    training = training.loc[training[target_col] != "unknown"].reset_index(drop=True)
+    if fit_at is None:
+        fit_at = session_schedule(market_data.index, allow_non_sessions=True)["market_close"].max()
+    training = purge_immature_labels(training, fit_at)
+    training = training.loc[(training[target_col] != "unknown") & training["volatility_shock"].notna() & training["downside_tail_risk"].notna()].reset_index(drop=True)
     if len(training) < 5:
         raise ValueError("Not enough labeled events to train Event Impact Overlay.")
 
@@ -169,6 +176,7 @@ def train_event_overlay_model(
         volatility_classifier=volatility_classifier,
         tail_classifier=tail_classifier,
         direction_classes=[str(item) for item in direction_classifier.classes_],
+        fit_at=pd.Timestamp(fit_at),
     )
     metrics = evaluate_event_overlay_model(model, training, market_data, external_data, target_horizon)
     return model, metrics
@@ -215,6 +223,9 @@ def score_event_overlay(
             {
                 "event_id": row["event_id"],
                 "published_at": row["published_at"],
+                "available_at": row["available_at"],
+                "decision_at": row["available_at"],
+                "fit_at": model.fit_at,
                 "event_type": row["event_type"],
                 "event_bullish_score": float(bullish.iloc[idx]),
                 "event_bearish_score": float(bearish.iloc[idx]),
@@ -238,7 +249,7 @@ def evaluate_event_overlay_model(
     target_horizon: int | None = None,
 ) -> dict[str, float]:
     horizon = target_horizon or model.target_horizon
-    labels = build_event_labels(events, market_data, horizons=(1, 3, 5))
+    labels = build_event_labels(events, market_data, horizons=tuple(sorted({1, 3, 5, horizon})))
     target_col = f"future_{horizon}d_direction"
     frame = classify_events(events).join(labels.set_index("event_id"), on="event_id")
     frame = frame.loc[frame[target_col] != "unknown"].reset_index(drop=True)
