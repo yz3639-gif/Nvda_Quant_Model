@@ -43,4 +43,4 @@ See [PUBLICATION_NOTES.md](PUBLICATION_NOTES.md) and [PUBLICATION_PROVENANCE.jso
 
 ## Remote verification
 
-GitHub workflow configuration and local test success are separate from a remotely completed CI run. The repository's Actions history is the authoritative record of remote run status for a given published commit.
+The command-line GitHub credential cannot create Actions workflows. The [workflow template](ci/research.yml.example) is retained for activation through a connection with workflow permission. Local checks above passed; no remote CI pass is claimed. The repository's Actions history is the authoritative record of remote run status for a given published commit.

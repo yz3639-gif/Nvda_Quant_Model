@@ -144,4 +144,3 @@ engine_calibration_latest/实际是另一份旧版59窗口代理分布结果，�
 - 旧审计：outputs/performance_retest/overfit_audit/overfit_audit.json
 - 搜索记录：outputs/stable_candidate_optimizer/stable_validation.json
 - 新闻演示：outputs/event_overlay_backtest/event_overlay_backtest_report.json
-

@@ -59,6 +59,6 @@ See the [complete report](results/frozen_20260918/research_report.md), [probabil
 
 ## Evidence and review
 
-Each completed run has a manifest, per-stage integrity hashes, dependencies, frozen input hashes, inner selection records, predictions, fill/account artifacts and generated charts. Offline regression tests include deterministic financial examples, actual fitted-model future-data mutations, event timing and artifact tampering. CI is configured; local test execution does not by itself establish that GitHub Actions has run remotely.
+Each completed run has a manifest, per-stage integrity hashes, dependencies, frozen input hashes, inner selection records, predictions, fill/account artifacts and generated charts. Offline regression tests include deterministic financial examples, actual fitted-model future-data mutations, event timing and artifact tampering. An [optional CI workflow](ci/research.yml.example) is provided; local test execution does not establish that GitHub Actions has run remotely.
 
 The [implementation status](IMPLEMENTATION_STATUS.md) separates recorded verification from open validation work, and the [runbook](RUNBOOK.md) provides the reproduction path. A technical review should be able to trace each headline number to its model, sample, cost assumptions and saved account; the [discussion brief](TECHNICAL_BRIEF.md) explains the main design decisions and limitations.
