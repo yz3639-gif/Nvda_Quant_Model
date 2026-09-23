@@ -93,7 +93,6 @@
   },
   "code": {
     "commit": "11c9cd1e40044a03169598fe257698aec6aee9d2",
-    "branch": "codex/nvda-research-v2",
     "dirty_status": "?? research/results/",
     "source_sha256": "ef05a1fc6ff25c2968212205b77c9c0f1445ec5213584eb4b55b307de2c09e83",
     "files": {
@@ -180,7 +179,7 @@
       "utils/stats.py": "6808cac86f649953e2c673544c95f4feae931728d1dbeed70bb725b4ba0d590c"
     }
   },
-  "input_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/sample/synthetic_ohlcv.csv",
+  "input_path": "research/sample/synthetic_ohlcv.csv",
   "data_first": "2019-01-02 00:00:00",
   "data_last": "2022-05-16 00:00:00",
   "data_rows": 850,

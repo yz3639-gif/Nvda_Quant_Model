@@ -1,0 +1,2831 @@
+{
+  "publication_date": "2026-09-23",
+  "kind": "metadata_normalization_only",
+  "scope": "Local absolute paths replaced with portable references; local branch labels omitted; file-size and parent artifact checksums refreshed. No financial result, model configuration, engine source, or recorded run date changed.",
+  "path_convention": "Paths beginning research/ or nvda_quant_model/ are repository-relative; legacy_workspace/ denotes the prior workspace, whose unshipped artifacts may not be present in this repository.",
+  "historical_reproduction_scope": "REPRODUCTION_CHECK.json records verification of the original 2026-09-18 files. Published metadata bytes differ; original and published hashes are recorded below. This publication was not a new model run.",
+  "original_metadata_backup": "research/runs/publication_backup (local only; ignored by Git)",
+  "numeric_fingerprint_method": "JSON numeric leaves, excluding byte-size metadata fields named bytes; CSV numeric cells identified by decimal/scientific/NaN/Inf lexical format. Field paths or cell coordinates are included in the digest.",
+  "historical_run_identity": {
+    "research/results/frozen_20260918/manifest.json": {
+      "source_commit": "11c9cd1e40044a03169598fe257698aec6aee9d2",
+      "source_sha256": "ef05a1fc6ff25c2968212205b77c9c0f1445ec5213584eb4b55b307de2c09e83",
+      "input_sha256": "e4e4a1b1b4da6a036f2c423ec415f23c91f948114fbaf43be8f676537565afc0",
+      "original_baseline_sha256": "d77b379e1ae0d51294eb63434c87475d5c84ddcdf01cc02879083e8028481310",
+      "published_baseline_sha256": "29abb8e549e0c3c5178c1b3ff3942f4a19780b1dde19ad994c705d456f01d7a8",
+      "cache_sha256": "e9d660af49329f86d690ba87749f51d9d04cdb00a3149a895ad9d42c0897b201"
+    },
+    "research/results/synthetic_example/manifest.json": {
+      "source_commit": "11c9cd1e40044a03169598fe257698aec6aee9d2",
+      "source_sha256": "ef05a1fc6ff25c2968212205b77c9c0f1445ec5213584eb4b55b307de2c09e83",
+      "input_sha256": "710f4516c9a8942310384a25c3bb99a85fa65dd075121f08c28365dd1f9c7467",
+      "original_baseline_sha256": null,
+      "published_baseline_sha256": null,
+      "cache_sha256": null
+    }
+  },
+  "files": [
+    {
+      "path": "nvda_quant_model/MODEL_REMEDIATION_PLAN.md",
+      "original_sha256": "9cd4f589f74c78af94b7850f232e98cfdf88aadac571116b1b02bf0cee2b9086",
+      "published_sha256": "a4821a179f3eb8cac9bbf43e0633c0130e6e98b50f1303386e175a0953926eec",
+      "original_bytes": 16011,
+      "published_bytes": 16438
+    },
+    {
+      "path": "nvda_quant_model/README.md",
+      "original_sha256": "fc7023619dd0fe9b5f219f079348a9de07b1de678eb09a944c24433dd45a7c29",
+      "published_sha256": "1b8ad5290de6bc7e4204bd4a0af7e223001e09abb3ffc5be4361ae2c8cd6b218",
+      "original_bytes": 13663,
+      "published_bytes": 14090
+    },
+    {
+      "path": "research/REPRODUCTION_CHECK.json",
+      "original_sha256": "c1ee4b183d01babcf7b7579aa04e96d74d478397913d96b8da86c0de69563257",
+      "published_sha256": "8980dd904c06ad26c5b918fb679a7c77d8aeb6c13169f964394c447df98eba5f",
+      "original_bytes": 1940,
+      "published_bytes": 2064
+    },
+    {
+      "path": "research/UPGRADE_PLAN.md",
+      "original_sha256": "55c9a53bc0e94ff4311c4bf98e78662987ec95387e591a47cdd465e986e1342e",
+      "published_sha256": "b2de4beeb40eaf1fdd4ac66411bc8ec22e495ce457871264801120203c368344",
+      "original_bytes": 13879,
+      "published_bytes": 13839
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/overfit_audit.json",
+      "original_sha256": "f3e3eb3c30a7f8dff6391bf2f1e873b903a7a1ca1734d47c18836c7128332ca7",
+      "published_sha256": "8965eeaefbc7ae092233807b04db08fe3bce68d8cb8078ab9c2af45162aa9a89",
+      "original_bytes": 2272,
+      "published_bytes": 2252
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion.json",
+      "original_sha256": "fedf65b5b94fd3c5c2ed09cd4181736523542349a0f3c3bf8012469ea825f886",
+      "published_sha256": "eb1bf995283b2f986a6470beef9252d057811cde25d407427a8e5cd28c5d6bc1",
+      "original_bytes": 18472,
+      "published_bytes": 18452
+    },
+    {
+      "path": "research/baseline/historical_outputs/stable_candidate_optimizer/stable_validation.json",
+      "original_sha256": "66e4b26a7712ebffbcd1561f8dee035513c06246c2510033148283094d328051",
+      "published_sha256": "36ff975c80a7df93a525ba28d555e503a6e21049c098dedc70e5dc8e6e8b26de",
+      "original_bytes": 14826,
+      "published_bytes": 14806
+    },
+    {
+      "path": "research/baseline/historical_outputs/summary.json",
+      "original_sha256": "66a06fbf8f673a84fb595f200bbcdab2de8baf943a871aa90dd00a51e4c5afaa",
+      "published_sha256": "eba6f3ec0142682bebd4dc87901d4bf9b753ff73040c83e60962faea0aa944b3",
+      "original_bytes": 18788,
+      "published_bytes": 18687
+    },
+    {
+      "path": "research/baseline/manifest.json",
+      "original_sha256": "3d7a094924a3668e7fe66d748034ed3bca48bd6a699704311c562215124735ce",
+      "published_sha256": "646bc7c46f0ffe88d2108468943ab50edd1eebcf06e3324e783d914dbc4e0578",
+      "original_bytes": 134033,
+      "published_bytes": 133130
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/manifest.json",
+      "original_sha256": "aa1a80b8d723c923cb7f293cf5e2fabb901ca25b8b02e3bd3ecdebe3feaec3f0",
+      "published_sha256": "87eaa07efc0d0d0e79db0def397f1c5e5e2ca45e4ae9448cb2e3eb408faeaa98",
+      "original_bytes": 18772,
+      "published_bytes": 18564
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/manifest.json",
+      "original_sha256": "ac11236bc91c46ae2f0f33278edc2ad819a3f1a4cc2f507ff06baa2a1fa90eea",
+      "published_sha256": "4dc595b82c42f5bd782c2db8d8f67358a341f73d1b6b95fa71d447a21472cb29",
+      "original_bytes": 18768,
+      "published_bytes": 18560
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/manifest.json",
+      "original_sha256": "344340d041ef2e67d1328f2f83af076ec9319eae528ae38e948fe8fedd107d3f",
+      "published_sha256": "3d0b70c02561358d80670003ff695e387aff679aa8e795d3d2f4b60e02c1d10e",
+      "original_bytes": 18777,
+      "published_bytes": 18569
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/historical_replay.csv",
+      "original_sha256": "1571271a9a6c1e2ba59b66301e72bac35c13d291537877298379383ade5be1d9",
+      "published_sha256": "f05b74c5fe0f70e0fcca97751b88bde8ff4abec35e9ebbde40df6b0a7174dcc5",
+      "original_bytes": 9418,
+      "published_bytes": 8818
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/historical_replay_manifest.json",
+      "original_sha256": "b24bc0b5d971dde380770fae47cf3ec516ee49f55ed1d508fa79271aa3d75d14",
+      "published_sha256": "1466328a48b7b61ff3ad565e14e3f256b5c77e38f4dfe5d6c4a411506f89c473",
+      "original_bytes": 5577,
+      "published_bytes": 4905
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/manifest.json",
+      "original_sha256": "4befaf44bfb479b263e2d947b535a311613ca462626c9445004aac37e542ce4a",
+      "published_sha256": "e6ae6e8f9e0d9cb93c1663b3c071a521611fd59920511075013e3cbf085e3725",
+      "original_bytes": 18675,
+      "published_bytes": 18355
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/manifest.json",
+      "original_sha256": "b7e5b65dbe1ff3ad915576f3529e0fe08e8d82b9bf889e5a13ce8f6c9be3ed8f",
+      "published_sha256": "e23eea082918b6b54f1e8933f1bb2f149382675a18b27a13f82cc89c7d5e262b",
+      "original_bytes": 18671,
+      "published_bytes": 18351
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/manifest.json",
+      "original_sha256": "0c07c46e35d905edd1c15a8ca1266e3bfaac0bcadb8adf4419399ba50f628bbf",
+      "published_sha256": "38813bfe3a2d39d33448775943fdddcd1c71f8fa379b5c41263eb87c3e7776d0",
+      "original_bytes": 18680,
+      "published_bytes": 18360
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/manifest.json",
+      "original_sha256": "d52cc7a0105e03a7eebd3cda60b64b218ee91741bda3a9a1da2a0343a321621c",
+      "published_sha256": "bad007d06cbba0a6e3b8834cd1641a7209327c7c2942a40658934f41a051857a",
+      "original_bytes": 18647,
+      "published_bytes": 18327
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/manifest.json",
+      "original_sha256": "b64c92444319de0f4e50bb56a5a0c3fa7e83e4f442d838907f956ce291e178f2",
+      "published_sha256": "7d777fa52d43486d63bfc7e63ccdf629d19f36d60bf7e69a2d8aafedbea11c5d",
+      "original_bytes": 18643,
+      "published_bytes": 18323
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/manifest.json",
+      "original_sha256": "9c107b7a11e1da12a3ab30a200e89dfacbd0525942471a7995ad756b1341d0f0",
+      "published_sha256": "e7ec7ab297040cefcbf5988597cbc3f1758cc053e1314ddfa87774e01540a65d",
+      "original_bytes": 18652,
+      "published_bytes": 18332
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/manifest.json",
+      "original_sha256": "5dabf7b55d4c1063d53b885ec69a72b3cfd22173e134b5495662c23a62246966",
+      "published_sha256": "9220f930760b36d5532ee2682dd3a74298836f8a612ae9d7b81b44eddcff4b6c",
+      "original_bytes": 18645,
+      "published_bytes": 18325
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/manifest.json",
+      "original_sha256": "233a29dd31f8e8657beb07cf4e2b15e2f527e6ca67993b624a4760b89193df1b",
+      "published_sha256": "717c43e4d6ec535fdf7a7337fcb6937a0a675c99e66f35d3d7066d786e39f4fa",
+      "original_bytes": 18641,
+      "published_bytes": 18321
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/manifest.json",
+      "original_sha256": "9533b29bc038cfe86f439bdb7e49063328e2c70367aea7b069c6ac13f5fdb533",
+      "published_sha256": "60cbcd29d1b5b8fc53fb905d6fd96b9e6c0f5a96b2496646d063f893aa13cfcb",
+      "original_bytes": 18650,
+      "published_bytes": 18330
+    },
+    {
+      "path": "research/results/frozen_20260918/manifest.json",
+      "original_sha256": "95f8adb39d581d6a2eb6216e75215be26906797b1db350b898940df1c5622ce3",
+      "published_sha256": "f210b1732e213816f262141141d79b890c9ecfeb0ce7b67a7bb2693d79f02d84",
+      "original_bytes": 148196,
+      "published_bytes": 148100
+    },
+    {
+      "path": "research/results/synthetic_example/manifest.json",
+      "original_sha256": "20585ebf7dcc71fa84ed408f67b00318dd1964bd82a017f6683726296db84cf1",
+      "published_sha256": "887f35dbccd010c2d34875f5cd7495e351d86d8d0cd3a0a7b4d4c47332aacebe",
+      "original_bytes": 87038,
+      "published_bytes": 86942
+    },
+    {
+      "path": "scripts/build_investor_consensus_model.py",
+      "original_sha256": "dd0925a319e8854e313639d82f067910e26f4227c801ba693a4cb67de69c0364",
+      "published_sha256": "bd0771352d7769c6af5ae453d1189b5616fd6d259f0c4b815a5cd4aef24a3df5",
+      "original_bytes": 15143,
+      "published_bytes": 15151
+    },
+    {
+      "path": "skills/nvda-news-sentiment/SKILL.md",
+      "original_sha256": "3c5cdde4b705b434213ec92ac194064f7be70f9ab766663fa04789cf0fcc5781",
+      "published_sha256": "4680c7b62a63431cc393693c974982cb963e69bd10670531eb504917dc2ad6c1",
+      "original_bytes": 1550,
+      "published_bytes": 1552
+    }
+  ],
+  "numeric_validation": [
+    {
+      "path": "research/REPRODUCTION_CHECK.json",
+      "numeric_values": 23,
+      "original_numeric_sha256": "7289fe81a1d8bc89eadda8484d7c3e7275078783cc56a7702f41fc144cbce023",
+      "published_numeric_sha256": "7289fe81a1d8bc89eadda8484d7c3e7275078783cc56a7702f41fc144cbce023",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/equity_curve.csv",
+      "numeric_values": 1506,
+      "original_numeric_sha256": "a76604fd3eb79d979d9e28fd4ae15afe685408ef8c439e51890342b449fa0bff",
+      "published_numeric_sha256": "a76604fd3eb79d979d9e28fd4ae15afe685408ef8c439e51890342b449fa0bff",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/event_overlay_backtest/classified_events_with_labels.csv",
+      "numeric_values": 177,
+      "original_numeric_sha256": "9a5ac21542eb850ca687d7c01805b1d55e9f5c7a1a1772602329b19000d428e4",
+      "published_numeric_sha256": "9a5ac21542eb850ca687d7c01805b1d55e9f5c7a1a1772602329b19000d428e4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/event_overlay_backtest/event_overlay_backtest_report.json",
+      "numeric_values": 61,
+      "original_numeric_sha256": "8dd4d168cfc05db4cfc5b17c57eac63a8677a9384c399c521cdb17cff8d90be1",
+      "published_numeric_sha256": "8dd4d168cfc05db4cfc5b17c57eac63a8677a9384c399c521cdb17cff8d90be1",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/event_overlay_backtest/event_overlay_backtest_summary.csv",
+      "numeric_values": 20,
+      "original_numeric_sha256": "07833c03c1e629f92999d7012de5996e08aa943045dcb82aac8d9d8c40d19d69",
+      "published_numeric_sha256": "07833c03c1e629f92999d7012de5996e08aa943045dcb82aac8d9d8c40d19d69",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/event_overlay_backtest/event_overlay_backtest_windows.csv",
+      "numeric_values": 52,
+      "original_numeric_sha256": "4eba1607aa805c3292138bd51a3bd1c18a0d0f687af76a276f2591bdbfa8a5f4",
+      "published_numeric_sha256": "4eba1607aa805c3292138bd51a3bd1c18a0d0f687af76a276f2591bdbfa8a5f4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/event_overlay_backtest/event_overlay_group_summary.csv",
+      "numeric_values": 27,
+      "original_numeric_sha256": "10fc9d3abcf086e547ef36cd4fb835c1b7f18fed32797dceb8ddc3ee67f71305",
+      "published_numeric_sha256": "10fc9d3abcf086e547ef36cd4fb835c1b7f18fed32797dceb8ddc3ee67f71305",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/event_overlay_backtest/latest_event_overlay_scores.csv",
+      "numeric_values": 32,
+      "original_numeric_sha256": "ebc1f8437270fac374ae6004af54511c8bd3dd59b6332f1f4d18d6399ad1d792",
+      "published_numeric_sha256": "ebc1f8437270fac374ae6004af54511c8bd3dd59b6332f1f4d18d6399ad1d792",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/engine_calibration/engine_calibration_summary.csv",
+      "numeric_values": 225,
+      "original_numeric_sha256": "35dc904a06dff6d2a18b4bfb72e9c11538479b71153a2567f06f50fe4702d4ec",
+      "published_numeric_sha256": "35dc904a06dff6d2a18b4bfb72e9c11538479b71153a2567f06f50fe4702d4ec",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/engine_calibration/engine_calibration_windows.csv",
+      "numeric_values": 18772,
+      "original_numeric_sha256": "4795a604b5978aa052430c355118dbf017d3e59c80bbdbd63a956f2e2c1656bf",
+      "published_numeric_sha256": "4795a604b5978aa052430c355118dbf017d3e59c80bbdbd63a956f2e2c1656bf",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_latest.json",
+      "numeric_values": 10,
+      "original_numeric_sha256": "d78ccd0111040dcca5d1c77c1628d882ef463b552f80107b96cb951f931d2ca5",
+      "published_numeric_sha256": "d78ccd0111040dcca5d1c77c1628d882ef463b552f80107b96cb951f931d2ca5",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_metrics.csv",
+      "numeric_values": 675,
+      "original_numeric_sha256": "dd243a2df8c08a1bebf711572865cf8f1ef7f0cfb1c7e6ad3f0d60abad0b8f07",
+      "published_numeric_sha256": "dd243a2df8c08a1bebf711572865cf8f1ef7f0cfb1c7e6ad3f0d60abad0b8f07",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_24m.csv",
+      "numeric_values": 6024,
+      "original_numeric_sha256": "34ee704ea353e3529a44be70f47bb6c89eba0b17901b45845f51238516881321",
+      "published_numeric_sha256": "34ee704ea353e3529a44be70f47bb6c89eba0b17901b45845f51238516881321",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_36m.csv",
+      "numeric_values": 9048,
+      "original_numeric_sha256": "40e4dfd9f0e4c69e3db57e29fca5b2e3d8de2e1d14de48904ad04e43ec577916",
+      "published_numeric_sha256": "40e4dfd9f0e4c69e3db57e29fca5b2e3d8de2e1d14de48904ad04e43ec577916",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_60m.csv",
+      "numeric_values": 15072,
+      "original_numeric_sha256": "b8d9bc9eb36f569edcefcf8bd6d9a1dbae94d82c8f4b4a0de83c4b6129d29dbb",
+      "published_numeric_sha256": "b8d9bc9eb36f569edcefcf8bd6d9a1dbae94d82c8f4b4a0de83c4b6129d29dbb",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_24m.csv",
+      "numeric_values": 6526,
+      "original_numeric_sha256": "5b509b480be61cb0fa211b909468a2061a524e708e60ba79f3b41018f1350026",
+      "published_numeric_sha256": "5b509b480be61cb0fa211b909468a2061a524e708e60ba79f3b41018f1350026",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_36m.csv",
+      "numeric_values": 9802,
+      "original_numeric_sha256": "908ff9dd38ce930ae1fbe6d9c16175377ec4971e6a6b1350df473d1c6a8b7948",
+      "published_numeric_sha256": "908ff9dd38ce930ae1fbe6d9c16175377ec4971e6a6b1350df473d1c6a8b7948",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_60m.csv",
+      "numeric_values": 16328,
+      "original_numeric_sha256": "000b8c5aafc28f4779be58a58b51d940e807a18db7175b3126d068b9684571ae",
+      "published_numeric_sha256": "000b8c5aafc28f4779be58a58b51d940e807a18db7175b3126d068b9684571ae",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_24m.csv",
+      "numeric_values": 6024,
+      "original_numeric_sha256": "34ee704ea353e3529a44be70f47bb6c89eba0b17901b45845f51238516881321",
+      "published_numeric_sha256": "34ee704ea353e3529a44be70f47bb6c89eba0b17901b45845f51238516881321",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_36m.csv",
+      "numeric_values": 9048,
+      "original_numeric_sha256": "40e4dfd9f0e4c69e3db57e29fca5b2e3d8de2e1d14de48904ad04e43ec577916",
+      "published_numeric_sha256": "40e4dfd9f0e4c69e3db57e29fca5b2e3d8de2e1d14de48904ad04e43ec577916",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_60m.csv",
+      "numeric_values": 15072,
+      "original_numeric_sha256": "b8d9bc9eb36f569edcefcf8bd6d9a1dbae94d82c8f4b4a0de83c4b6129d29dbb",
+      "published_numeric_sha256": "b8d9bc9eb36f569edcefcf8bd6d9a1dbae94d82c8f4b4a0de83c4b6129d29dbb",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_24m.csv",
+      "numeric_values": 6526,
+      "original_numeric_sha256": "5b509b480be61cb0fa211b909468a2061a524e708e60ba79f3b41018f1350026",
+      "published_numeric_sha256": "5b509b480be61cb0fa211b909468a2061a524e708e60ba79f3b41018f1350026",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_36m.csv",
+      "numeric_values": 9802,
+      "original_numeric_sha256": "908ff9dd38ce930ae1fbe6d9c16175377ec4971e6a6b1350df473d1c6a8b7948",
+      "published_numeric_sha256": "908ff9dd38ce930ae1fbe6d9c16175377ec4971e6a6b1350df473d1c6a8b7948",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_60m.csv",
+      "numeric_values": 16328,
+      "original_numeric_sha256": "000b8c5aafc28f4779be58a58b51d940e807a18db7175b3126d068b9684571ae",
+      "published_numeric_sha256": "000b8c5aafc28f4779be58a58b51d940e807a18db7175b3126d068b9684571ae",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_summary.json",
+      "numeric_values": 94,
+      "original_numeric_sha256": "34a2cedc7a0d15b8dc33dbd4b0d5a6fe65629d2f0c3c8a751adf18748863c246",
+      "published_numeric_sha256": "34a2cedc7a0d15b8dc33dbd4b0d5a6fe65629d2f0c3c8a751adf18748863c246",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/engine_calibration.csv",
+      "numeric_values": 225,
+      "original_numeric_sha256": "c666897f242a5a364258d3ff808111933986bfcb1652e9810f3a0586feb0de3c",
+      "published_numeric_sha256": "c666897f242a5a364258d3ff808111933986bfcb1652e9810f3a0586feb0de3c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/overfit_audit.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "5c1f982212f144c99ee2d241e9b285905dd8d488cca9f33c98e818aa8129dcda",
+      "published_numeric_sha256": "5c1f982212f144c99ee2d241e9b285905dd8d488cca9f33c98e818aa8129dcda",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/parameter_sensitivity_nearby.csv",
+      "numeric_values": 243,
+      "original_numeric_sha256": "c20e9f21ad52480ddf486f43eda3299b0c09784f68f110be39c5494c5c9df4f4",
+      "published_numeric_sha256": "c20e9f21ad52480ddf486f43eda3299b0c09784f68f110be39c5494c5c9df4f4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/train_validation.csv",
+      "numeric_values": 42,
+      "original_numeric_sha256": "85dda41aa8dd08dbc3c75fc4941b52ac00aa09f778d033f28cf4106c5482214e",
+      "published_numeric_sha256": "85dda41aa8dd08dbc3c75fc4941b52ac00aa09f778d033f28cf4106c5482214e",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/window_thresholds.csv",
+      "numeric_values": 45,
+      "original_numeric_sha256": "fa35ed79d04a00d07a5e0e129eb012f49893894a3f38b47efd9b6d242091dfa5",
+      "published_numeric_sha256": "fa35ed79d04a00d07a5e0e129eb012f49893894a3f38b47efd9b6d242091dfa5",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_latest_snapshot.csv",
+      "numeric_values": 112,
+      "original_numeric_sha256": "ab73c586993cd866bc3c26ae09fa067e79f7f402f0d9093a9b58c8dd4f3e03cb",
+      "published_numeric_sha256": "ab73c586993cd866bc3c26ae09fa067e79f7f402f0d9093a9b58c8dd4f3e03cb",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion.json",
+      "numeric_values": 350,
+      "original_numeric_sha256": "aeb829b86fdcdb18b8f0055d865e330eb11e84c8a4870fb6862799b65c9934bb",
+      "published_numeric_sha256": "aeb829b86fdcdb18b8f0055d865e330eb11e84c8a4870fb6862799b65c9934bb",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion_summary.csv",
+      "numeric_values": 544,
+      "original_numeric_sha256": "0bfbdbd34415f3b364362b6964ba523ab2ede94280250f7cfe51c599d1125920",
+      "published_numeric_sha256": "0bfbdbd34415f3b364362b6964ba523ab2ede94280250f7cfe51c599d1125920",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_source_rows.csv",
+      "numeric_values": 564,
+      "original_numeric_sha256": "ce34001a2580afa290dd17249c87ed687fffc7e18798d8f6475e0579665646e6",
+      "published_numeric_sha256": "ce34001a2580afa290dd17249c87ed687fffc7e18798d8f6475e0579665646e6",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_stress_backtests.csv",
+      "numeric_values": 864,
+      "original_numeric_sha256": "f9df85bdc1870e027cf2f5d6106788f6f9a5b99127c8d8c8b1a962c3902602fe",
+      "published_numeric_sha256": "f9df85bdc1870e027cf2f5d6106788f6f9a5b99127c8d8c8b1a962c3902602fe",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/signals.csv",
+      "numeric_values": 3006,
+      "original_numeric_sha256": "dd42c6c127d9ffb711f3634bcebe83b522003a2cfe2a6de319f47f3b873e2a25",
+      "published_numeric_sha256": "dd42c6c127d9ffb711f3634bcebe83b522003a2cfe2a6de319f47f3b873e2a25",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/stable_candidate_optimizer/stable_validation.json",
+      "numeric_values": 276,
+      "original_numeric_sha256": "f7358f96b781859d4a46bfe92f7fa51b805268066595d2efe867081b8b4c5b81",
+      "published_numeric_sha256": "f7358f96b781859d4a46bfe92f7fa51b805268066595d2efe867081b8b4c5b81",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/summary.json",
+      "numeric_values": 247,
+      "original_numeric_sha256": "ac565fc5a7fcd06cda38241e973edeaec7c3568c35f22d7791928c8bb09974d7",
+      "published_numeric_sha256": "ac565fc5a7fcd06cda38241e973edeaec7c3568c35f22d7791928c8bb09974d7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/trades.csv",
+      "numeric_values": 205,
+      "original_numeric_sha256": "4315ab9cfed0ea4311ba6d1f26e89ed90378c63c18487dbdd06ea8bb94a91224",
+      "published_numeric_sha256": "4315ab9cfed0ea4311ba6d1f26e89ed90378c63c18487dbdd06ea8bb94a91224",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/historical_outputs/walk_forward.csv",
+      "numeric_values": 65,
+      "original_numeric_sha256": "fc10e2d59a3b55058824875344ef7e14cca1309b9fa67095ceef8b6fe4fd12b9",
+      "published_numeric_sha256": "fc10e2d59a3b55058824875344ef7e14cca1309b9fa67095ceef8b6fe4fd12b9",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/baseline/manifest.json",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_calibrated/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "b85ae28d12e4ac2fcf82c52381929b55ec207cfa5e71627d21a5adac43a5e74b",
+      "published_numeric_sha256": "b85ae28d12e4ac2fcf82c52381929b55ec207cfa5e71627d21a5adac43a5e74b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_calibrated/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "4eb0aadd4cb408ac36af74d98c9d3f30d34029ce92f81fe586d47ceaf069ca78",
+      "published_numeric_sha256": "4eb0aadd4cb408ac36af74d98c9d3f30d34029ce92f81fe586d47ceaf069ca78",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_calibrated/fills.csv",
+      "numeric_values": 770,
+      "original_numeric_sha256": "d903461e41beb51527a6b25bf15cdb49d9e1f8ee2ddd85859ffa5e0924dcc19b",
+      "published_numeric_sha256": "d903461e41beb51527a6b25bf15cdb49d9e1f8ee2ddd85859ffa5e0924dcc19b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_calibrated/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "5b2e0ccaccac674e21e27c99c56b16a1731db1b2090951048abef3dc9ca2a215",
+      "published_numeric_sha256": "5b2e0ccaccac674e21e27c99c56b16a1731db1b2090951048abef3dc9ca2a215",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_calibrated/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "dae77492cd7ea739bb7a4326671aa80538c5c03ecd2e74bbed34661c6d98c9db",
+      "published_numeric_sha256": "dae77492cd7ea739bb7a4326671aa80538c5c03ecd2e74bbed34661c6d98c9db",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_calibrated/trades.csv",
+      "numeric_values": 280,
+      "original_numeric_sha256": "2fe28482ecd08fd0e94ca83b7f74b948368f51b1e4f5294849e173bfbe443e7c",
+      "published_numeric_sha256": "2fe28482ecd08fd0e94ca83b7f74b948368f51b1e4f5294849e173bfbe443e7c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_exposure_control/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "0c88d140e932d03d97ef79f27f394d4152a22ad7930b54a4e950f6c29932d252",
+      "published_numeric_sha256": "0c88d140e932d03d97ef79f27f394d4152a22ad7930b54a4e950f6c29932d252",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_exposure_control/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "520894aeda820c0d32b04a795e552be8f265362f1a0454c4400423af1fe4631f",
+      "published_numeric_sha256": "520894aeda820c0d32b04a795e552be8f265362f1a0454c4400423af1fe4631f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_exposure_control/fills.csv",
+      "numeric_values": 9779,
+      "original_numeric_sha256": "f1cbb3ac935b40b032e429146a261db2955360a5a2f67da2a8180f23e67cdea3",
+      "published_numeric_sha256": "f1cbb3ac935b40b032e429146a261db2955360a5a2f67da2a8180f23e67cdea3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_exposure_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "a12503a625553d11098cbfdf970e4796282098b918567d5b6e30e6f07df1281a",
+      "published_numeric_sha256": "a12503a625553d11098cbfdf970e4796282098b918567d5b6e30e6f07df1281a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_exposure_control/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "4f329c1e414da90d6d198f61371e87649efe31d5212ede27ff3b7906dec5f96c",
+      "published_numeric_sha256": "4f329c1e414da90d6d198f61371e87649efe31d5212ede27ff3b7906dec5f96c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_exposure_control/trades.csv",
+      "numeric_values": 24,
+      "original_numeric_sha256": "fdff63d420917f58111a317b904ea89b196426c2fd3bc4d991a2c83bde22a26f",
+      "published_numeric_sha256": "fdff63d420917f58111a317b904ea89b196426c2fd3bc4d991a2c83bde22a26f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_fixed_risk_control/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "203c50c2507d7993ded7cb51166e831a27147e59efe957869ed4442ff8b5d943",
+      "published_numeric_sha256": "203c50c2507d7993ded7cb51166e831a27147e59efe957869ed4442ff8b5d943",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_fixed_risk_control/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "3f0cbe3f759bfe43c8a2dfd179fd0cf0daedf99c7dac320807cc20be7210c567",
+      "published_numeric_sha256": "3f0cbe3f759bfe43c8a2dfd179fd0cf0daedf99c7dac320807cc20be7210c567",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_fixed_risk_control/fills.csv",
+      "numeric_values": 2046,
+      "original_numeric_sha256": "91aba8f656aa17722302b1372dbe976286f769dad7ef0ee5c9fa31c099aae897",
+      "published_numeric_sha256": "91aba8f656aa17722302b1372dbe976286f769dad7ef0ee5c9fa31c099aae897",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_fixed_risk_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "0f2f9d97b0c8efe0693b37dd55c1554e190d87607c22be0fa8bc060f9413f121",
+      "published_numeric_sha256": "0f2f9d97b0c8efe0693b37dd55c1554e190d87607c22be0fa8bc060f9413f121",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_fixed_risk_control/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "0f69562664b8ecaca520fe10f4b6063e2ab05a242e0f692e4c63d1c2737012c0",
+      "published_numeric_sha256": "0f69562664b8ecaca520fe10f4b6063e2ab05a242e0f692e4c63d1c2737012c0",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_fixed_risk_control/trades.csv",
+      "numeric_values": 608,
+      "original_numeric_sha256": "e31b2818289d5342f97bb3c4f7f660ae8c8c3be1c082070d699728aea8e0ebee",
+      "published_numeric_sha256": "e31b2818289d5342f97bb3c4f7f660ae8c8c3be1c082070d699728aea8e0ebee",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_raw/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "e4b32a72b9b8bb6ae71d042db9f1c44a3303e485bf79ad2bb372aef5505768fc",
+      "published_numeric_sha256": "e4b32a72b9b8bb6ae71d042db9f1c44a3303e485bf79ad2bb372aef5505768fc",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_raw/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "61bf7c20313fef2d28053625bf932102cde4362e549c28cbe5f83ec10d0c3441",
+      "published_numeric_sha256": "61bf7c20313fef2d28053625bf932102cde4362e549c28cbe5f83ec10d0c3441",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_raw/fills.csv",
+      "numeric_values": 440,
+      "original_numeric_sha256": "7304d219bc6c57236b201da0d9f6c04027fb0782c756203c20b048f811f89bc3",
+      "published_numeric_sha256": "7304d219bc6c57236b201da0d9f6c04027fb0782c756203c20b048f811f89bc3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_raw/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "98c1b94bec556dad3e27fc993673878c137cad4f6b4022c10f492e772a4ec227",
+      "published_numeric_sha256": "98c1b94bec556dad3e27fc993673878c137cad4f6b4022c10f492e772a4ec227",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_raw/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "f328608f091ad4b7520a35f213a690b8564881e2881cfbd6da9f5a85a2f2f6ce",
+      "published_numeric_sha256": "f328608f091ad4b7520a35f213a690b8564881e2881cfbd6da9f5a85a2f2f6ce",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_raw/trades.csv",
+      "numeric_values": 160,
+      "original_numeric_sha256": "5336ce4833605eb756fc2e755572d358ba72258603a96d9c4ff9b941035bb902",
+      "published_numeric_sha256": "5336ce4833605eb756fc2e755572d358ba72258603a96d9c4ff9b941035bb902",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_vol_target/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "5bf188f8035957169a1807425fb672dbe04643bd05799cec307fe4873306dbb2",
+      "published_numeric_sha256": "5bf188f8035957169a1807425fb672dbe04643bd05799cec307fe4873306dbb2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_vol_target/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "98ba0529922f83510dafb96edee609ab3eb56214c2c0324a31ed6fcfa98286aa",
+      "published_numeric_sha256": "98ba0529922f83510dafb96edee609ab3eb56214c2c0324a31ed6fcfa98286aa",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_vol_target/fills.csv",
+      "numeric_values": 2035,
+      "original_numeric_sha256": "dac38d30e7c8938ca2b7d3f80e0c75890524792903838e90cf292b9caed773a5",
+      "published_numeric_sha256": "dac38d30e7c8938ca2b7d3f80e0c75890524792903838e90cf292b9caed773a5",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_vol_target/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "c49fca0e8fd79eedf18d2760831b83f0656355deae72373bbb9968986d725ef7",
+      "published_numeric_sha256": "c49fca0e8fd79eedf18d2760831b83f0656355deae72373bbb9968986d725ef7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_vol_target/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "39ad53b2b140c8f5f4435410de24f640bd84fca31df2e118ae82cfda229917eb",
+      "published_numeric_sha256": "39ad53b2b140c8f5f4435410de24f640bd84fca31df2e118ae82cfda229917eb",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/boosting_vol_target/trades.csv",
+      "numeric_values": 600,
+      "original_numeric_sha256": "9cb67788583738eac1bfa1d9b35e99b2b7e2c6a43f50117022bac2c21080dd40",
+      "published_numeric_sha256": "9cb67788583738eac1bfa1d9b35e99b2b7e2c6a43f50117022bac2c21080dd40",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/buy_hold/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "d1aeb49de3b9abd9bc90e34465c86c5770f5bafba925b95a95e0a7308a46d065",
+      "published_numeric_sha256": "d1aeb49de3b9abd9bc90e34465c86c5770f5bafba925b95a95e0a7308a46d065",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/buy_hold/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "6aee405a427f13ce00c3e3708ce8781df11309b889efa551e571d550d5db6000",
+      "published_numeric_sha256": "6aee405a427f13ce00c3e3708ce8781df11309b889efa551e571d550d5db6000",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/buy_hold/fills.csv",
+      "numeric_values": 11,
+      "original_numeric_sha256": "7c4e25c2c4821689246a0ff37f545f5d5ee288ad089f4514b5ec4902482db994",
+      "published_numeric_sha256": "7c4e25c2c4821689246a0ff37f545f5d5ee288ad089f4514b5ec4902482db994",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/buy_hold/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "187400ef2de118aa1c70f8ce41013896fc3524f703a13102bb2a563d0b05abac",
+      "published_numeric_sha256": "187400ef2de118aa1c70f8ce41013896fc3524f703a13102bb2a563d0b05abac",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/buy_hold/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "202e88c749da4f2563c4756810d84caa4bcff91254e2b59aaf43b980776bd234",
+      "published_numeric_sha256": "202e88c749da4f2563c4756810d84caa4bcff91254e2b59aaf43b980776bd234",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/buy_hold/trades.csv",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_calibrated/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "c3dc9ef21ef86b761758641d9c54ae6a468733fecef66a583bc268b480c1ba8c",
+      "published_numeric_sha256": "c3dc9ef21ef86b761758641d9c54ae6a468733fecef66a583bc268b480c1ba8c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_calibrated/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "250dfe2bbb19d36c72f900e77f0db132bc479b2134e2bb0b6992fd5730b1c6d6",
+      "published_numeric_sha256": "250dfe2bbb19d36c72f900e77f0db132bc479b2134e2bb0b6992fd5730b1c6d6",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_calibrated/fills.csv",
+      "numeric_values": 528,
+      "original_numeric_sha256": "d75608928a18d9bbb7750821e0711cceed59b370d1de3c415ae3854fe0b050cb",
+      "published_numeric_sha256": "d75608928a18d9bbb7750821e0711cceed59b370d1de3c415ae3854fe0b050cb",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_calibrated/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "18322a3836dc3e0b559fb12c46c89d4e6c9552d28e531972017c535c5a688e89",
+      "published_numeric_sha256": "18322a3836dc3e0b559fb12c46c89d4e6c9552d28e531972017c535c5a688e89",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_calibrated/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "7f45b762997fecbd3754c3929d04d4846f83c34a99296e4e7aee441058b3fc2f",
+      "published_numeric_sha256": "7f45b762997fecbd3754c3929d04d4846f83c34a99296e4e7aee441058b3fc2f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_calibrated/trades.csv",
+      "numeric_values": 192,
+      "original_numeric_sha256": "fc69928122e0a3ba4f852aa53042fc5751ff10ce737f19b616885296a31b328d",
+      "published_numeric_sha256": "fc69928122e0a3ba4f852aa53042fc5751ff10ce737f19b616885296a31b328d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_exposure_control/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "e2248f4ca0baf0235c5d716972d39e2c5ef3593590f2ad0bb237e71b3d23e857",
+      "published_numeric_sha256": "e2248f4ca0baf0235c5d716972d39e2c5ef3593590f2ad0bb237e71b3d23e857",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_exposure_control/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "757fff45ef4cb2918cdabd6354a88aa25382b469be8a3d5d99c53edd893defe4",
+      "published_numeric_sha256": "757fff45ef4cb2918cdabd6354a88aa25382b469be8a3d5d99c53edd893defe4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_exposure_control/fills.csv",
+      "numeric_values": 9779,
+      "original_numeric_sha256": "11f73706eca9570fb5189a435bad8f3ccd3891357ceb26d8c4412fe581bedeab",
+      "published_numeric_sha256": "11f73706eca9570fb5189a435bad8f3ccd3891357ceb26d8c4412fe581bedeab",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_exposure_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "d24debcdabebcd90a26b13ac895247b39b0a8f048fd009354eb1ba7ab4be71de",
+      "published_numeric_sha256": "d24debcdabebcd90a26b13ac895247b39b0a8f048fd009354eb1ba7ab4be71de",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_exposure_control/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "24997a023684ef7cfad5db8a86476f70ade5e207e2a0f25384679868e91bff3c",
+      "published_numeric_sha256": "24997a023684ef7cfad5db8a86476f70ade5e207e2a0f25384679868e91bff3c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_exposure_control/trades.csv",
+      "numeric_values": 24,
+      "original_numeric_sha256": "32f2a18acba14f6145a5eb73d7d73df6ab0f6191dc1f5d0d9b70ff1d4050e897",
+      "published_numeric_sha256": "32f2a18acba14f6145a5eb73d7d73df6ab0f6191dc1f5d0d9b70ff1d4050e897",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_fixed_risk_control/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "b941bf2516853f567144dede4842a2c838fddd67186ccaf42f46809ca40890ba",
+      "published_numeric_sha256": "b941bf2516853f567144dede4842a2c838fddd67186ccaf42f46809ca40890ba",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_fixed_risk_control/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "27cf2c4ff81551e2a24c48bd72f4364b471b60a50e03d84413533dae008f641c",
+      "published_numeric_sha256": "27cf2c4ff81551e2a24c48bd72f4364b471b60a50e03d84413533dae008f641c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_fixed_risk_control/fills.csv",
+      "numeric_values": 4763,
+      "original_numeric_sha256": "9d57b7be1a0128006fc41d33a5682fbac270abc1bade10b2761cd6ef4fcb86be",
+      "published_numeric_sha256": "9d57b7be1a0128006fc41d33a5682fbac270abc1bade10b2761cd6ef4fcb86be",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_fixed_risk_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "77f61d20d0ecbaa505231e66c20d238580ebb58c104b9296fe4b878dc7a149c5",
+      "published_numeric_sha256": "77f61d20d0ecbaa505231e66c20d238580ebb58c104b9296fe4b878dc7a149c5",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_fixed_risk_control/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "797cae13f72e6d4649e5e2c2e7ea3d8d4357285a5cf8d23984343b71e61f5655",
+      "published_numeric_sha256": "797cae13f72e6d4649e5e2c2e7ea3d8d4357285a5cf8d23984343b71e61f5655",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_fixed_risk_control/trades.csv",
+      "numeric_values": 1432,
+      "original_numeric_sha256": "cb179ea91e2118476411bbe62e4ce4d1434a100ed6297df675b8109a36e9530c",
+      "published_numeric_sha256": "cb179ea91e2118476411bbe62e4ce4d1434a100ed6297df675b8109a36e9530c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_raw/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "2fce572cbdd3d59fc33afb9ceabf7b7e965a1bd58171f9a8d37ae239ca49b840",
+      "published_numeric_sha256": "2fce572cbdd3d59fc33afb9ceabf7b7e965a1bd58171f9a8d37ae239ca49b840",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_raw/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "40b6e27af8923a2660537b6e4fa093fa04897de0ff536ef78ac17d8da681c12d",
+      "published_numeric_sha256": "40b6e27af8923a2660537b6e4fa093fa04897de0ff536ef78ac17d8da681c12d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_raw/fills.csv",
+      "numeric_values": 726,
+      "original_numeric_sha256": "ae88cba05d239467c2d784c3ad3a52fb747e093320c2e42f1106af0e4607be2d",
+      "published_numeric_sha256": "ae88cba05d239467c2d784c3ad3a52fb747e093320c2e42f1106af0e4607be2d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_raw/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "8aa21053f41a0caffe784ff35abc94bf670cf43e01b9c8dd19b03876217010e2",
+      "published_numeric_sha256": "8aa21053f41a0caffe784ff35abc94bf670cf43e01b9c8dd19b03876217010e2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_raw/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "e44094c872cb6f21a5e2c5b4347381ac076dbe90016c988483d2ea4c77ffcf6f",
+      "published_numeric_sha256": "e44094c872cb6f21a5e2c5b4347381ac076dbe90016c988483d2ea4c77ffcf6f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_raw/trades.csv",
+      "numeric_values": 264,
+      "original_numeric_sha256": "0a16aee63b2e0c6152ea12cbcc8087fb3149d8d9d5f6ed06172ff6aad2eb7183",
+      "published_numeric_sha256": "0a16aee63b2e0c6152ea12cbcc8087fb3149d8d9d5f6ed06172ff6aad2eb7183",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_vol_target/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "a39300ecf34a68e62e6da5dda833e2bce31cc27fb869ceaef7544923b6e0ec7d",
+      "published_numeric_sha256": "a39300ecf34a68e62e6da5dda833e2bce31cc27fb869ceaef7544923b6e0ec7d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_vol_target/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "5b62ac08335df0cbe4664fa2c69c992497c2ac93e66ba80202854d06029a3a6c",
+      "published_numeric_sha256": "5b62ac08335df0cbe4664fa2c69c992497c2ac93e66ba80202854d06029a3a6c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_vol_target/fills.csv",
+      "numeric_values": 4543,
+      "original_numeric_sha256": "87ef3cca3d5b0fe9658e6e2d035d651e2a412cce3de94fc2e72a8aedd935aebc",
+      "published_numeric_sha256": "87ef3cca3d5b0fe9658e6e2d035d651e2a412cce3de94fc2e72a8aedd935aebc",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_vol_target/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "38e497745d3a8abcc33766576ade0cea75ed1ac125f9031488bac2f6a5b145c2",
+      "published_numeric_sha256": "38e497745d3a8abcc33766576ade0cea75ed1ac125f9031488bac2f6a5b145c2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_vol_target/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "1240ee57c7faa5786850b89e8e294b1570e340df2378652533684d89c494825d",
+      "published_numeric_sha256": "1240ee57c7faa5786850b89e8e294b1570e340df2378652533684d89c494825d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/logistic_vol_target/trades.csv",
+      "numeric_values": 1368,
+      "original_numeric_sha256": "bbdf254f0cec8320027d0a5976b76bdbc5ef358f61373e67fedf5ee0f1bb0620",
+      "published_numeric_sha256": "bbdf254f0cec8320027d0a5976b76bdbc5ef358f61373e67fedf5ee0f1bb0620",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_calibrated/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "03f010ff7ade23db68c96c62e6a73fee0128840d49156ddf3f3e0af426784183",
+      "published_numeric_sha256": "03f010ff7ade23db68c96c62e6a73fee0128840d49156ddf3f3e0af426784183",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_calibrated/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "6ddea5b0e9d803c21962df3b4349bcbd5cca1b32335253834aa1937be3d7eb3e",
+      "published_numeric_sha256": "6ddea5b0e9d803c21962df3b4349bcbd5cca1b32335253834aa1937be3d7eb3e",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_calibrated/fills.csv",
+      "numeric_values": 550,
+      "original_numeric_sha256": "811579b886150d9bc7cc03c616e0bf98e5d00afc2ed5998d0cca97e9ab30d899",
+      "published_numeric_sha256": "811579b886150d9bc7cc03c616e0bf98e5d00afc2ed5998d0cca97e9ab30d899",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_calibrated/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "d0049cfa95fe26b55c04ede53219dbdfc4157225597b232f70a23721d265e0f7",
+      "published_numeric_sha256": "d0049cfa95fe26b55c04ede53219dbdfc4157225597b232f70a23721d265e0f7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_calibrated/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "e003cc01d90407c5ca4d6768c932d00ac1d1b9d8264a0c1393a3b8904f0dccae",
+      "published_numeric_sha256": "e003cc01d90407c5ca4d6768c932d00ac1d1b9d8264a0c1393a3b8904f0dccae",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_calibrated/trades.csv",
+      "numeric_values": 200,
+      "original_numeric_sha256": "1bc308030e82f5628f464df5aaaedb1d87b56f9d3928935848bc9592d138bb28",
+      "published_numeric_sha256": "1bc308030e82f5628f464df5aaaedb1d87b56f9d3928935848bc9592d138bb28",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_exposure_control/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "3835fde2a282637fa7bc73ec2028c736805356077e22aa315dc122dcde1c4d41",
+      "published_numeric_sha256": "3835fde2a282637fa7bc73ec2028c736805356077e22aa315dc122dcde1c4d41",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_exposure_control/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "1498062c0c6940bb5864e9707d9f2f99f22ffd9c13393d19b94253d32f8e863a",
+      "published_numeric_sha256": "1498062c0c6940bb5864e9707d9f2f99f22ffd9c13393d19b94253d32f8e863a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_exposure_control/fills.csv",
+      "numeric_values": 6347,
+      "original_numeric_sha256": "b5f0ef3421a3ce1bcd610f2756a8646363c5e1fc0bb25c52bcde1b96f09a761c",
+      "published_numeric_sha256": "b5f0ef3421a3ce1bcd610f2756a8646363c5e1fc0bb25c52bcde1b96f09a761c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_exposure_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "2f278e05f9d550dfa2f1507f24c893fc92abcf6b3c45c4f73f4a64ee4a4ab69f",
+      "published_numeric_sha256": "2f278e05f9d550dfa2f1507f24c893fc92abcf6b3c45c4f73f4a64ee4a4ab69f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_exposure_control/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "1a0570e4b90209db0444c819355f868147e683981d456e0bb42f9c4cbe1cf6a2",
+      "published_numeric_sha256": "1a0570e4b90209db0444c819355f868147e683981d456e0bb42f9c4cbe1cf6a2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_exposure_control/trades.csv",
+      "numeric_values": 48,
+      "original_numeric_sha256": "63fa44b235afc048f13fbdf66c7f8311c78a763a4535fee710b919163ac46156",
+      "published_numeric_sha256": "63fa44b235afc048f13fbdf66c7f8311c78a763a4535fee710b919163ac46156",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_fixed_risk_control/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "517f54454c735642698803537e310cc5eb57d9699663e0d060f2a2501016e2b4",
+      "published_numeric_sha256": "517f54454c735642698803537e310cc5eb57d9699663e0d060f2a2501016e2b4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_fixed_risk_control/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "306b673c246393f76d9160c55b4ab1f36566564f41daaacc2e6fbdd9436c4a54",
+      "published_numeric_sha256": "306b673c246393f76d9160c55b4ab1f36566564f41daaacc2e6fbdd9436c4a54",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_fixed_risk_control/fills.csv",
+      "numeric_values": 2134,
+      "original_numeric_sha256": "ce044bacc6023f1c2f1347c8ff5d151a901382cd825402da096907f8d72ba47a",
+      "published_numeric_sha256": "ce044bacc6023f1c2f1347c8ff5d151a901382cd825402da096907f8d72ba47a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_fixed_risk_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "4a6ce6e66801c69c7794f31194c275e3b1c3993176d1d6ca31aae3a51a9acbec",
+      "published_numeric_sha256": "4a6ce6e66801c69c7794f31194c275e3b1c3993176d1d6ca31aae3a51a9acbec",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_fixed_risk_control/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "bb76fdd29f3e7f2d1ad1b0e1a5bd0427298b8c5f19d7f54d88c863e8080c3eb2",
+      "published_numeric_sha256": "bb76fdd29f3e7f2d1ad1b0e1a5bd0427298b8c5f19d7f54d88c863e8080c3eb2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_fixed_risk_control/trades.csv",
+      "numeric_values": 544,
+      "original_numeric_sha256": "08b15aa382ae19b017572e2598bdf3271fe7b7dfe9813e8f3c140edf02859283",
+      "published_numeric_sha256": "08b15aa382ae19b017572e2598bdf3271fe7b7dfe9813e8f3c140edf02859283",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_raw/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "03f010ff7ade23db68c96c62e6a73fee0128840d49156ddf3f3e0af426784183",
+      "published_numeric_sha256": "03f010ff7ade23db68c96c62e6a73fee0128840d49156ddf3f3e0af426784183",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_raw/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "6ddea5b0e9d803c21962df3b4349bcbd5cca1b32335253834aa1937be3d7eb3e",
+      "published_numeric_sha256": "6ddea5b0e9d803c21962df3b4349bcbd5cca1b32335253834aa1937be3d7eb3e",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_raw/fills.csv",
+      "numeric_values": 550,
+      "original_numeric_sha256": "811579b886150d9bc7cc03c616e0bf98e5d00afc2ed5998d0cca97e9ab30d899",
+      "published_numeric_sha256": "811579b886150d9bc7cc03c616e0bf98e5d00afc2ed5998d0cca97e9ab30d899",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_raw/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "d0049cfa95fe26b55c04ede53219dbdfc4157225597b232f70a23721d265e0f7",
+      "published_numeric_sha256": "d0049cfa95fe26b55c04ede53219dbdfc4157225597b232f70a23721d265e0f7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_raw/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "af5176c2b0595fb3614f5ec023085aadac0d4c0d4dd748920b067ff14c1e8c66",
+      "published_numeric_sha256": "af5176c2b0595fb3614f5ec023085aadac0d4c0d4dd748920b067ff14c1e8c66",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_raw/trades.csv",
+      "numeric_values": 200,
+      "original_numeric_sha256": "1bc308030e82f5628f464df5aaaedb1d87b56f9d3928935848bc9592d138bb28",
+      "published_numeric_sha256": "1bc308030e82f5628f464df5aaaedb1d87b56f9d3928935848bc9592d138bb28",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_vol_target/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "7fdcd1d75cd75f2deaa6c19ddb00fa9fb8024c30bafa2757d3e984b957bd6231",
+      "published_numeric_sha256": "7fdcd1d75cd75f2deaa6c19ddb00fa9fb8024c30bafa2757d3e984b957bd6231",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_vol_target/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "219d2f933a7ba20c5dc6eff4eb08f5993bea99cd4660e4b29d68a4574e10b0a7",
+      "published_numeric_sha256": "219d2f933a7ba20c5dc6eff4eb08f5993bea99cd4660e4b29d68a4574e10b0a7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_vol_target/fills.csv",
+      "numeric_values": 5038,
+      "original_numeric_sha256": "1e6dc150773644829df24f97aa55c65413dc4a5be917d282f0dfe06afb05db74",
+      "published_numeric_sha256": "1e6dc150773644829df24f97aa55c65413dc4a5be917d282f0dfe06afb05db74",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_vol_target/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "b0729c0264d937996e9fc60aee56a3d8e54b02d9421d87b3f0982ecbf7c48cfd",
+      "published_numeric_sha256": "b0729c0264d937996e9fc60aee56a3d8e54b02d9421d87b3f0982ecbf7c48cfd",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_vol_target/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "a10cda12311dc51ed2fc025145a97c43d9ed2a263eedfe9015477db65be94b18",
+      "published_numeric_sha256": "a10cda12311dc51ed2fc025145a97c43d9ed2a263eedfe9015477db65be94b18",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/rule_vol_target/trades.csv",
+      "numeric_values": 1288,
+      "original_numeric_sha256": "252a2f29bca3dacb4e946e2ae168c9656c314990c26096bed1306841aab4ffc2",
+      "published_numeric_sha256": "252a2f29bca3dacb4e946e2ae168c9656c314990c26096bed1306841aab4ffc2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/trend/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "cf4d393381fcc6663dd88c9c237ced4baeaac5f89dcb2e72b26b350d29e64c8e",
+      "published_numeric_sha256": "cf4d393381fcc6663dd88c9c237ced4baeaac5f89dcb2e72b26b350d29e64c8e",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/trend/equity.csv",
+      "numeric_values": 10760,
+      "original_numeric_sha256": "1c5e1991c70951f72120e831db3964813d8bccd4bc880f935f29f46a796cda54",
+      "published_numeric_sha256": "1c5e1991c70951f72120e831db3964813d8bccd4bc880f935f29f46a796cda54",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/trend/fills.csv",
+      "numeric_values": 858,
+      "original_numeric_sha256": "226f9e91141d4353614cbcc7cfabae43347d0e5807f669ea232bad205624b170",
+      "published_numeric_sha256": "226f9e91141d4353614cbcc7cfabae43347d0e5807f669ea232bad205624b170",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/trend/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "acf4b1bdcc0f22d9725e1d92c5c304b1839d1a21527bd0d94b43469c1eb21a7d",
+      "published_numeric_sha256": "acf4b1bdcc0f22d9725e1d92c5c304b1839d1a21527bd0d94b43469c1eb21a7d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/trend/signals.csv",
+      "numeric_values": 6456,
+      "original_numeric_sha256": "d2eb0b02de11409d8748d7c1199b240c71f20b764de02501d000163c92c993b0",
+      "published_numeric_sha256": "d2eb0b02de11409d8748d7c1199b240c71f20b764de02501d000163c92c993b0",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/backtests/trend/trades.csv",
+      "numeric_values": 312,
+      "original_numeric_sha256": "fc5a7bb7deb48035df126d3ffcb4013718ccefb70584fb312043149d0280708e",
+      "published_numeric_sha256": "fc5a7bb7deb48035df126d3ffcb4013718ccefb70584fb312043149d0280708e",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/block_uncertainty.csv",
+      "numeric_values": 96,
+      "original_numeric_sha256": "9be596cf596518a3ee47dee98bb99d1dba49253db433b8258e8befa9ff9572e8",
+      "published_numeric_sha256": "9be596cf596518a3ee47dee98bb99d1dba49253db433b8258e8befa9ff9572e8",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/cost_stress.csv",
+      "numeric_values": 918,
+      "original_numeric_sha256": "98c499b4a4dc98514613d78c1480ae94773631ef62b35221405695f29fd2b973",
+      "published_numeric_sha256": "98c499b4a4dc98514613d78c1480ae94773631ef62b35221405695f29fd2b973",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/daily_returns.csv",
+      "numeric_values": 18292,
+      "original_numeric_sha256": "c74a397f4f87df89df570ee70f1ceedc5606ef77f016199daca78454e44ad73a",
+      "published_numeric_sha256": "c74a397f4f87df89df570ee70f1ceedc5606ef77f016199daca78454e44ad73a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/distribution_summary.csv",
+      "numeric_values": 648,
+      "original_numeric_sha256": "7d224308cb00102078192e64319cbe60d6bf92dc95de564de8804a237d88f993",
+      "published_numeric_sha256": "7d224308cb00102078192e64319cbe60d6bf92dc95de564de8804a237d88f993",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/distribution_windows.csv",
+      "numeric_values": 61610,
+      "original_numeric_sha256": "aa72a56c491bed9716c37cb96ae6401a1c5fe158d08308b8dfc5e723d15041ce",
+      "published_numeric_sha256": "aa72a56c491bed9716c37cb96ae6401a1c5fe158d08308b8dfc5e723d15041ce",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/folds.json",
+      "numeric_values": 1026,
+      "original_numeric_sha256": "513b11db306d59df33f4ebdffdddc8dcca597d12be37eb5334cd0757009b62e5",
+      "published_numeric_sha256": "513b11db306d59df33f4ebdffdddc8dcca597d12be37eb5334cd0757009b62e5",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "c61bde03bad5771aba8b7db90cb63c3927a0e3e31a78b08da0bbb64ce16ff84b",
+      "published_numeric_sha256": "c61bde03bad5771aba8b7db90cb63c3927a0e3e31a78b08da0bbb64ce16ff84b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/equity_curve.csv",
+      "numeric_values": 5020,
+      "original_numeric_sha256": "948d8cf31b6f05c7931907d7c714a734acd527be21d5cb8ecccdc617cc4f2afd",
+      "published_numeric_sha256": "948d8cf31b6f05c7931907d7c714a734acd527be21d5cb8ecccdc617cc4f2afd",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/fills.csv",
+      "numeric_values": 902,
+      "original_numeric_sha256": "8004a5671bd0432605aad820008c507598ded9123f43b6ba4cfcac4679fb58b3",
+      "published_numeric_sha256": "8004a5671bd0432605aad820008c507598ded9123f43b6ba4cfcac4679fb58b3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/manifest.json",
+      "numeric_values": 69,
+      "original_numeric_sha256": "ef2912b54aa99214601726635a9ca13eab161698db7f788e2e308603d331e258",
+      "published_numeric_sha256": "ef2912b54aa99214601726635a9ca13eab161698db7f788e2e308603d331e258",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "2f809b75e1ce9ae0d87c42b92a59f2cb9dceca669f503f0d78cab2345f8d6b7a",
+      "published_numeric_sha256": "2f809b75e1ce9ae0d87c42b92a59f2cb9dceca669f503f0d78cab2345f8d6b7a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/prices.csv",
+      "numeric_values": 2510,
+      "original_numeric_sha256": "79f9758d666741505894423780d89a0966f44b515d831b2b7725b1069ec98dc3",
+      "published_numeric_sha256": "79f9758d666741505894423780d89a0966f44b515d831b2b7725b1069ec98dc3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/signals.csv",
+      "numeric_values": 3006,
+      "original_numeric_sha256": "8a193a6fa11af87492030360138bffaea2ed469b051f8b39be0de80e82c92e3f",
+      "published_numeric_sha256": "8a193a6fa11af87492030360138bffaea2ed469b051f8b39be0de80e82c92e3f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/trades.csv",
+      "numeric_values": 328,
+      "original_numeric_sha256": "19a6f223d0c00a89dbc337577bc5fb4328cd22859f1e28711601b13141bce649",
+      "published_numeric_sha256": "19a6f223d0c00a89dbc337577bc5fb4328cd22859f1e28711601b13141bce649",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "e93bb5765436bc8048519c5065f8e07c1ffcfad0d78679802eae8a12b63c561f",
+      "published_numeric_sha256": "e93bb5765436bc8048519c5065f8e07c1ffcfad0d78679802eae8a12b63c561f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/equity_curve.csv",
+      "numeric_values": 5020,
+      "original_numeric_sha256": "e548135138350df98cf8f6f64713088c3b9c4e2f7e42e3187c5add059af8adc0",
+      "published_numeric_sha256": "e548135138350df98cf8f6f64713088c3b9c4e2f7e42e3187c5add059af8adc0",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/fills.csv",
+      "numeric_values": 924,
+      "original_numeric_sha256": "6ea1aba31ab4e45cb41b068fae383b1af911a2f0654df3413ed1d2d3ae2b5fff",
+      "published_numeric_sha256": "6ea1aba31ab4e45cb41b068fae383b1af911a2f0654df3413ed1d2d3ae2b5fff",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/manifest.json",
+      "numeric_values": 69,
+      "original_numeric_sha256": "ef2912b54aa99214601726635a9ca13eab161698db7f788e2e308603d331e258",
+      "published_numeric_sha256": "ef2912b54aa99214601726635a9ca13eab161698db7f788e2e308603d331e258",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "84496ff09f3e851c05a25ca9ca705f1eaa3be791cad91eb1af2ea453054fbce1",
+      "published_numeric_sha256": "84496ff09f3e851c05a25ca9ca705f1eaa3be791cad91eb1af2ea453054fbce1",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/prices.csv",
+      "numeric_values": 2510,
+      "original_numeric_sha256": "79f9758d666741505894423780d89a0966f44b515d831b2b7725b1069ec98dc3",
+      "published_numeric_sha256": "79f9758d666741505894423780d89a0966f44b515d831b2b7725b1069ec98dc3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/signals.csv",
+      "numeric_values": 3006,
+      "original_numeric_sha256": "8a193a6fa11af87492030360138bffaea2ed469b051f8b39be0de80e82c92e3f",
+      "published_numeric_sha256": "8a193a6fa11af87492030360138bffaea2ed469b051f8b39be0de80e82c92e3f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/trades.csv",
+      "numeric_values": 336,
+      "original_numeric_sha256": "aae80890006e03d4fa05d2a3995eb9f1cf4dabbd5b2ec7f1b74fac7cf03431b9",
+      "published_numeric_sha256": "aae80890006e03d4fa05d2a3995eb9f1cf4dabbd5b2ec7f1b74fac7cf03431b9",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/account.json",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/equity_curve.csv",
+      "numeric_values": 1506,
+      "original_numeric_sha256": "f62a71412962330bd281246143c3a7745530536e521c3726972ae072f0e69360",
+      "published_numeric_sha256": "f62a71412962330bd281246143c3a7745530536e521c3726972ae072f0e69360",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/fills.csv",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/manifest.json",
+      "numeric_values": 69,
+      "original_numeric_sha256": "ef2912b54aa99214601726635a9ca13eab161698db7f788e2e308603d331e258",
+      "published_numeric_sha256": "ef2912b54aa99214601726635a9ca13eab161698db7f788e2e308603d331e258",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/metrics.json",
+      "numeric_values": 14,
+      "original_numeric_sha256": "e19bdeeb7350232e4e326e2d2a02c435be10ddcfd2490c646205c6091ec471f1",
+      "published_numeric_sha256": "e19bdeeb7350232e4e326e2d2a02c435be10ddcfd2490c646205c6091ec471f1",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/prices.csv",
+      "numeric_values": 2510,
+      "original_numeric_sha256": "79f9758d666741505894423780d89a0966f44b515d831b2b7725b1069ec98dc3",
+      "published_numeric_sha256": "79f9758d666741505894423780d89a0966f44b515d831b2b7725b1069ec98dc3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/signals.csv",
+      "numeric_values": 3006,
+      "original_numeric_sha256": "8a193a6fa11af87492030360138bffaea2ed469b051f8b39be0de80e82c92e3f",
+      "published_numeric_sha256": "8a193a6fa11af87492030360138bffaea2ed469b051f8b39be0de80e82c92e3f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/trades.csv",
+      "numeric_values": 205,
+      "original_numeric_sha256": "69f9f7fa04e5642e496597847fe108bafe03abea6e7eb0f259b411526d07a100",
+      "published_numeric_sha256": "69f9f7fa04e5642e496597847fe108bafe03abea6e7eb0f259b411526d07a100",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/historical_replay.csv",
+      "numeric_values": 288,
+      "original_numeric_sha256": "4de65b2b1efe8577e7256f23b51eb662fc0f746a45acc7d99dc0aa6c30b3be98",
+      "published_numeric_sha256": "4de65b2b1efe8577e7256f23b51eb662fc0f746a45acc7d99dc0aa6c30b3be98",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/historical_replay_manifest.json",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "23eff15bebded41dc0576cbd8bce9f9673b611da41011757ec55e5438f4cb5df",
+      "published_numeric_sha256": "23eff15bebded41dc0576cbd8bce9f9673b611da41011757ec55e5438f4cb5df",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/equity_curve.csv",
+      "numeric_values": 5020,
+      "original_numeric_sha256": "487c221a501ebb4109193d62d30379cdda299aae1a67bbf9aac4d9914baeabf2",
+      "published_numeric_sha256": "487c221a501ebb4109193d62d30379cdda299aae1a67bbf9aac4d9914baeabf2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/fills.csv",
+      "numeric_values": 704,
+      "original_numeric_sha256": "971adfbc3c96ad294cddd88c8fb7a5223f90f4e335ae904200cd9fbdbcd92dd0",
+      "published_numeric_sha256": "971adfbc3c96ad294cddd88c8fb7a5223f90f4e335ae904200cd9fbdbcd92dd0",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/manifest.json",
+      "numeric_values": 54,
+      "original_numeric_sha256": "38f7dc8cbecc2f02fd192c4a5e1603db402bb056a54f2f95e492b5ca919bc645",
+      "published_numeric_sha256": "38f7dc8cbecc2f02fd192c4a5e1603db402bb056a54f2f95e492b5ca919bc645",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "8ac6ac581596731f9baf500da1b38f2540f3a4b29394c5f19caf76c42cd6d0ec",
+      "published_numeric_sha256": "8ac6ac581596731f9baf500da1b38f2540f3a4b29394c5f19caf76c42cd6d0ec",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/prices.csv",
+      "numeric_values": 2510,
+      "original_numeric_sha256": "4ad13ae5737962c25341e8cb1837c9e67e4904ada392a88853405e8e025d639d",
+      "published_numeric_sha256": "4ad13ae5737962c25341e8cb1837c9e67e4904ada392a88853405e8e025d639d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/signals.csv",
+      "numeric_values": 6526,
+      "original_numeric_sha256": "72bc0b5ad935a7498842888b2a9095f4bca0f2a50636a915135cd231de9a5208",
+      "published_numeric_sha256": "72bc0b5ad935a7498842888b2a9095f4bca0f2a50636a915135cd231de9a5208",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/trades.csv",
+      "numeric_values": 256,
+      "original_numeric_sha256": "d740e8bf2b1732cbd8a3575c115d25c544cbb648da6abfb112772973e645c2f2",
+      "published_numeric_sha256": "d740e8bf2b1732cbd8a3575c115d25c544cbb648da6abfb112772973e645c2f2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "4b5ec2f692ff11d98f081d3d008a1a21d2d7e01ccdc9e6f165508e235fe37ed4",
+      "published_numeric_sha256": "4b5ec2f692ff11d98f081d3d008a1a21d2d7e01ccdc9e6f165508e235fe37ed4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/equity_curve.csv",
+      "numeric_values": 5020,
+      "original_numeric_sha256": "5cf1b8d78ec7c462fce2e6d33c21cfda1f291123ea0d718984f9ba0b149806cc",
+      "published_numeric_sha256": "5cf1b8d78ec7c462fce2e6d33c21cfda1f291123ea0d718984f9ba0b149806cc",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/fills.csv",
+      "numeric_values": 748,
+      "original_numeric_sha256": "2a2569a3a19906256919ab63746d518708b3a670dbb9a40ace009c0595654b08",
+      "published_numeric_sha256": "2a2569a3a19906256919ab63746d518708b3a670dbb9a40ace009c0595654b08",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/manifest.json",
+      "numeric_values": 54,
+      "original_numeric_sha256": "38f7dc8cbecc2f02fd192c4a5e1603db402bb056a54f2f95e492b5ca919bc645",
+      "published_numeric_sha256": "38f7dc8cbecc2f02fd192c4a5e1603db402bb056a54f2f95e492b5ca919bc645",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "489983703ef09733afa01d367e5dcfee6269d0e2fb9fea464e99b7544ebdf715",
+      "published_numeric_sha256": "489983703ef09733afa01d367e5dcfee6269d0e2fb9fea464e99b7544ebdf715",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/prices.csv",
+      "numeric_values": 2510,
+      "original_numeric_sha256": "4ad13ae5737962c25341e8cb1837c9e67e4904ada392a88853405e8e025d639d",
+      "published_numeric_sha256": "4ad13ae5737962c25341e8cb1837c9e67e4904ada392a88853405e8e025d639d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/signals.csv",
+      "numeric_values": 6526,
+      "original_numeric_sha256": "72bc0b5ad935a7498842888b2a9095f4bca0f2a50636a915135cd231de9a5208",
+      "published_numeric_sha256": "72bc0b5ad935a7498842888b2a9095f4bca0f2a50636a915135cd231de9a5208",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/trades.csv",
+      "numeric_values": 272,
+      "original_numeric_sha256": "715d857efbbc32e3546d181df7794babdafebb8a335461682ca36dd9150d7091",
+      "published_numeric_sha256": "715d857efbbc32e3546d181df7794babdafebb8a335461682ca36dd9150d7091",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/account.json",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/equity_curve.csv",
+      "numeric_values": 1506,
+      "original_numeric_sha256": "d5d706dba83e3e9094be2009956ff8f6f6429ac8217d7412495cc855050df16b",
+      "published_numeric_sha256": "d5d706dba83e3e9094be2009956ff8f6f6429ac8217d7412495cc855050df16b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/fills.csv",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/manifest.json",
+      "numeric_values": 54,
+      "original_numeric_sha256": "38f7dc8cbecc2f02fd192c4a5e1603db402bb056a54f2f95e492b5ca919bc645",
+      "published_numeric_sha256": "38f7dc8cbecc2f02fd192c4a5e1603db402bb056a54f2f95e492b5ca919bc645",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/metrics.json",
+      "numeric_values": 14,
+      "original_numeric_sha256": "87992d7cf446bd3b6ac470facc4c643f72562bcc66d37d776f5ea63b401aa3c8",
+      "published_numeric_sha256": "87992d7cf446bd3b6ac470facc4c643f72562bcc66d37d776f5ea63b401aa3c8",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/prices.csv",
+      "numeric_values": 2510,
+      "original_numeric_sha256": "4ad13ae5737962c25341e8cb1837c9e67e4904ada392a88853405e8e025d639d",
+      "published_numeric_sha256": "4ad13ae5737962c25341e8cb1837c9e67e4904ada392a88853405e8e025d639d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/signals.csv",
+      "numeric_values": 6526,
+      "original_numeric_sha256": "72bc0b5ad935a7498842888b2a9095f4bca0f2a50636a915135cd231de9a5208",
+      "published_numeric_sha256": "72bc0b5ad935a7498842888b2a9095f4bca0f2a50636a915135cd231de9a5208",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/trades.csv",
+      "numeric_values": 160,
+      "original_numeric_sha256": "0e3097d5fcd73574eeef8442f3f4975f5e0097dd338a1b7ed76e87c6b6ffa01a",
+      "published_numeric_sha256": "0e3097d5fcd73574eeef8442f3f4975f5e0097dd338a1b7ed76e87c6b6ffa01a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "4c2b8836c0edacfb219da46390a66bd99a7d50611a4ceeb291cb9f31cb92109b",
+      "published_numeric_sha256": "4c2b8836c0edacfb219da46390a66bd99a7d50611a4ceeb291cb9f31cb92109b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/equity_curve.csv",
+      "numeric_values": 7540,
+      "original_numeric_sha256": "9af9382efb381f3338bd9de6b94804487aefce1d6022f5eb8f97830b81f9d868",
+      "published_numeric_sha256": "9af9382efb381f3338bd9de6b94804487aefce1d6022f5eb8f97830b81f9d868",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/fills.csv",
+      "numeric_values": 1188,
+      "original_numeric_sha256": "3dc6fc6616effbe725b86482108c795251a54513fa5209f10b3a562fef384400",
+      "published_numeric_sha256": "3dc6fc6616effbe725b86482108c795251a54513fa5209f10b3a562fef384400",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/manifest.json",
+      "numeric_values": 54,
+      "original_numeric_sha256": "109aa2800c0baba8e4ee9b8cd81398f44bbf5d378f9983d400f8bd746da345c1",
+      "published_numeric_sha256": "109aa2800c0baba8e4ee9b8cd81398f44bbf5d378f9983d400f8bd746da345c1",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "2f34be584799b02517c870b765dcb98b29a3c36211d4773af389aadb089e26fc",
+      "published_numeric_sha256": "2f34be584799b02517c870b765dcb98b29a3c36211d4773af389aadb089e26fc",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/prices.csv",
+      "numeric_values": 3770,
+      "original_numeric_sha256": "b7d896235f53587c61beac6b4bdf67cc5531ebc5e4a13754ba0d7b5b9f7fd00d",
+      "published_numeric_sha256": "b7d896235f53587c61beac6b4bdf67cc5531ebc5e4a13754ba0d7b5b9f7fd00d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/signals.csv",
+      "numeric_values": 9802,
+      "original_numeric_sha256": "e25291e7ddc60326da2dfc3443acbf39a17d8e26078eb1f42f4c1935c0fd762f",
+      "published_numeric_sha256": "e25291e7ddc60326da2dfc3443acbf39a17d8e26078eb1f42f4c1935c0fd762f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/trades.csv",
+      "numeric_values": 432,
+      "original_numeric_sha256": "59e626918b1a5431c31278a73bad1d665d4752df1cc74f87ba280774c9a1eddf",
+      "published_numeric_sha256": "59e626918b1a5431c31278a73bad1d665d4752df1cc74f87ba280774c9a1eddf",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "941a4a2f3c1b5f3489953567271d66c5309025bf2400ccf68a203a716523e210",
+      "published_numeric_sha256": "941a4a2f3c1b5f3489953567271d66c5309025bf2400ccf68a203a716523e210",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/equity_curve.csv",
+      "numeric_values": 7540,
+      "original_numeric_sha256": "e868b28e920ffbc448111415242cacd246f0c8b6cea2d4e7d3c7ba84eb68171a",
+      "published_numeric_sha256": "e868b28e920ffbc448111415242cacd246f0c8b6cea2d4e7d3c7ba84eb68171a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/fills.csv",
+      "numeric_values": 1276,
+      "original_numeric_sha256": "677db07082af017a00e31a6fff14e4af96f1f8e147ef402ed7cdcebd3cdd76bc",
+      "published_numeric_sha256": "677db07082af017a00e31a6fff14e4af96f1f8e147ef402ed7cdcebd3cdd76bc",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/manifest.json",
+      "numeric_values": 54,
+      "original_numeric_sha256": "109aa2800c0baba8e4ee9b8cd81398f44bbf5d378f9983d400f8bd746da345c1",
+      "published_numeric_sha256": "109aa2800c0baba8e4ee9b8cd81398f44bbf5d378f9983d400f8bd746da345c1",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "e6889f9ef4405a61fc98787b4e1b9e1a23986ad522a2d4375a2fde7e0c3ec544",
+      "published_numeric_sha256": "e6889f9ef4405a61fc98787b4e1b9e1a23986ad522a2d4375a2fde7e0c3ec544",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/prices.csv",
+      "numeric_values": 3770,
+      "original_numeric_sha256": "b7d896235f53587c61beac6b4bdf67cc5531ebc5e4a13754ba0d7b5b9f7fd00d",
+      "published_numeric_sha256": "b7d896235f53587c61beac6b4bdf67cc5531ebc5e4a13754ba0d7b5b9f7fd00d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/signals.csv",
+      "numeric_values": 9802,
+      "original_numeric_sha256": "e25291e7ddc60326da2dfc3443acbf39a17d8e26078eb1f42f4c1935c0fd762f",
+      "published_numeric_sha256": "e25291e7ddc60326da2dfc3443acbf39a17d8e26078eb1f42f4c1935c0fd762f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/trades.csv",
+      "numeric_values": 464,
+      "original_numeric_sha256": "fc60c44bc71b3dcec93491f2b71b4d30ec7d9734b0cfc3217a182377b97f6ec4",
+      "published_numeric_sha256": "fc60c44bc71b3dcec93491f2b71b4d30ec7d9734b0cfc3217a182377b97f6ec4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/account.json",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/equity_curve.csv",
+      "numeric_values": 2262,
+      "original_numeric_sha256": "1a52cef855a5e7c1bcf3a358095347f007d804bc439781edc13686524fd05865",
+      "published_numeric_sha256": "1a52cef855a5e7c1bcf3a358095347f007d804bc439781edc13686524fd05865",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/fills.csv",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/manifest.json",
+      "numeric_values": 54,
+      "original_numeric_sha256": "109aa2800c0baba8e4ee9b8cd81398f44bbf5d378f9983d400f8bd746da345c1",
+      "published_numeric_sha256": "109aa2800c0baba8e4ee9b8cd81398f44bbf5d378f9983d400f8bd746da345c1",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/metrics.json",
+      "numeric_values": 14,
+      "original_numeric_sha256": "a07f9067a0ea1c200e183015a825943fa4221f9fc8b5a88cc2a06338fa00d891",
+      "published_numeric_sha256": "a07f9067a0ea1c200e183015a825943fa4221f9fc8b5a88cc2a06338fa00d891",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/prices.csv",
+      "numeric_values": 3770,
+      "original_numeric_sha256": "b7d896235f53587c61beac6b4bdf67cc5531ebc5e4a13754ba0d7b5b9f7fd00d",
+      "published_numeric_sha256": "b7d896235f53587c61beac6b4bdf67cc5531ebc5e4a13754ba0d7b5b9f7fd00d",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/signals.csv",
+      "numeric_values": 9802,
+      "original_numeric_sha256": "e25291e7ddc60326da2dfc3443acbf39a17d8e26078eb1f42f4c1935c0fd762f",
+      "published_numeric_sha256": "e25291e7ddc60326da2dfc3443acbf39a17d8e26078eb1f42f4c1935c0fd762f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/trades.csv",
+      "numeric_values": 270,
+      "original_numeric_sha256": "5882093940d6f45b36a2c63640d38c6255ec6cf35413c31299bb30c2958ffeec",
+      "published_numeric_sha256": "5882093940d6f45b36a2c63640d38c6255ec6cf35413c31299bb30c2958ffeec",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "202bd4521a4fd17a7f5fbc166cc0d8ffd2dac0b7416e605ad3bd21f7b4a2f587",
+      "published_numeric_sha256": "202bd4521a4fd17a7f5fbc166cc0d8ffd2dac0b7416e605ad3bd21f7b4a2f587",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/equity_curve.csv",
+      "numeric_values": 12560,
+      "original_numeric_sha256": "bd2f683a6d8df0fb48898a8687a60c88cc0437d3e40762640e0eab6068630628",
+      "published_numeric_sha256": "bd2f683a6d8df0fb48898a8687a60c88cc0437d3e40762640e0eab6068630628",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/fills.csv",
+      "numeric_values": 2046,
+      "original_numeric_sha256": "3152cb927ac90f76b5f24f5ab6dbd5a7819547029de94e5c76d8d1591d94f064",
+      "published_numeric_sha256": "3152cb927ac90f76b5f24f5ab6dbd5a7819547029de94e5c76d8d1591d94f064",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/manifest.json",
+      "numeric_values": 54,
+      "original_numeric_sha256": "08929bde8b780147fb4367de8eced7c808a2b58becbf4149d881ed63a320dac7",
+      "published_numeric_sha256": "08929bde8b780147fb4367de8eced7c808a2b58becbf4149d881ed63a320dac7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "ba7798d7bc2be69c59fd9c47bce93e0c5d8a24dff44db9fc1d7baa8dad305536",
+      "published_numeric_sha256": "ba7798d7bc2be69c59fd9c47bce93e0c5d8a24dff44db9fc1d7baa8dad305536",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/prices.csv",
+      "numeric_values": 6280,
+      "original_numeric_sha256": "5db7de22acaef52962d45b02bee362825148e5e0a996106e76f500ddc3cc1718",
+      "published_numeric_sha256": "5db7de22acaef52962d45b02bee362825148e5e0a996106e76f500ddc3cc1718",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/signals.csv",
+      "numeric_values": 16328,
+      "original_numeric_sha256": "5c69b69b4b16ddfd907ff58a100bd43dfef677e60232a31bc2cea45da2c2523c",
+      "published_numeric_sha256": "5c69b69b4b16ddfd907ff58a100bd43dfef677e60232a31bc2cea45da2c2523c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/trades.csv",
+      "numeric_values": 744,
+      "original_numeric_sha256": "020c71cc6e13bf4ac2d06ecc7f78d6a0bca65d22efb6f81142e640652a4f214f",
+      "published_numeric_sha256": "020c71cc6e13bf4ac2d06ecc7f78d6a0bca65d22efb6f81142e640652a4f214f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "056742ba28fb32fc832c28bff204cc3bb5dca2c967fd4496836e4bd6af8bef3b",
+      "published_numeric_sha256": "056742ba28fb32fc832c28bff204cc3bb5dca2c967fd4496836e4bd6af8bef3b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/equity_curve.csv",
+      "numeric_values": 12560,
+      "original_numeric_sha256": "c45ae481e21f8c2aeb80df786449af598a0622ca43d54635721d485612b60cd8",
+      "published_numeric_sha256": "c45ae481e21f8c2aeb80df786449af598a0622ca43d54635721d485612b60cd8",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/fills.csv",
+      "numeric_values": 1100,
+      "original_numeric_sha256": "b59f5dd1f8bcccaad88a8c778b034351d0a4bb827bbb364d6658b6603d1c67af",
+      "published_numeric_sha256": "b59f5dd1f8bcccaad88a8c778b034351d0a4bb827bbb364d6658b6603d1c67af",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/manifest.json",
+      "numeric_values": 54,
+      "original_numeric_sha256": "08929bde8b780147fb4367de8eced7c808a2b58becbf4149d881ed63a320dac7",
+      "published_numeric_sha256": "08929bde8b780147fb4367de8eced7c808a2b58becbf4149d881ed63a320dac7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "e3c97362edfe5fa3f882a411a794b8db6492e686f023bf231fbb41cdc3fa6c75",
+      "published_numeric_sha256": "e3c97362edfe5fa3f882a411a794b8db6492e686f023bf231fbb41cdc3fa6c75",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/prices.csv",
+      "numeric_values": 6280,
+      "original_numeric_sha256": "5db7de22acaef52962d45b02bee362825148e5e0a996106e76f500ddc3cc1718",
+      "published_numeric_sha256": "5db7de22acaef52962d45b02bee362825148e5e0a996106e76f500ddc3cc1718",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/signals.csv",
+      "numeric_values": 16328,
+      "original_numeric_sha256": "5c69b69b4b16ddfd907ff58a100bd43dfef677e60232a31bc2cea45da2c2523c",
+      "published_numeric_sha256": "5c69b69b4b16ddfd907ff58a100bd43dfef677e60232a31bc2cea45da2c2523c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/trades.csv",
+      "numeric_values": 400,
+      "original_numeric_sha256": "6d611d62cb2848c12526b6d384eff651abb4cd4b2cb55bb6ff5260a53b191cbf",
+      "published_numeric_sha256": "6d611d62cb2848c12526b6d384eff651abb4cd4b2cb55bb6ff5260a53b191cbf",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/account.json",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/equity_curve.csv",
+      "numeric_values": 3768,
+      "original_numeric_sha256": "596c98e3ecab41d220bb336761f56028f52c9125bac06f89e539f8903af9b431",
+      "published_numeric_sha256": "596c98e3ecab41d220bb336761f56028f52c9125bac06f89e539f8903af9b431",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/fills.csv",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/manifest.json",
+      "numeric_values": 54,
+      "original_numeric_sha256": "08929bde8b780147fb4367de8eced7c808a2b58becbf4149d881ed63a320dac7",
+      "published_numeric_sha256": "08929bde8b780147fb4367de8eced7c808a2b58becbf4149d881ed63a320dac7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/metrics.json",
+      "numeric_values": 14,
+      "original_numeric_sha256": "1d80a983388ecb6697003e7b5bae0885d89e660cd0fc81a272f69db1f207eae6",
+      "published_numeric_sha256": "1d80a983388ecb6697003e7b5bae0885d89e660cd0fc81a272f69db1f207eae6",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/prices.csv",
+      "numeric_values": 6280,
+      "original_numeric_sha256": "5db7de22acaef52962d45b02bee362825148e5e0a996106e76f500ddc3cc1718",
+      "published_numeric_sha256": "5db7de22acaef52962d45b02bee362825148e5e0a996106e76f500ddc3cc1718",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/signals.csv",
+      "numeric_values": 16328,
+      "original_numeric_sha256": "5c69b69b4b16ddfd907ff58a100bd43dfef677e60232a31bc2cea45da2c2523c",
+      "published_numeric_sha256": "5c69b69b4b16ddfd907ff58a100bd43dfef677e60232a31bc2cea45da2c2523c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/trades.csv",
+      "numeric_values": 465,
+      "original_numeric_sha256": "894383c35831f256d30cdbfadc521c226e24e2ef11bcb9905a65030261abade8",
+      "published_numeric_sha256": "894383c35831f256d30cdbfadc521c226e24e2ef11bcb9905a65030261abade8",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/manifest.json",
+      "numeric_values": 21,
+      "original_numeric_sha256": "ccb3640a8c08a40591df42712f1e1e692ad216af19a532114b62d9111cab5315",
+      "published_numeric_sha256": "ccb3640a8c08a40591df42712f1e1e692ad216af19a532114b62d9111cab5315",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/news_eligibility.json",
+      "numeric_values": 3,
+      "original_numeric_sha256": "00a189744f348007de2f7eb4933fc81af4666d98ce1ce0f438fb734f4dccfef0",
+      "published_numeric_sha256": "00a189744f348007de2f7eb4933fc81af4666d98ce1ce0f438fb734f4dccfef0",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/parameter_neighborhood.csv",
+      "numeric_values": 684,
+      "original_numeric_sha256": "c789ef4372de1fae2441510d4b859a573f89850dc1d7f64d72459bc7f8dd795a",
+      "published_numeric_sha256": "c789ef4372de1fae2441510d4b859a573f89850dc1d7f64d72459bc7f8dd795a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/predictions.csv",
+      "numeric_values": 44075,
+      "original_numeric_sha256": "34c3d48058664bf2974ebc06d659ecbb93008cfffaabd761b56941ca8145b0e3",
+      "published_numeric_sha256": "34c3d48058664bf2974ebc06d659ecbb93008cfffaabd761b56941ca8145b0e3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/probability_scores.csv",
+      "numeric_values": 90,
+      "original_numeric_sha256": "d3d10a95ad90d009e0007ae28b9d89ac90dd1e3f34afba409971be6f18ca46ec",
+      "published_numeric_sha256": "d3d10a95ad90d009e0007ae28b9d89ac90dd1e3f34afba409971be6f18ca46ec",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/probability_uncertainty.csv",
+      "numeric_values": 90,
+      "original_numeric_sha256": "afc3a3b1863dee1bda679a1f8a52c95ac1fbbac98997cb10b9400a348b999374",
+      "published_numeric_sha256": "afc3a3b1863dee1bda679a1f8a52c95ac1fbbac98997cb10b9400a348b999374",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/reliability.csv",
+      "numeric_values": 168,
+      "original_numeric_sha256": "7f65b3ab6e02e83a60b8a87b0620602b4f78855158cad1261247c278d9746557",
+      "published_numeric_sha256": "7f65b3ab6e02e83a60b8a87b0620602b4f78855158cad1261247c278d9746557",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/strategy_summary.csv",
+      "numeric_values": 306,
+      "original_numeric_sha256": "ad9879365cfb44ddb15eb06a0922573b5f64515304114ec02ef7dc364ccf0499",
+      "published_numeric_sha256": "ad9879365cfb44ddb15eb06a0922573b5f64515304114ec02ef7dc364ccf0499",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/frozen_20260918/stratified_results.csv",
+      "numeric_values": 527,
+      "original_numeric_sha256": "15493a4055034db544c0065507e0066f15d406fefc9e3bcd6191c6d139c059f5",
+      "published_numeric_sha256": "15493a4055034db544c0065507e0066f15d406fefc9e3bcd6191c6d139c059f5",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_calibrated/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "79b1a53472fa4b8600d31a4d8476b8637116440ea5bb13ef11509a91eeb5d503",
+      "published_numeric_sha256": "79b1a53472fa4b8600d31a4d8476b8637116440ea5bb13ef11509a91eeb5d503",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_calibrated/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "ad4eaa9d97a736a230545ae98ad4ce3fd857f829047225609245cb5875066559",
+      "published_numeric_sha256": "ad4eaa9d97a736a230545ae98ad4ce3fd857f829047225609245cb5875066559",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_calibrated/fills.csv",
+      "numeric_values": 847,
+      "original_numeric_sha256": "66ce6f7ddd42fce77cf7ae377aac32546b8525dfc42cc8c6a35c0c5654e124d3",
+      "published_numeric_sha256": "66ce6f7ddd42fce77cf7ae377aac32546b8525dfc42cc8c6a35c0c5654e124d3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_calibrated/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "02c42fea91a1d3efb95be2718467770ccada13fcb5389f00e7e77632c55a4b55",
+      "published_numeric_sha256": "02c42fea91a1d3efb95be2718467770ccada13fcb5389f00e7e77632c55a4b55",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_calibrated/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "1cef4bad6a6980c461d284b0d2434008b5a99123a33dd77631804a4cda750320",
+      "published_numeric_sha256": "1cef4bad6a6980c461d284b0d2434008b5a99123a33dd77631804a4cda750320",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_calibrated/trades.csv",
+      "numeric_values": 304,
+      "original_numeric_sha256": "f73c554b9803a8279d0dab9ba256547034a6d55e981f55e6880e432c2eb67a8b",
+      "published_numeric_sha256": "f73c554b9803a8279d0dab9ba256547034a6d55e981f55e6880e432c2eb67a8b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_exposure_control/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "ce62d530c3634f231a6f7ff1391497fde46607826ca7f5f9aebd2b3ebf31a0a4",
+      "published_numeric_sha256": "ce62d530c3634f231a6f7ff1391497fde46607826ca7f5f9aebd2b3ebf31a0a4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_exposure_control/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "f560d8d2d6fceb52c348ff2d16bcf68069c31703524631483f0a54e0fc4e24b6",
+      "published_numeric_sha256": "f560d8d2d6fceb52c348ff2d16bcf68069c31703524631483f0a54e0fc4e24b6",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_exposure_control/fills.csv",
+      "numeric_values": 1386,
+      "original_numeric_sha256": "98ad867e73dfe6743c8548991e6106c8d5f6a62940aae216f725b183527e6a74",
+      "published_numeric_sha256": "98ad867e73dfe6743c8548991e6106c8d5f6a62940aae216f725b183527e6a74",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_exposure_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "df6702648f84b66a9297d5548e4f00cc64e2ee15249c4d659aa93e703cda3179",
+      "published_numeric_sha256": "df6702648f84b66a9297d5548e4f00cc64e2ee15249c4d659aa93e703cda3179",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_exposure_control/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "7f0bef074d4538b90e3c740ce29326fd2650c0e0b7ee74ba9dcd7c8344193722",
+      "published_numeric_sha256": "7f0bef074d4538b90e3c740ce29326fd2650c0e0b7ee74ba9dcd7c8344193722",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_exposure_control/trades.csv",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_fixed_risk_control/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "21253211d79b1aca01b6322e215366681fdc69643e7854d542d8d576cd415ddd",
+      "published_numeric_sha256": "21253211d79b1aca01b6322e215366681fdc69643e7854d542d8d576cd415ddd",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_fixed_risk_control/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "8fb53fa3ed9bf32f7afeca467bb58d7abaec395b6baa85f01aac405162483ffc",
+      "published_numeric_sha256": "8fb53fa3ed9bf32f7afeca467bb58d7abaec395b6baa85f01aac405162483ffc",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_fixed_risk_control/fills.csv",
+      "numeric_values": 1782,
+      "original_numeric_sha256": "e8121e03628dd146140423d21285cbabce954306f39b63f24fc386bf87e27513",
+      "published_numeric_sha256": "e8121e03628dd146140423d21285cbabce954306f39b63f24fc386bf87e27513",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_fixed_risk_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "a27ff519d979c1d2ebd22f9af9ecc9a100ce51150049fb5bf7bdb5375f4ebb21",
+      "published_numeric_sha256": "a27ff519d979c1d2ebd22f9af9ecc9a100ce51150049fb5bf7bdb5375f4ebb21",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_fixed_risk_control/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "5067aa73cad6ad91c9765acff21aa487453b117abf37520fbeb1fd44fddafac3",
+      "published_numeric_sha256": "5067aa73cad6ad91c9765acff21aa487453b117abf37520fbeb1fd44fddafac3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_fixed_risk_control/trades.csv",
+      "numeric_values": 304,
+      "original_numeric_sha256": "6d3ac8fc87b75b2a7ee9599d2fd9bd4002a3ae31f7c5742204001ebe0a1fa6cc",
+      "published_numeric_sha256": "6d3ac8fc87b75b2a7ee9599d2fd9bd4002a3ae31f7c5742204001ebe0a1fa6cc",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_raw/account.json",
+      "numeric_values": 8,
+      "original_numeric_sha256": "26f864860533a277041088ff9897ceaefd7def4add606c092900b4166273446b",
+      "published_numeric_sha256": "26f864860533a277041088ff9897ceaefd7def4add606c092900b4166273446b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_raw/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "ac3817ac89254e5e4c239404e93fdd687afe19addf7ecb56e2bca89135b3f63a",
+      "published_numeric_sha256": "ac3817ac89254e5e4c239404e93fdd687afe19addf7ecb56e2bca89135b3f63a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_raw/fills.csv",
+      "numeric_values": 770,
+      "original_numeric_sha256": "7dbcd61d5f22cc545eb3d22fd802aa79a7cebbd2d830635d5e95267f0324a5a2",
+      "published_numeric_sha256": "7dbcd61d5f22cc545eb3d22fd802aa79a7cebbd2d830635d5e95267f0324a5a2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_raw/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "919a86e17955f3d089cbbea96c0328c8ed251af33b982dca301af1a5193404fd",
+      "published_numeric_sha256": "919a86e17955f3d089cbbea96c0328c8ed251af33b982dca301af1a5193404fd",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_raw/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "d2382f4aa129eb4d939e1db13a657615e7b1903fe98c99153611960adafb70c4",
+      "published_numeric_sha256": "d2382f4aa129eb4d939e1db13a657615e7b1903fe98c99153611960adafb70c4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_raw/trades.csv",
+      "numeric_values": 280,
+      "original_numeric_sha256": "5579505794d26030ab41e4b92d5e43a48d92b0e570174c6a97330f4112e5e52f",
+      "published_numeric_sha256": "5579505794d26030ab41e4b92d5e43a48d92b0e570174c6a97330f4112e5e52f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_vol_target/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "f2715ff6fbbc867a38a3bf06ae5aba49c74c013d8111db1ef45443d12b4119e4",
+      "published_numeric_sha256": "f2715ff6fbbc867a38a3bf06ae5aba49c74c013d8111db1ef45443d12b4119e4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_vol_target/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "60ebf84d2a72a6ea0ee482fe05d4a598f1a254b4ae0ae90ebc452bbcd528c51a",
+      "published_numeric_sha256": "60ebf84d2a72a6ea0ee482fe05d4a598f1a254b4ae0ae90ebc452bbcd528c51a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_vol_target/fills.csv",
+      "numeric_values": 1298,
+      "original_numeric_sha256": "53800b847c33e354cff8063c0e8fa3736053922e40d9ef00b8b792952e888416",
+      "published_numeric_sha256": "53800b847c33e354cff8063c0e8fa3736053922e40d9ef00b8b792952e888416",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_vol_target/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "22f3611599b3bb62d4176eaf8ea909d98dafc01184c2a8583af8060329597536",
+      "published_numeric_sha256": "22f3611599b3bb62d4176eaf8ea909d98dafc01184c2a8583af8060329597536",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_vol_target/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "e6f558392b95ae6b1dbd67742e158c44a25bc9a3a827bf6ecb958083e29aa761",
+      "published_numeric_sha256": "e6f558392b95ae6b1dbd67742e158c44a25bc9a3a827bf6ecb958083e29aa761",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/boosting_vol_target/trades.csv",
+      "numeric_values": 304,
+      "original_numeric_sha256": "1e68893d48be93f687eb9537e1013cfcc46a68bb07d755e7f9699f710f307eb3",
+      "published_numeric_sha256": "1e68893d48be93f687eb9537e1013cfcc46a68bb07d755e7f9699f710f307eb3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/buy_hold/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "61592cef9db97defe0f40f9a2747a47b842194347afed7426c12907300211783",
+      "published_numeric_sha256": "61592cef9db97defe0f40f9a2747a47b842194347afed7426c12907300211783",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/buy_hold/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "8c471ddc95fc54b0b67fad175fea9386bdfba4e8bd868c961b2a5dd2ff691610",
+      "published_numeric_sha256": "8c471ddc95fc54b0b67fad175fea9386bdfba4e8bd868c961b2a5dd2ff691610",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/buy_hold/fills.csv",
+      "numeric_values": 11,
+      "original_numeric_sha256": "3e0ff1ab122f211af1705c156359d4ec701fd68a689bfb7a412f38ff6ad9475b",
+      "published_numeric_sha256": "3e0ff1ab122f211af1705c156359d4ec701fd68a689bfb7a412f38ff6ad9475b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/buy_hold/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "bfc637f998491606a256fa22e8f3cf7e699cfb64cce54935d2fe93988f498db0",
+      "published_numeric_sha256": "bfc637f998491606a256fa22e8f3cf7e699cfb64cce54935d2fe93988f498db0",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/buy_hold/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "06e745ca0c559446536c267a151a24344a66a19c6e7b8190226065f191adc622",
+      "published_numeric_sha256": "06e745ca0c559446536c267a151a24344a66a19c6e7b8190226065f191adc622",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/buy_hold/trades.csv",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_calibrated/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "8b089b60cdaf09be7b8fb5424833435eed815732a68a1cd7eca3eff5d3f32557",
+      "published_numeric_sha256": "8b089b60cdaf09be7b8fb5424833435eed815732a68a1cd7eca3eff5d3f32557",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_calibrated/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "5e5f0d39b1afd73799ef3c390ec6672a611f9a48aae861c8f15a7fdd362bf648",
+      "published_numeric_sha256": "5e5f0d39b1afd73799ef3c390ec6672a611f9a48aae861c8f15a7fdd362bf648",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_calibrated/fills.csv",
+      "numeric_values": 891,
+      "original_numeric_sha256": "7758a9a4c46e051144d105f505d5c44cb9fde0b916be5f1586c518bec4500bbd",
+      "published_numeric_sha256": "7758a9a4c46e051144d105f505d5c44cb9fde0b916be5f1586c518bec4500bbd",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_calibrated/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "19bfc45c2d80fae1110dff7dff2848524006b664a7142a5b9f4fa509ffd6b69a",
+      "published_numeric_sha256": "19bfc45c2d80fae1110dff7dff2848524006b664a7142a5b9f4fa509ffd6b69a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_calibrated/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "85ac9b0a1dbde2b2c0a9d28b0a946439404f1e3c75ceafba8a06f0a47b59929c",
+      "published_numeric_sha256": "85ac9b0a1dbde2b2c0a9d28b0a946439404f1e3c75ceafba8a06f0a47b59929c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_calibrated/trades.csv",
+      "numeric_values": 320,
+      "original_numeric_sha256": "2dc2bb74d866fcf12b727d8331d477da5945058a1c1881ed3f0b7693453f3392",
+      "published_numeric_sha256": "2dc2bb74d866fcf12b727d8331d477da5945058a1c1881ed3f0b7693453f3392",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_exposure_control/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "aab364d7c8f003e1400a4a6d17bdbf4f9cff25a8f49c755c7c52cd565ae8ba72",
+      "published_numeric_sha256": "aab364d7c8f003e1400a4a6d17bdbf4f9cff25a8f49c755c7c52cd565ae8ba72",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_exposure_control/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "bb2e1c3611cfc0230f4e3911a259461ea6eed364f725c351e93094d690b715e5",
+      "published_numeric_sha256": "bb2e1c3611cfc0230f4e3911a259461ea6eed364f725c351e93094d690b715e5",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_exposure_control/fills.csv",
+      "numeric_values": 1386,
+      "original_numeric_sha256": "85bb1f069c02d1c0659f1a47db65af926e6c6914e1a8a94d039a4d7453b501ff",
+      "published_numeric_sha256": "85bb1f069c02d1c0659f1a47db65af926e6c6914e1a8a94d039a4d7453b501ff",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_exposure_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "bfc7f33c060300d9b11afb28599aab3437ceca9c54bd2078f01471f31687cc0f",
+      "published_numeric_sha256": "bfc7f33c060300d9b11afb28599aab3437ceca9c54bd2078f01471f31687cc0f",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_exposure_control/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "55e8eab873b27f7d525ca45e6a07d57fb556b840a85daba434036254daf2d8c3",
+      "published_numeric_sha256": "55e8eab873b27f7d525ca45e6a07d57fb556b840a85daba434036254daf2d8c3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_exposure_control/trades.csv",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_fixed_risk_control/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "b3a917a4303ee3bf03f90438294dc69564f5bfedb412b6c1bf8b33fbe0cbc863",
+      "published_numeric_sha256": "b3a917a4303ee3bf03f90438294dc69564f5bfedb412b6c1bf8b33fbe0cbc863",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_fixed_risk_control/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "a1484ae244dad329293ccb0881c863a0123e7611f2131c213190ab99f60327bf",
+      "published_numeric_sha256": "a1484ae244dad329293ccb0881c863a0123e7611f2131c213190ab99f60327bf",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_fixed_risk_control/fills.csv",
+      "numeric_values": 1606,
+      "original_numeric_sha256": "f633c1742aa928efeeab17ae71e48b1890bfef537579becb5e21d92c765355a8",
+      "published_numeric_sha256": "f633c1742aa928efeeab17ae71e48b1890bfef537579becb5e21d92c765355a8",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_fixed_risk_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "1e6b064e1ee06bb76f593ca6de8076ec062bd89adfb2761c16cb0b2e09947e9e",
+      "published_numeric_sha256": "1e6b064e1ee06bb76f593ca6de8076ec062bd89adfb2761c16cb0b2e09947e9e",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_fixed_risk_control/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "cb2aa9cc7f6250f7355a825f15cc79543779fefcd28cb7f61ac2d18266869dba",
+      "published_numeric_sha256": "cb2aa9cc7f6250f7355a825f15cc79543779fefcd28cb7f61ac2d18266869dba",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_fixed_risk_control/trades.csv",
+      "numeric_values": 312,
+      "original_numeric_sha256": "e03fecabdcb70490653df91a111c91ef70a21cdfddfaa1ace99502cc8543d6ed",
+      "published_numeric_sha256": "e03fecabdcb70490653df91a111c91ef70a21cdfddfaa1ace99502cc8543d6ed",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_raw/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "9ac7f281897a72a9549e93890a306a6c49495ea4402a82b28bd819cb6f4f2e86",
+      "published_numeric_sha256": "9ac7f281897a72a9549e93890a306a6c49495ea4402a82b28bd819cb6f4f2e86",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_raw/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "e1e9cb5163c002caf3a66c92c2427c7083c25dc2653248e793e189569f2c5e36",
+      "published_numeric_sha256": "e1e9cb5163c002caf3a66c92c2427c7083c25dc2653248e793e189569f2c5e36",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_raw/fills.csv",
+      "numeric_values": 715,
+      "original_numeric_sha256": "adc19579217a99b30f209cf908e97b0854d0457fbfe638da4a52f56fe61fd53a",
+      "published_numeric_sha256": "adc19579217a99b30f209cf908e97b0854d0457fbfe638da4a52f56fe61fd53a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_raw/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "60e562b8972275575d1b25e2078b4d899e989d6adaf66f75bea02546099024db",
+      "published_numeric_sha256": "60e562b8972275575d1b25e2078b4d899e989d6adaf66f75bea02546099024db",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_raw/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "376b85942985946d43e15d003696ade361f7574c6c169c03a7d8e12dffa7a53c",
+      "published_numeric_sha256": "376b85942985946d43e15d003696ade361f7574c6c169c03a7d8e12dffa7a53c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_raw/trades.csv",
+      "numeric_values": 256,
+      "original_numeric_sha256": "2faf91ff66e32524b4de790c98e3546b0e117d59d0a6eb4f29476e3c8423b72e",
+      "published_numeric_sha256": "2faf91ff66e32524b4de790c98e3546b0e117d59d0a6eb4f29476e3c8423b72e",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_vol_target/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "9bf49c39dc2e63607b2953d09661b5f0f1eeee8ede15b56a465c7c1a078bc6ab",
+      "published_numeric_sha256": "9bf49c39dc2e63607b2953d09661b5f0f1eeee8ede15b56a465c7c1a078bc6ab",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_vol_target/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "7fb597be15703b837f59489468f97af2386992ea9750b51367121c426e058945",
+      "published_numeric_sha256": "7fb597be15703b837f59489468f97af2386992ea9750b51367121c426e058945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_vol_target/fills.csv",
+      "numeric_values": 1144,
+      "original_numeric_sha256": "140f58b66319c257f1fdde4c54faf093ac37beca0f1af1081f1b94699e863364",
+      "published_numeric_sha256": "140f58b66319c257f1fdde4c54faf093ac37beca0f1af1081f1b94699e863364",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_vol_target/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "d6a69b129e4f7dc8c04766fd4baa86bacc501878a92842b07c2575aa6cc9a556",
+      "published_numeric_sha256": "d6a69b129e4f7dc8c04766fd4baa86bacc501878a92842b07c2575aa6cc9a556",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_vol_target/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "1c99e51da436a44d28f88192b22a8ffbc2e97597425df05eed61852efd7c1f8b",
+      "published_numeric_sha256": "1c99e51da436a44d28f88192b22a8ffbc2e97597425df05eed61852efd7c1f8b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/logistic_vol_target/trades.csv",
+      "numeric_values": 320,
+      "original_numeric_sha256": "ff5279b422fdf6088d9e5f27c023fcb77571fc6312ee890d416ba4046f1f1aaf",
+      "published_numeric_sha256": "ff5279b422fdf6088d9e5f27c023fcb77571fc6312ee890d416ba4046f1f1aaf",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_calibrated/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "79b1a53472fa4b8600d31a4d8476b8637116440ea5bb13ef11509a91eeb5d503",
+      "published_numeric_sha256": "79b1a53472fa4b8600d31a4d8476b8637116440ea5bb13ef11509a91eeb5d503",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_calibrated/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "ad4eaa9d97a736a230545ae98ad4ce3fd857f829047225609245cb5875066559",
+      "published_numeric_sha256": "ad4eaa9d97a736a230545ae98ad4ce3fd857f829047225609245cb5875066559",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_calibrated/fills.csv",
+      "numeric_values": 847,
+      "original_numeric_sha256": "66ce6f7ddd42fce77cf7ae377aac32546b8525dfc42cc8c6a35c0c5654e124d3",
+      "published_numeric_sha256": "66ce6f7ddd42fce77cf7ae377aac32546b8525dfc42cc8c6a35c0c5654e124d3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_calibrated/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "02c42fea91a1d3efb95be2718467770ccada13fcb5389f00e7e77632c55a4b55",
+      "published_numeric_sha256": "02c42fea91a1d3efb95be2718467770ccada13fcb5389f00e7e77632c55a4b55",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_calibrated/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "cbbc0070f96384922742907243a65cf530ed2b8cf4aafdf1083a5202d8d4d7be",
+      "published_numeric_sha256": "cbbc0070f96384922742907243a65cf530ed2b8cf4aafdf1083a5202d8d4d7be",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_calibrated/trades.csv",
+      "numeric_values": 304,
+      "original_numeric_sha256": "f73c554b9803a8279d0dab9ba256547034a6d55e981f55e6880e432c2eb67a8b",
+      "published_numeric_sha256": "f73c554b9803a8279d0dab9ba256547034a6d55e981f55e6880e432c2eb67a8b",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_exposure_control/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "86545feabfeadfbdaac60de42f88fff0f170fad47dd95ec04cac50cf887e3d0a",
+      "published_numeric_sha256": "86545feabfeadfbdaac60de42f88fff0f170fad47dd95ec04cac50cf887e3d0a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_exposure_control/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "94cbf45e6614154009cac5c7853d807cf070726be3c65fdf899a7db3bb1e74c2",
+      "published_numeric_sha256": "94cbf45e6614154009cac5c7853d807cf070726be3c65fdf899a7db3bb1e74c2",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_exposure_control/fills.csv",
+      "numeric_values": 1386,
+      "original_numeric_sha256": "37eb4267510d96b3b097add367bc2362f9f37776b8ac6dde23fd033695e500d7",
+      "published_numeric_sha256": "37eb4267510d96b3b097add367bc2362f9f37776b8ac6dde23fd033695e500d7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_exposure_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "34188f26b973b590f37f1d1737ddec43aaaedbab0f79783fe40cb4e685536413",
+      "published_numeric_sha256": "34188f26b973b590f37f1d1737ddec43aaaedbab0f79783fe40cb4e685536413",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_exposure_control/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "728333685e5a2d760e6966e983d40631f53b9e1b27acf377db9b7214e0d6d09a",
+      "published_numeric_sha256": "728333685e5a2d760e6966e983d40631f53b9e1b27acf377db9b7214e0d6d09a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_exposure_control/trades.csv",
+      "numeric_values": 0,
+      "original_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "published_numeric_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_fixed_risk_control/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "4b28efc69ec6a799dcdef86f51a635fcf6c7eacc08a7c34cd2a62624bda043a9",
+      "published_numeric_sha256": "4b28efc69ec6a799dcdef86f51a635fcf6c7eacc08a7c34cd2a62624bda043a9",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_fixed_risk_control/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "5ecad7368ab9dc873f82d6e5f2a216ae487159b430fbe85f19763187b941dc91",
+      "published_numeric_sha256": "5ecad7368ab9dc873f82d6e5f2a216ae487159b430fbe85f19763187b941dc91",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_fixed_risk_control/fills.csv",
+      "numeric_values": 1771,
+      "original_numeric_sha256": "c4c0f0bee6899cea08977bf343e2c42631b5a94d6ba48abed0bc92ffdccd38be",
+      "published_numeric_sha256": "c4c0f0bee6899cea08977bf343e2c42631b5a94d6ba48abed0bc92ffdccd38be",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_fixed_risk_control/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "b8accc6a4b7343d196d409d9f1a3000ed1f0d6532bcc3fe96a9507d06dcae9e5",
+      "published_numeric_sha256": "b8accc6a4b7343d196d409d9f1a3000ed1f0d6532bcc3fe96a9507d06dcae9e5",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_fixed_risk_control/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "b2b3a1b38b15821926ae95405190ff835fce98bc45b698cd7d0a68a1d0f317d4",
+      "published_numeric_sha256": "b2b3a1b38b15821926ae95405190ff835fce98bc45b698cd7d0a68a1d0f317d4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_fixed_risk_control/trades.csv",
+      "numeric_values": 296,
+      "original_numeric_sha256": "0359912d2413c9b94c966f16a7ea6a0d9e7e6afb335eaa1e2d42527e2c3391b4",
+      "published_numeric_sha256": "0359912d2413c9b94c966f16a7ea6a0d9e7e6afb335eaa1e2d42527e2c3391b4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_raw/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "004f9d18e336d0de10b07f883ff8b5521b54f3e6f6d7ee94a156d59e31c12343",
+      "published_numeric_sha256": "004f9d18e336d0de10b07f883ff8b5521b54f3e6f6d7ee94a156d59e31c12343",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_raw/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "5d2545f377a2671e726c042aa80781c2aade2789bf4f64a619efc9094201a776",
+      "published_numeric_sha256": "5d2545f377a2671e726c042aa80781c2aade2789bf4f64a619efc9094201a776",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_raw/fills.csv",
+      "numeric_values": 781,
+      "original_numeric_sha256": "7d569142d5c9355c2ec3555beba70fc276a9cf06031b585db26bac2e1f8a5fc4",
+      "published_numeric_sha256": "7d569142d5c9355c2ec3555beba70fc276a9cf06031b585db26bac2e1f8a5fc4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_raw/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "70c5653b4ef7bb80eb185a3bf6f49f6bf6b3e21c09c562702b2edb5170fb06f5",
+      "published_numeric_sha256": "70c5653b4ef7bb80eb185a3bf6f49f6bf6b3e21c09c562702b2edb5170fb06f5",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_raw/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "ac73722aa44a582f6d4f1aecd30fb2fba94d47ff6c064560748c3b0b6ff91968",
+      "published_numeric_sha256": "ac73722aa44a582f6d4f1aecd30fb2fba94d47ff6c064560748c3b0b6ff91968",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_raw/trades.csv",
+      "numeric_values": 280,
+      "original_numeric_sha256": "fd8c459c901eb3e774452d522a836d21f53e2bbcb29505b5183650cd5fb32109",
+      "published_numeric_sha256": "fd8c459c901eb3e774452d522a836d21f53e2bbcb29505b5183650cd5fb32109",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_vol_target/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "f2715ff6fbbc867a38a3bf06ae5aba49c74c013d8111db1ef45443d12b4119e4",
+      "published_numeric_sha256": "f2715ff6fbbc867a38a3bf06ae5aba49c74c013d8111db1ef45443d12b4119e4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_vol_target/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "60ebf84d2a72a6ea0ee482fe05d4a598f1a254b4ae0ae90ebc452bbcd528c51a",
+      "published_numeric_sha256": "60ebf84d2a72a6ea0ee482fe05d4a598f1a254b4ae0ae90ebc452bbcd528c51a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_vol_target/fills.csv",
+      "numeric_values": 1298,
+      "original_numeric_sha256": "53800b847c33e354cff8063c0e8fa3736053922e40d9ef00b8b792952e888416",
+      "published_numeric_sha256": "53800b847c33e354cff8063c0e8fa3736053922e40d9ef00b8b792952e888416",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_vol_target/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "22f3611599b3bb62d4176eaf8ea909d98dafc01184c2a8583af8060329597536",
+      "published_numeric_sha256": "22f3611599b3bb62d4176eaf8ea909d98dafc01184c2a8583af8060329597536",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_vol_target/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "9d38414eec46b2ed444f55893696295bab820234c5f33c0ab5bd12d626446dfa",
+      "published_numeric_sha256": "9d38414eec46b2ed444f55893696295bab820234c5f33c0ab5bd12d626446dfa",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/rule_vol_target/trades.csv",
+      "numeric_values": 304,
+      "original_numeric_sha256": "1e68893d48be93f687eb9537e1013cfcc46a68bb07d755e7f9699f710f307eb3",
+      "published_numeric_sha256": "1e68893d48be93f687eb9537e1013cfcc46a68bb07d755e7f9699f710f307eb3",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/trend/account.json",
+      "numeric_values": 13,
+      "original_numeric_sha256": "b09510a6dbc97a80ab1962874bf7c23b2ce6060263543a1f8d67a4122dc4e49e",
+      "published_numeric_sha256": "b09510a6dbc97a80ab1962874bf7c23b2ce6060263543a1f8d67a4122dc4e49e",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/trend/equity.csv",
+      "numeric_values": 1270,
+      "original_numeric_sha256": "395fdd16efc4ed4fff08a89f4a62917874bc71d6733dd51b64c35d6ae3186457",
+      "published_numeric_sha256": "395fdd16efc4ed4fff08a89f4a62917874bc71d6733dd51b64c35d6ae3186457",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/trend/fills.csv",
+      "numeric_values": 825,
+      "original_numeric_sha256": "07448b00d68691a19d4416ec1258f547b1ad7cf206548e33d5650c2c1e667086",
+      "published_numeric_sha256": "07448b00d68691a19d4416ec1258f547b1ad7cf206548e33d5650c2c1e667086",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/trend/metrics.json",
+      "numeric_values": 17,
+      "original_numeric_sha256": "f0d636757186262e926e7a9d044784cd119876463336467332ea57d6305ec671",
+      "published_numeric_sha256": "f0d636757186262e926e7a9d044784cd119876463336467332ea57d6305ec671",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/trend/signals.csv",
+      "numeric_values": 762,
+      "original_numeric_sha256": "95fed839087dfc4782810338cd6fab02c145e46fe7e5a788f55740c583f77634",
+      "published_numeric_sha256": "95fed839087dfc4782810338cd6fab02c145e46fe7e5a788f55740c583f77634",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/backtests/trend/trades.csv",
+      "numeric_values": 296,
+      "original_numeric_sha256": "455992cfd4f905d168390c35e233014936498afc486bfa097390965e15f54653",
+      "published_numeric_sha256": "455992cfd4f905d168390c35e233014936498afc486bfa097390965e15f54653",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/block_uncertainty.csv",
+      "numeric_values": 96,
+      "original_numeric_sha256": "c988af9d2b0673e246f1224cb0436743ae9d309c81f62ed649e602c79427dc99",
+      "published_numeric_sha256": "c988af9d2b0673e246f1224cb0436743ae9d309c81f62ed649e602c79427dc99",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/cost_stress.csv",
+      "numeric_values": 918,
+      "original_numeric_sha256": "6d9a3c924df1da083e1dcc2316214d0111c0f2c251714f9ca3cdadc0eb8b9153",
+      "published_numeric_sha256": "6d9a3c924df1da083e1dcc2316214d0111c0f2c251714f9ca3cdadc0eb8b9153",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/daily_returns.csv",
+      "numeric_values": 2159,
+      "original_numeric_sha256": "b5b96cc9cdff03fccf468f0690aa42642f3db80bed0efd22b0b4064901427b2e",
+      "published_numeric_sha256": "b5b96cc9cdff03fccf468f0690aa42642f3db80bed0efd22b0b4064901427b2e",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/distribution_summary.csv",
+      "numeric_values": 648,
+      "original_numeric_sha256": "c43ae7fbff9727982d3bf0c2389e56a1bf3aa8fd94a1804ddea1bd419fccfa1a",
+      "published_numeric_sha256": "c43ae7fbff9727982d3bf0c2389e56a1bf3aa8fd94a1804ddea1bd419fccfa1a",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/distribution_windows.csv",
+      "numeric_values": 32086,
+      "original_numeric_sha256": "03fdbd2d9e8acd2ba03a9df2d5d58bb82ea410c9116c67adb931fa7112ea506c",
+      "published_numeric_sha256": "03fdbd2d9e8acd2ba03a9df2d5d58bb82ea410c9116c67adb931fa7112ea506c",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/folds.json",
+      "numeric_values": 114,
+      "original_numeric_sha256": "7f521e8cc080179dd993ecefce84a38d9878ec8624cd2ff3e5872f87252623c7",
+      "published_numeric_sha256": "7f521e8cc080179dd993ecefce84a38d9878ec8624cd2ff3e5872f87252623c7",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/manifest.json",
+      "numeric_values": 22,
+      "original_numeric_sha256": "2dc6000977017a170f78eeee0c4c1d64aee414642fdd19149c8231f17c879af8",
+      "published_numeric_sha256": "2dc6000977017a170f78eeee0c4c1d64aee414642fdd19149c8231f17c879af8",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/news_eligibility.json",
+      "numeric_values": 1,
+      "original_numeric_sha256": "9039b623b9e859e9d5ab8b19f7bb1571207d7149fd7b5b8995ee287088afd752",
+      "published_numeric_sha256": "9039b623b9e859e9d5ab8b19f7bb1571207d7149fd7b5b8995ee287088afd752",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/parameter_neighborhood.csv",
+      "numeric_values": 684,
+      "original_numeric_sha256": "a48153ddd98ea95371451b0d33caa178296c3171c81d2d3d08b7c709e91a9f89",
+      "published_numeric_sha256": "a48153ddd98ea95371451b0d33caa178296c3171c81d2d3d08b7c709e91a9f89",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/predictions.csv",
+      "numeric_values": 5166,
+      "original_numeric_sha256": "ef42e5957d8018fbf81e42785fb24930150387d3c11e099e66faa14df15f32b8",
+      "published_numeric_sha256": "ef42e5957d8018fbf81e42785fb24930150387d3c11e099e66faa14df15f32b8",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/probability_scores.csv",
+      "numeric_values": 90,
+      "original_numeric_sha256": "a197384d5822a7f5f1de017e8cc36d7e3143c4a65ee7952c9e2504d9933c02ae",
+      "published_numeric_sha256": "a197384d5822a7f5f1de017e8cc36d7e3143c4a65ee7952c9e2504d9933c02ae",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/probability_uncertainty.csv",
+      "numeric_values": 90,
+      "original_numeric_sha256": "38fec311df83e0d37afb2410e5ed4aaba83d45da181c1ed205c002b0f27ce3f4",
+      "published_numeric_sha256": "38fec311df83e0d37afb2410e5ed4aaba83d45da181c1ed205c002b0f27ce3f4",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/reliability.csv",
+      "numeric_values": 141,
+      "original_numeric_sha256": "9081ba6b933f7965d462ab5cd2c9a2c3e921eca8db8424b016c03ba3923174ba",
+      "published_numeric_sha256": "9081ba6b933f7965d462ab5cd2c9a2c3e921eca8db8424b016c03ba3923174ba",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/strategy_summary.csv",
+      "numeric_values": 306,
+      "original_numeric_sha256": "c9a5cf5808388e16411f1a0baa33fe7aeec20ce7a9726413f513ac4a0bd00787",
+      "published_numeric_sha256": "c9a5cf5808388e16411f1a0baa33fe7aeec20ce7a9726413f513ac4a0bd00787",
+      "numeric_equal": true
+    },
+    {
+      "path": "research/results/synthetic_example/stratified_results.csv",
+      "numeric_values": 187,
+      "original_numeric_sha256": "9bf7b5bb1df53eede1d968e6decc20ef0abd82408e54e772bd9462c575b9567a",
+      "published_numeric_sha256": "9bf7b5bb1df53eede1d968e6decc20ef0abd82408e54e772bd9462c575b9567a",
+      "numeric_equal": true
+    }
+  ]
+}

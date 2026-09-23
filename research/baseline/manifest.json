@@ -1,5 +1,5 @@
 {
-  "source_root": "/Users/yuangzuo/Documents/New project",
+  "source_root": "legacy_workspace",
   "source_commit": "cc58b0c3f351f206cccd5841ba9659f6ee55e491",
   "frozen_at": "2026-09-18T22:22:18.921641+00:00",
   "user_files": [
@@ -3123,253 +3123,253 @@
   "historical_artifacts": [
     {
       "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_latest_snapshot.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_latest_snapshot.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_latest_snapshot.csv",
       "sha256": "b92015e8f2a3e0a43fc26f85c295402b427c9511269ddbad9fbc5cf4df0fc835",
       "bytes": 2499
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion.json",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion.json",
-      "sha256": "fedf65b5b94fd3c5c2ed09cd4181736523542349a0f3c3bf8012469ea825f886",
-      "bytes": 18472
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion.json",
+      "sha256": "eb1bf995283b2f986a6470beef9252d057811cde25d407427a8e5cd28c5d6bc1",
+      "bytes": 18452
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion_report.md",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion_report.md",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion_report.md",
       "sha256": "0954713381c7f564c6f7fb0012dc86ecea8150d7d20131305022e79c710db725",
       "bytes": 24223
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion_summary.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion_summary.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion_summary.csv",
       "sha256": "520cc39c72e4213fb7a8c4aa5eb379f3770155efd0debb87973326a6b5c5112b",
       "bytes": 12334
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_source_rows.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_source_rows.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_source_rows.csv",
       "sha256": "9efac0e4206177b1673c1b084c0036532f98e97dfc9ededfe158678f9f750455",
       "bytes": 13044
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_stress_backtests.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_stress_backtests.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_stress_backtests.csv",
       "sha256": "7a15e396e28157d570bbe756bf383ef96c5f9d903bbbfa1eea1c5b0866069ad4",
       "bytes": 18737
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_latest.json",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_latest.json",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_latest.json",
       "sha256": "24ad0c8ab2dca97b0e66922764ab103922386ffd10a7d9735e3f553eac908d4f",
       "bytes": 417
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_metrics.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_metrics.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_metrics.csv",
       "sha256": "6364723ed57950e9126a972e8434bd762c91d7e072304dc97be565bb5350f1c2",
       "bytes": 12679
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_report.md",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_report.md",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_report.md",
       "sha256": "87e7956840f47c30de8e09393bc1df38a538ae26b64b27f2591b7a64ee96f7cc",
       "bytes": 10711
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_24m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_24m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_24m.csv",
       "sha256": "28ece7d067d3c68827ae678b6a393db4acf145e7e1ae49a16f227e7e4cdeb5f7",
       "bytes": 32116
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_36m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_36m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_36m.csv",
       "sha256": "5ef606c21b03e14d8703f28eb8a57f6d4d7ede9ef8604ceff7d958474ff8fe12",
       "bytes": 48524
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_60m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_60m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_diagnostics_60m.csv",
       "sha256": "4c4652e21fbe79b2acf64e91fd770be6b08f94e62ef2ef0ac543f1d9a52a9e5e",
       "bytes": 81216
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_24m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_24m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_24m.csv",
       "sha256": "2aa43896547d31840d160e7dae1f627e2e3ce064c249adaf7b485b53b448eb28",
       "bytes": 46255
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_36m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_36m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_36m.csv",
       "sha256": "8bc0d0b61207619ffc7318698977e6cdec01917237835eab830f6ac9d943e662",
       "bytes": 70092
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_60m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_60m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_research_signals_60m.csv",
       "sha256": "1609d764d8a6cfc26c0e80a8b661d696a5f93f643bd3716430afd586e05dff1c",
       "bytes": 117663
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_24m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_24m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_24m.csv",
       "sha256": "28ece7d067d3c68827ae678b6a393db4acf145e7e1ae49a16f227e7e4cdeb5f7",
       "bytes": 32116
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_36m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_36m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_36m.csv",
       "sha256": "5ef606c21b03e14d8703f28eb8a57f6d4d7ede9ef8604ceff7d958474ff8fe12",
       "bytes": 48524
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_60m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_60m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_diagnostics_60m.csv",
       "sha256": "4c4652e21fbe79b2acf64e91fd770be6b08f94e62ef2ef0ac543f1d9a52a9e5e",
       "bytes": 81216
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_24m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_24m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_24m.csv",
       "sha256": "b1bb3c40eb3ff08a82622d160a17b7f5e5357afb052054574a0d08a7f844a061",
       "bytes": 45753
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_36m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_36m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_36m.csv",
       "sha256": "67f01a403eca9be0a0f24100ce266bf81bc7503d64328f5d3d8fa79542c3bdf5",
       "bytes": 69338
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_60m.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_60m.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_60m.csv",
       "sha256": "f08ee7a8cecc952866b2a27a6cfd2098ed5d3b64d82669b2d11509b3715f487a",
       "bytes": 116407
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_summary.json",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_summary.json",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/meta_decision_layer_override/meta_decision_summary.json",
       "sha256": "d1ca678cc79b2b17718d497679588e9c91b05ae338bde00c92923fd425d57cba",
       "bytes": 7924
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/engine_calibration/engine_calibration_summary.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/engine_calibration/engine_calibration_summary.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/engine_calibration/engine_calibration_summary.csv",
       "sha256": "1904abd03b146d5c36fb5ff0a2d13c87f6bcd66548e66cec425982c20ac54e69",
       "bytes": 4085
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/engine_calibration/engine_calibration_windows.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/engine_calibration/engine_calibration_windows.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/engine_calibration/engine_calibration_windows.csv",
       "sha256": "466c44475fe2c4eeed6d542e7c019ebbb083090b2983b73fcd18d9dff2b19669",
       "bytes": 421170
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/engine_calibration.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/overfit_audit/engine_calibration.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/overfit_audit/engine_calibration.csv",
       "sha256": "d09015450504b402bbe0fb81c33847e57a017f4534564c3e91eca1eb9db7fb18",
       "bytes": 3926
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/overfit_audit.json",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/overfit_audit/overfit_audit.json",
-      "sha256": "f3e3eb3c30a7f8dff6391bf2f1e873b903a7a1ca1734d47c18836c7128332ca7",
-      "bytes": 2272
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/overfit_audit/overfit_audit.json",
+      "sha256": "8965eeaefbc7ae092233807b04db08fe3bce68d8cb8078ab9c2af45162aa9a89",
+      "bytes": 2252
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/overfit_audit_report.md",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/overfit_audit/overfit_audit_report.md",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/overfit_audit/overfit_audit_report.md",
       "sha256": "340793d39dd3cec988e0614b456559ff030cb080c1f8e5af01e7e37392409eea",
       "bytes": 5361
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/parameter_sensitivity_nearby.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/overfit_audit/parameter_sensitivity_nearby.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/overfit_audit/parameter_sensitivity_nearby.csv",
       "sha256": "c3876f2bbccf6fa29b5958ffd27f54e2f37e1bfde0297022cb4d0c7a07d2b9be",
       "bytes": 4168
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/train_validation.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/overfit_audit/train_validation.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/overfit_audit/train_validation.csv",
       "sha256": "642fb8433ffb2fa9341fe65270adf0d0d5b339bb879daf870a37b06623e90215",
       "bytes": 858
     },
     {
       "path": "research/baseline/historical_outputs/performance_retest/overfit_audit/window_thresholds.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/overfit_audit/window_thresholds.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/performance_retest/overfit_audit/window_thresholds.csv",
       "sha256": "f9317105e42593fb76b3407c01c23c01fcd4c6294d574e0d83bfe68897dcc3c8",
       "bytes": 1011
     },
     {
       "path": "research/baseline/historical_outputs/event_overlay_backtest/classified_events_with_labels.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/event_overlay_backtest/classified_events_with_labels.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/event_overlay_backtest/classified_events_with_labels.csv",
       "sha256": "e90c1172a93332598da7a6671fa2ee2988c271e88771e18b81ce15e0f16b1ccc",
       "bytes": 13695
     },
     {
       "path": "research/baseline/historical_outputs/event_overlay_backtest/event_overlay_backtest_report.json",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/event_overlay_backtest/event_overlay_backtest_report.json",
+      "source": "legacy_workspace/nvda_quant_model/outputs/event_overlay_backtest/event_overlay_backtest_report.json",
       "sha256": "ebbfdb52ed0420885e5ef4da43324737703d02707f5fbcb1f381cab029985814",
       "bytes": 3883
     },
     {
       "path": "research/baseline/historical_outputs/event_overlay_backtest/event_overlay_backtest_summary.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/event_overlay_backtest/event_overlay_backtest_summary.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/event_overlay_backtest/event_overlay_backtest_summary.csv",
       "sha256": "6979e2df50460b75ead867872cc925ec4de37d2d311c82047ae56e4591bc8fe2",
       "bytes": 342
     },
     {
       "path": "research/baseline/historical_outputs/event_overlay_backtest/event_overlay_backtest_windows.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/event_overlay_backtest/event_overlay_backtest_windows.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/event_overlay_backtest/event_overlay_backtest_windows.csv",
       "sha256": "ef9b7b44dcb1102737f80dd8911231aafe2baf5d192ca32bf479fde367d9e90b",
       "bytes": 601
     },
     {
       "path": "research/baseline/historical_outputs/event_overlay_backtest/event_overlay_group_summary.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/event_overlay_backtest/event_overlay_group_summary.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/event_overlay_backtest/event_overlay_group_summary.csv",
       "sha256": "5a4cc3108b9cd2a56e14e53ebd768d09110b4aa39c08cdd9582468a68931b959",
       "bytes": 527
     },
     {
       "path": "research/baseline/historical_outputs/event_overlay_backtest/latest_event_overlay_scores.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/event_overlay_backtest/latest_event_overlay_scores.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/event_overlay_backtest/latest_event_overlay_scores.csv",
       "sha256": "ae1cd46597176ee54fc8755c65f50771e6f228bf6d02e21154c2a97503d786e3",
       "bytes": 1197
     },
     {
       "path": "research/baseline/historical_outputs/stable_candidate_optimizer/stable_validation.json",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/stable_candidate_optimizer/stable_validation.json",
-      "sha256": "66e4b26a7712ebffbcd1561f8dee035513c06246c2510033148283094d328051",
-      "bytes": 14826
+      "source": "legacy_workspace/nvda_quant_model/outputs/stable_candidate_optimizer/stable_validation.json",
+      "sha256": "36ff975c80a7df93a525ba28d555e503a6e21049c098dedc70e5dc8e6e8b26de",
+      "bytes": 14806
     },
     {
       "path": "research/baseline/historical_outputs/summary.json",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/summary.json",
-      "sha256": "66a06fbf8f673a84fb595f200bbcdab2de8baf943a871aa90dd00a51e4c5afaa",
-      "bytes": 18788
+      "source": "legacy_workspace/nvda_quant_model/outputs/summary.json",
+      "sha256": "eba6f3ec0142682bebd4dc87901d4bf9b753ff73040c83e60962faea0aa944b3",
+      "bytes": 18687
     },
     {
       "path": "research/baseline/historical_outputs/signals.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/signals.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/signals.csv",
       "sha256": "c3bd07f6fde9207f953e97f1f4d1540a710397ecabe3f32cbb3b10de1dbe8f21",
       "bytes": 19368
     },
     {
       "path": "research/baseline/historical_outputs/equity_curve.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/equity_curve.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/equity_curve.csv",
       "sha256": "868f2495fe9eb76eb69fa87b92ad86872334e8bed5d836a33e63fa5fa4b02927",
       "bytes": 19986
     },
     {
       "path": "research/baseline/historical_outputs/trades.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/trades.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/trades.csv",
       "sha256": "4c8d13385d068e66c754f5ab208432cdffc0831bc01428b3168e50c20f351a49",
       "bytes": 4593
     },
     {
       "path": "research/baseline/historical_outputs/walk_forward.csv",
-      "source": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/walk_forward.csv",
+      "source": "legacy_workspace/nvda_quant_model/outputs/walk_forward.csv",
       "sha256": "57c1ea30202a634d0b15c5e7021cc3b126a937ffe39261fd71c39e5c400fc928",
       "bytes": 1295
     }

@@ -12,7 +12,7 @@
     "current_baseline": 1,
     "reject_oos_degradation": 1
   },
-  "report": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/stable_candidate_optimizer/candidate_promotion_report.md",
+  "report": "legacy_workspace/nvda_quant_model/outputs/stable_candidate_optimizer/candidate_promotion_report.md",
   "best_promoted_label": null,
   "top_rows": [
     {

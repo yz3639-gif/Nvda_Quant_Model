@@ -12,75 +12,75 @@
     {
       "experiment_id": "strict_baseline_24m",
       "variant": "legacy_close_daily_reset",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/manifest.json",
-      "manifest_sha256": "0c07c46e35d905edd1c15a8ca1266e3bfaac0bcadb8adf4419399ba50f628bbf"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/legacy_close_daily_reset/manifest.json",
+      "manifest_sha256": "38813bfe3a2d39d33448775943fdddcd1c71f8fa379b5c41263eb87c3e7776d0"
     },
     {
       "experiment_id": "strict_baseline_24m",
       "variant": "corrected_close_daily_reset",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/manifest.json",
-      "manifest_sha256": "4befaf44bfb479b263e2d947b535a311613ca462626c9445004aac37e542ce4a"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_close_daily_reset/manifest.json",
+      "manifest_sha256": "e6ae6e8f9e0d9cb93c1663b3c071a521611fd59920511075013e3cbf085e3725"
     },
     {
       "experiment_id": "strict_baseline_24m",
       "variant": "corrected_next_open_entry",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/manifest.json",
-      "manifest_sha256": "b7e5b65dbe1ff3ad915576f3529e0fe08e8d82b9bf889e5a13ce8f6c9be3ed8f"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/strict_baseline_24m/corrected_next_open_entry/manifest.json",
+      "manifest_sha256": "e23eea082918b6b54f1e8933f1bb2f149382675a18b27a13f82cc89c7d5e262b"
     },
     {
       "experiment_id": "strict_baseline_36m",
       "variant": "legacy_close_daily_reset",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/manifest.json",
-      "manifest_sha256": "9c107b7a11e1da12a3ab30a200e89dfacbd0525942471a7995ad756b1341d0f0"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/legacy_close_daily_reset/manifest.json",
+      "manifest_sha256": "e7ec7ab297040cefcbf5988597cbc3f1758cc053e1314ddfa87774e01540a65d"
     },
     {
       "experiment_id": "strict_baseline_36m",
       "variant": "corrected_close_daily_reset",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/manifest.json",
-      "manifest_sha256": "d52cc7a0105e03a7eebd3cda60b64b218ee91741bda3a9a1da2a0343a321621c"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_close_daily_reset/manifest.json",
+      "manifest_sha256": "bad007d06cbba0a6e3b8834cd1641a7209327c7c2942a40658934f41a051857a"
     },
     {
       "experiment_id": "strict_baseline_36m",
       "variant": "corrected_next_open_entry",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/manifest.json",
-      "manifest_sha256": "b64c92444319de0f4e50bb56a5a0c3fa7e83e4f442d838907f956ce291e178f2"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/strict_baseline_36m/corrected_next_open_entry/manifest.json",
+      "manifest_sha256": "7d777fa52d43486d63bfc7e63ccdf629d19f36d60bf7e69a2d8aafedbea11c5d"
     },
     {
       "experiment_id": "strict_baseline_60m",
       "variant": "legacy_close_daily_reset",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/manifest.json",
-      "manifest_sha256": "9533b29bc038cfe86f439bdb7e49063328e2c70367aea7b069c6ac13f5fdb533"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/legacy_close_daily_reset/manifest.json",
+      "manifest_sha256": "60cbcd29d1b5b8fc53fb905d6fd96b9e6c0f5a96b2496646d063f893aa13cfcb"
     },
     {
       "experiment_id": "strict_baseline_60m",
       "variant": "corrected_close_daily_reset",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/manifest.json",
-      "manifest_sha256": "5dabf7b55d4c1063d53b885ec69a72b3cfd22173e134b5495662c23a62246966"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_close_daily_reset/manifest.json",
+      "manifest_sha256": "9220f930760b36d5532ee2682dd3a74298836f8a612ae9d7b81b44eddcff4b6c"
     },
     {
       "experiment_id": "strict_baseline_60m",
       "variant": "corrected_next_open_entry",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/manifest.json",
-      "manifest_sha256": "233a29dd31f8e8657beb07cf4e2b15e2f527e6ca67993b624a4760b89193df1b"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/strict_baseline_60m/corrected_next_open_entry/manifest.json",
+      "manifest_sha256": "717c43e4d6ec535fdf7a7337fcb6937a0a675c99e66f35d3d7066d786e39f4fa"
     },
     {
       "experiment_id": "default_model_24m",
       "variant": "legacy_close_daily_reset",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/manifest.json",
-      "manifest_sha256": "344340d041ef2e67d1328f2f83af076ec9319eae528ae38e948fe8fedd107d3f"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/default_model_24m/legacy_close_daily_reset/manifest.json",
+      "manifest_sha256": "3d0b70c02561358d80670003ff695e387aff679aa8e795d3d2f4b60e02c1d10e"
     },
     {
       "experiment_id": "default_model_24m",
       "variant": "corrected_close_daily_reset",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/manifest.json",
-      "manifest_sha256": "aa1a80b8d723c923cb7f293cf5e2fabb901ca25b8b02e3bd3ecdebe3feaec3f0"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_close_daily_reset/manifest.json",
+      "manifest_sha256": "87eaa07efc0d0d0e79db0def397f1c5e5e2ca45e4ae9448cb2e3eb408faeaa98"
     },
     {
       "experiment_id": "default_model_24m",
       "variant": "corrected_next_open_entry",
-      "manifest_path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/manifest.json",
-      "manifest_sha256": "ac11236bc91c46ae2f0f33278edc2ad819a3f1a4cc2f507ff06baa2a1fa90eea"
+      "manifest_path": "research/results/frozen_20260918/historical_replay/default_model_24m/corrected_next_open_entry/manifest.json",
+      "manifest_sha256": "4dc595b82c42f5bd782c2db8d8f67358a341f73d1b6b95fa71d447a21472cb29"
     }
   ],
-  "summary_sha256": "1571271a9a6c1e2ba59b66301e72bac35c13d291537877298379383ade5be1d9"
+  "summary_sha256": "f05b74c5fe0f70e0fcca97751b88bde8ff4abec35e9ebbde40df6b0a7174dcc5"
 }

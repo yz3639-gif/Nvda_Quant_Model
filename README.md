@@ -1,59 +1,121 @@
-# NVDA Research Platform
+# NVDA Quant Research Lab
 
-A daily research system for comparing signals, execution assumptions and predictive uncertainty. Its purpose is to make results reproducible and challenge apparent edges before using them.
+**Daily signals · execution modeling · probability calibration · risk diagnostics**
 
-**Current status: research infrastructure; no validated live alpha.** The historical data were already used in development. The new experiments are chronological development evaluations, not an untouched holdout. News remains explanatory because the saved event sample does not meet the eligibility gates.
+Built by **Antony Zuo**
 
-## What the system demonstrates
+A Python research platform that follows a trading idea from daily market inputs to model predictions, simulated fills, reconciled P&L and a reproducible evidence report. It compares simple rules with machine learning and shows how costs, execution choices and risk controls change the conclusion.
 
-- One fill ledger reconciles cash, shares, fees, realized P&L and marked equity, including gaps, partial trades and risk halts.
-- Training-only preprocessing and label-maturity purging protect temporal validation; future-price mutation tests exercise real fitted models.
-- A registered 11-candidate design compares a fixed volume/momentum rule, logistic regression, shallow boosting and six distribution variants. Calibration, sizing and cost stresses are explicit ablations.
-- Frozen historical signals are replayed separately under the original engine, corrected accounting and changed execution assumptions.
-- Every run records source/input hashes, dependencies, configuration, inner selections, predictions, fills, metrics and report artifacts.
+[Research report](research/results/frozen_20260918/research_report.md) · [Technical walkthrough](research/TECHNICAL_BRIEF.md) · [Reproduce the pipeline](research/RUNBOOK.md) · [Model card](research/MODEL_CARD.md)
+
+## Research at a glance
+
+| Dimension | Implemented and recorded |
+| :--- | :--- |
+| Market inputs | **1,641 daily NVDA observations**, November 11, 2019–May 22, 2026 |
+| Directional models | **3 families:** volume/momentum rule, logistic regression and shallow gradient boosting |
+| Temporal evaluation | **18 walk-forward folds**; 1,075 forecast dates per family; training-only preprocessing and label-maturity checks |
+| Trading comparisons | **17 strategy and control variants**, with their losses, exposure and risk halts retained |
+| Cost sensitivity | **1×, 2× and 4×** baseline commission and slippage; **51** recorded comparisons |
+| Distribution research | **6 variants**, 5- and 21-session horizons, **5,000 simulated paths** per forecast |
+| Engineering checks | **196 offline tests passed** in the September 23, 2026 local publication check |
+
+**Data freshness:** the main experiment was run on **September 18, 2026**, using inputs ending **May 22, 2026**. A separate default-strategy execution replay ends July 24, 2026. This publication updates the implementation and explanation; it does not add September market observations. These are historical development evaluations, with no untouched holdout or live performance record claimed.
+
+The registered design has **11 candidate specifications**: five directional-model settings and six distribution variants. This is different from the 17 strategy/control variants, which also vary calibration and sizing. Counts are traceable to the [run manifest](research/results/frozen_20260918/manifest.json), [fold records](research/results/frozen_20260918/folds.json) and [cost results](research/results/frozen_20260918/cost_stress.csv).
+
+## What the implementation demonstrates
+
+- **Time-aware model research.** Model selection and probability calibration use chronological training blocks. Preprocessing is fitted inside training, immature labels are excluded, and future-price mutation tests exercise the fitted models.
+- **Execution and accounting.** A fill ledger tracks cash, shares, fees, realized P&L and marked equity. Gap fills, partial trades, stop/target behavior and risk halts have explicit handling and regression coverage.
+- **Risk and uncertainty.** The platform compares fixed, volatility-targeted and exposure-control sizing; measures probability reliability; and evaluates return intervals with coverage, width and tail diagnostics.
+- **Auditable experiments.** Source/input hashes, dependencies, configuration, folds, predictions, trades and stage checkpoints travel with each result. Failed stages and negative outcomes remain visible.
 
 ```mermaid
 flowchart LR
-    A[Versioned OHLCV] --> B[Session clock and data checks]
-    B --> C[Mature training labels]
-    C --> D[Fit preprocessing and models]
-    D --> E[Chronological tuning and calibration]
-    E --> F[Next-open execution and ledger]
-    E --> G[Probability and interval diagnostics]
-    F --> H[Versioned research report]
+    A[Versioned daily OHLCV] --> B[Session and label checks]
+    B --> C[Chronological fitting and calibration]
+    C --> D[Predictions and sizing]
+    D --> E[Execution and fill ledger]
+    E --> F[Net P&L and stress comparisons]
+    C --> G[Probability and interval diagnostics]
+    F --> H[Versioned evidence report]
     G --> H
-    I[Frozen legacy signals] --> J[Execution sensitivity replay]
-    J --> H
 ```
 
-## Run the offline example
+## What the results show
 
-Python 3.13 is supported; the reference environment was created with Python 3.13.9.
+![Execution assumptions and all 17 strategy/control results from the frozen research run](docs/assets/research_evidence.png)
+
+The figure separates two experiments: a replay of one historical signal stream under three execution/accounting definitions, and the complete set of 17 v2 strategy/control results. The panels are not a before/after comparison of the same model. [Figure source](scripts/build_readme_figures.py) · [Replay CSV](research/results/frozen_20260918/historical_replay/historical_replay.csv) · [All strategy results](research/results/frozen_20260918/strategy_summary.csv)
+
+**Execution assumptions matter.** The 60-month legacy result with Sharpe **1.24** is preserved with its original identity. The same saved signals produce different outcomes under changed assumptions:
+
+| Frozen 60-month signal replay | Annualized return | Sharpe | Maximum drawdown |
+| :--- | ---: | ---: | ---: |
+| Legacy close execution / daily stop reset | 15.40% | 1.240 | −13.32% |
+| Corrected accounting / close execution / daily stop reset | 15.80% | 1.230 | −13.30% |
+| Corrected accounting / next-open execution / entry-based stops | −0.65% | −0.023 | −20.84% |
+
+These cases use May 24, 2021–May 22, 2026 observations. The last row changes both fill timing and stop semantics; its difference cannot be attributed solely to an accounting fix. Replay preserves saved signals rather than regenerating the original model-selection history.
+
+**The complete v2 comparison does not establish a durable trading edge.** Five of the 17 strategy/control variants have positive net returns at baseline costs; four remain positive at 4× costs. These counts include controls and buy-and-hold, and are not independent replications. Several strategies hit the drawdown guard; their subsequent cash holdings remain part of the reported result. Exposure controls and buy-and-hold also carry different realized exposure, so a lower drawdown alone is not evidence of better forecasting.
+
+**Calibration and tail diagnostics are part of the research output.** Probability calibration reduces observed Brier error for some models, but the recorded block-bootstrap intervals do not establish a repeatable improvement over the training-frequency benchmark. At the 21-session horizon, nominal 95% interval coverage is approximately 92.6%–94.4% over 54 nonoverlapping outcomes per distribution variant. These are descriptive findings from previously researched data.
+
+[Open the complete report and tables](research/results/frozen_20260918/research_report.md) for returns, costs, probability scores, parameter sensitivity and failures.
+
+<details>
+<summary><strong>Open the broader research dashboard</strong></summary>
+
+![Historical development evaluation: equity, drawdown, costs, calibration and interval coverage](research/results/frozen_20260918/overview.png)
+
+This dashboard displays a prespecified subset for legibility. The table and figure above retain all 17 strategy/control variants. Flat strategy paths after a risk halt represent cash, not missing observations.
+
+</details>
+
+## Reproduce an offline example
+
+The synthetic example runs without an API key or market-data account. It exercises the same research pipeline; its output is labeled synthetic and is not market-performance evidence.
 
 ```bash
+git clone https://github.com/yz3639-gif/Nvda_Quant_Model.git
+cd Nvda_Quant_Model
 python3.13 -m venv .venv-research
 .venv-research/bin/python -m pip install -r research/environment.lock.txt
-MPLCONFIGDIR=.mplconfig OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+
+NVDA_OFFLINE_TESTS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv-research/bin/python -m pytest -q -p no:cacheprovider
+
+MPLBACKEND=Agg MPLCONFIGDIR=.mplconfig OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
   .venv-research/bin/python -m nvda_quant_model.research.runner \
-  --synthetic --output research/runs/example
-NVDA_OFFLINE_TESTS=1 .venv-research/bin/python -m pytest -q
+  --synthetic --config research/configs/smoke.json --output research/runs/example
 ```
 
-The example generates deterministic synthetic OHLCV and requires no API key or live price connection. Its charts are marked synthetic and cannot establish market performance. Market runs accept an explicit CSV with `Date,Open,High,Low,Close,Volume`; see the [runbook](research/RUNBOOK.md).
+The reference environment is Python 3.13.9. Windows users should use the corresponding virtual-environment executable and shell environment-variable syntax. For historical market runs, provide an authorized CSV with `Date,Open,High,Low,Close,Volume`; the original full vendor cache is not bundled. A fresh download is a new data vintage, not automatically an exact reproduction. See the [runbook](research/RUNBOOK.md).
 
-## Research results and interpretation
+## Review the implementation
 
-The [frozen research report](research/results/frozen_20260918/research_report.md) and its CSV files contain all candidates, including failures. [Execution sensitivity](research/results/frozen_20260918/historical_replay/historical_replay.csv) distinguishes an accounting correction from a changed strategy definition. [The model card](research/MODEL_CARD.md) sets out the remaining limitations.
+| Research question | Code | Evidence |
+| :--- | :--- | :--- |
+| Was training information available at the decision time? | [Model experiments](nvda_quant_model/research/experiments.py) | [Fold records](research/results/frozen_20260918/folds.json), [time contract](research/DATA_CONTRACT.md) |
+| Do simulated trades reconcile to account equity? | [Backtest and ledger](nvda_quant_model/backtest/backtest_engine.py) | [Per-strategy ledgers](research/results/frozen_20260918/backtests), [execution tests](tests/test_execution_v2.py) |
+| How much depends on costs or trading assumptions? | [Historical replay](nvda_quant_model/research/replay.py) | [Execution comparison](research/results/frozen_20260918/historical_replay/historical_replay.csv), [cost stress](research/results/frozen_20260918/cost_stress.csv) |
+| Are probabilities and return intervals useful? | [Distribution models](nvda_quant_model/research/distributions.py) | [Probability scores](research/results/frozen_20260918/probability_scores.csv), [distribution diagnostics](research/results/frozen_20260918/distribution_summary.csv) |
+| Can a run be reproduced or resumed safely? | [Runner](nvda_quant_model/research/runner.py), [provenance](nvda_quant_model/research/provenance.py) | [Recorded reproduction checks](research/REPRODUCTION_CHECK.json), [publication verification](research/PUBLICATION_CHECK.md) |
 
-Historical screenshots must retain their original model, input window and execution identity. A result produced by the old engine cannot be relabeled as an upgraded model's performance. The saved strict/default signals are replayed, not represented as fully regenerated training histories.
+The earlier independent reproduction matched 12 principal result tables byte-for-byte in the reference environment. That historical check is distinct from the current publication tests and from cross-platform reproducibility. [Public metadata normalization](research/PUBLICATION_NOTES.md) is documented separately; original run identities and numerical results remain distinguishable from publication artifacts.
 
-## Documentation
+## Scope and next validation
 
-- [Model card](research/MODEL_CARD.md): intended use, models, validation and limitations.
-- [Runbook](research/RUNBOOK.md): actual-data runs, checkpoints, provenance and shadow records.
-- [Data and time contracts](research/DATA_CONTRACT.md): clocks, labels, preprocessing and execution.
-- [Technical discussion brief](research/TECHNICAL_BRIEF.md): research decisions and interview explanations.
-- [Approved upgrade plan](research/UPGRADE_PLAN.md) and [implementation evidence](research/IMPLEMENTATION_STATUS.md).
-- [Earlier repository documentation](docs/LEGACY_REPOSITORY_README.md): existing exploratory tools retained for context.
+This project demonstrates daily equity research, execution modeling and risk diagnostics. It does not implement an options market-making desk or establish a live trading track record. The related [WTI Options Desk](https://github.com/yz3639-gif/cushing-wti-research) demonstrates option valuation, volatility editing and scenario-based proxy hedging separately.
 
-The v2 implementation was developed with AI-assisted coding and independently reviewed through separate execution, time/data, and model/reporting workstreams. The evidence supports the implemented system and its tests; it does not establish unaided authorship or profitable deployment.
+The next empirical step is a fixed prospective experiment using newly recorded inputs, with the forecast horizon aligned to the holding-period policy and explicit turnover/cost controls. Shadow-recording support exists, but a prospective performance history has not yet been collected. The news sample has 26 events and fails its source/time-coverage gate, so no news-alpha claim is made.
+
+## 中文导读
+
+这个项目展示的是一套可检查、可复现的量化研究流程：比较 NVDA 日频信号，把预测转化为模拟交易，再核对成本、损益和风险。主要工作包括 18 个滚动验证窗口、三档交易成本压力测试、逐笔成交记账，以及概率和收益区间诊断。
+
+阅读时请区分**报告生成日期、行情截止日期和模型版本**。9 月生成的报告使用截止 5 月的主研究数据；旧版 1.24 Sharpe 保留为特定历史假设下的结果。新版把不同执行规则、失败案例和全部策略对照放在同一份证据记录中，不将历史开发回测包装成全新样本外或实盘收益。
+
+技术讨论建议先看 [Technical walkthrough](research/TECHNICAL_BRIEF.md)，复现方法见 [Runbook](research/RUNBOOK.md)。旧页面留在 [历史文档](docs/LEGACY_REPOSITORY_README.md)，用于追溯此前的模型和表述。

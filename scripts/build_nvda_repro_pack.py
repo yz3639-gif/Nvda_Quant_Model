@@ -20,6 +20,8 @@ def build(destination: Path):
     files.add(ROOT/'research/REPRODUCTION_CHECK.json')
     files.add(ROOT/'research/LINKEDIN_DESCRIPTION.txt')
     files.add(ROOT/'docs/LEGACY_REPOSITORY_README.md')
+    files.update(p for p in (ROOT/'docs/assets').glob('*') if p.is_file())
+    files.add(ROOT/'scripts/build_readme_figures.py')
     files.update((ROOT/'tests').glob('test_*_v2.py'))
     files.add(Path(__file__).resolve())
     # Market outputs are research evidence, not a redistributable vendor feed.

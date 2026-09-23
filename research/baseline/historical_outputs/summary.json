@@ -68,8 +68,8 @@
     "warnings": []
   },
   "data_quality": {
-    "csv": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/data_quality.csv",
-    "json": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/data_quality.json"
+    "csv": "legacy_workspace/nvda_quant_model/outputs/data_quality.csv",
+    "json": "legacy_workspace/nvda_quant_model/outputs/data_quality.json"
   },
   "metrics": {
     "initial_capital": 100000.0,
@@ -116,7 +116,7 @@
     "benchmark_sharpe": 1.031529470885311,
     "shapiro_p": 5.716100767170932e-19,
     "durbin_watson": 2.0807973361765213,
-    "conclusion": "策略无显著性，可能是随机波动"
+    "conclusion": "\u7b56\u7565\u65e0\u663e\u8457\u6027\uff0c\u53ef\u80fd\u662f\u968f\u673a\u6ce2\u52a8"
   },
   "robustness": {
     "observed_sharpe": 0.29934378861648875,
@@ -446,7 +446,7 @@
       {
         "published_at": "2026-07-25",
         "source": "AD HOC NEWS",
-        "title": "Nvidia’s Valuation Hits a Five-Year Low Even as Revenue Soars to $81.6 Billion - AD HOC NEWS",
+        "title": "Nvidia\u2019s Valuation Hits a Five-Year Low Even as Revenue Soars to $81.6 Billion - AD HOC NEWS",
         "sentiment_score": 0.0,
         "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPcEduclZqMXgwTV9pS3I0N0p2ckpCVFdxTHJ2TFNaSjRRNHk2T1djdDVxczcyWXdkaGZ3ZjlOTjU1VnNxVlNtQVI1aXl1eUxBUDVBQnY0Z3k1RU4xZW1JRlRXSExGeVU2Vk1MU1ZkX0JQQ3djRVZpYmNQUlhYYnZxZ2J0by1SbzY5YnF3eXpTZ2FDa3pCQ2p5S29kekQ0ZGZ3ZTZyVHcwQUpfSmdDQlJkdnRIencyOFVJV2pXSUk0dHkta1BoVUVB?oc=5"
       },
@@ -495,11 +495,11 @@
     ]
   },
   "order_flow_overlay": null,
-  "report_path": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/report.md",
+  "report_path": "legacy_workspace/nvda_quant_model/outputs/report.md",
   "charts": {
-    "equity_curve": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/equity_curve.png",
-    "drawdown": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/drawdown.png",
-    "monthly_returns": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/monthly_returns_heatmap.png",
-    "rolling_sharpe": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/rolling_sharpe.png"
+    "equity_curve": "legacy_workspace/nvda_quant_model/outputs/equity_curve.png",
+    "drawdown": "legacy_workspace/nvda_quant_model/outputs/drawdown.png",
+    "monthly_returns": "legacy_workspace/nvda_quant_model/outputs/monthly_returns_heatmap.png",
+    "rolling_sharpe": "legacy_workspace/nvda_quant_model/outputs/rolling_sharpe.png"
   }
 }

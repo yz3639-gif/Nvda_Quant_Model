@@ -45,5 +45,5 @@
     "Do not use prob_up as a sizing scalar until calibration error is reduced.",
     "Require parameter-neighborhood evidence before future stop/take changes become production."
   ],
-  "report": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/overfit_audit/overfit_audit_report.md"
+  "report": "legacy_workspace/nvda_quant_model/outputs/performance_retest/overfit_audit/overfit_audit_report.md"
 }

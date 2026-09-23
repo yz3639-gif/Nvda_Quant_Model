@@ -51,32 +51,31 @@
   "config_basis": "All stored StrategyConfig fields from frozen summary.json; new additive fields use current defaults.",
   "inputs": [
     {
-      "path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/baseline/historical_outputs/signals.csv",
+      "path": "research/baseline/historical_outputs/signals.csv",
       "sha256": "c3bd07f6fde9207f953e97f1f4d1540a710397ecabe3f32cbb3b10de1dbe8f21",
       "bytes": 19368,
       "frozen_sha256": "c3bd07f6fde9207f953e97f1f4d1540a710397ecabe3f32cbb3b10de1dbe8f21",
       "freeze_verified": true
     },
     {
-      "path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/nvda_quant_model/cache/NVDA_2023-01-11_2026-07-25.csv",
+      "path": "nvda_quant_model/cache/NVDA_2023-01-11_2026-07-25.csv",
       "sha256": "b478093d1a365414b30352550b3345e42bd4b0f8e51faf5755a32347b39b2e55",
       "bytes": 84086,
       "frozen_sha256": "b478093d1a365414b30352550b3345e42bd4b0f8e51faf5755a32347b39b2e55",
       "freeze_verified": true
     },
     {
-      "path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/baseline/historical_outputs/summary.json",
-      "sha256": "66a06fbf8f673a84fb595f200bbcdab2de8baf943a871aa90dd00a51e4c5afaa",
-      "bytes": 18788,
-      "frozen_sha256": "66a06fbf8f673a84fb595f200bbcdab2de8baf943a871aa90dd00a51e4c5afaa",
+      "path": "research/baseline/historical_outputs/summary.json",
+      "sha256": "eba6f3ec0142682bebd4dc87901d4bf9b753ff73040c83e60962faea0aa944b3",
+      "bytes": 18687,
+      "frozen_sha256": "eba6f3ec0142682bebd4dc87901d4bf9b753ff73040c83e60962faea0aa944b3",
       "freeze_verified": true
     }
   ],
-  "source_freeze_manifest_sha256": "3d7a094924a3668e7fe66d748034ed3bca48bd6a699704311c562215124735ce",
+  "source_freeze_manifest_sha256": "646bc7c46f0ffe88d2108468943ab50edd1eebcf06e3324e783d914dbc4e0578",
   "source_commit": "cc58b0c3f351f206cccd5841ba9659f6ee55e491",
   "code": {
     "commit": "11c9cd1e40044a03169598fe257698aec6aee9d2",
-    "branch": "codex/nvda-research-v2",
     "dirty_status": "?? research/results/",
     "source_sha256": "ef05a1fc6ff25c2968212205b77c9c0f1445ec5213584eb4b55b307de2c09e83",
     "files": {

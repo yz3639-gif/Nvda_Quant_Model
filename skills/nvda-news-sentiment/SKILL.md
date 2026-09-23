@@ -5,7 +5,7 @@ description: Use when updating the NVDA quant model with real-time news, event s
 
 # NVDA News Sentiment Workflow
 
-Use the project at `/Users/yuangzuo/Documents/New project/nvda_quant_model`.
+Run commands from the repository root; the core module is `nvda_quant_model/`.
 
 ## Workflow
 

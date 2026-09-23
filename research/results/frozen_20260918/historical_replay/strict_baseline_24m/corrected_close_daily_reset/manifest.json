@@ -51,46 +51,45 @@
   "config_basis": "Historical strict baseline constructor defaults plus explicit 2.5% stop / 4% take-profit override.",
   "inputs": [
     {
-      "path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_24m.csv",
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_strict_signals_24m.csv",
       "sha256": "b1bb3c40eb3ff08a82622d160a17b7f5e5357afb052054574a0d08a7f844a061",
       "bytes": 45753,
       "frozen_sha256": "b1bb3c40eb3ff08a82622d160a17b7f5e5357afb052054574a0d08a7f844a061",
       "freeze_verified": true
     },
     {
-      "path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/nvda_quant_model/cache/NVDA_2022-11-09_2026-05-23.csv",
+      "path": "nvda_quant_model/cache/NVDA_2022-11-09_2026-05-23.csv",
       "sha256": "c12de51a8c384a1cb88ebd1a76065522c95eb7376bec2c7682d9a4d32fb9190c",
       "bytes": 83920,
       "frozen_sha256": "c12de51a8c384a1cb88ebd1a76065522c95eb7376bec2c7682d9a4d32fb9190c",
       "freeze_verified": true
     },
     {
-      "path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_stress_backtests.csv",
+      "path": "research/baseline/historical_outputs/performance_retest/strict_candidate_promotion_override/candidate_stress_backtests.csv",
       "sha256": "7a15e396e28157d570bbe756bf383ef96c5f9d903bbbfa1eea1c5b0866069ad4",
       "bytes": 18737,
       "frozen_sha256": "7a15e396e28157d570bbe756bf383ef96c5f9d903bbbfa1eea1c5b0866069ad4",
       "freeze_verified": true
     },
     {
-      "path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_summary.json",
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_summary.json",
       "sha256": "d1ca678cc79b2b17718d497679588e9c91b05ae338bde00c92923fd425d57cba",
       "bytes": 7924,
       "frozen_sha256": "d1ca678cc79b2b17718d497679588e9c91b05ae338bde00c92923fd425d57cba",
       "freeze_verified": true
     },
     {
-      "path": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_metrics.csv",
+      "path": "research/baseline/historical_outputs/performance_retest/meta_decision_layer_override/meta_decision_metrics.csv",
       "sha256": "6364723ed57950e9126a972e8434bd762c91d7e072304dc97be565bb5350f1c2",
       "bytes": 12679,
       "frozen_sha256": "6364723ed57950e9126a972e8434bd762c91d7e072304dc97be565bb5350f1c2",
       "freeze_verified": true
     }
   ],
-  "source_freeze_manifest_sha256": "3d7a094924a3668e7fe66d748034ed3bca48bd6a699704311c562215124735ce",
+  "source_freeze_manifest_sha256": "646bc7c46f0ffe88d2108468943ab50edd1eebcf06e3324e783d914dbc4e0578",
   "source_commit": "cc58b0c3f351f206cccd5841ba9659f6ee55e491",
   "code": {
     "commit": "11c9cd1e40044a03169598fe257698aec6aee9d2",
-    "branch": "codex/nvda-research-v2",
     "dirty_status": "?? research/results/",
     "source_sha256": "ef05a1fc6ff25c2968212205b77c9c0f1445ec5213584eb4b55b307de2c09e83",
     "files": {

@@ -11,7 +11,7 @@
     36,
     60
   ],
-  "report": "/Users/yuangzuo/Documents/New project/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion_report.md",
+  "report": "legacy_workspace/nvda_quant_model/outputs/performance_retest/strict_candidate_promotion_override/candidate_promotion_report.md",
   "promotion_counts": {
     "reject_weak_metrics": 8,
     "watchlist_strong_recent_mid": 6,

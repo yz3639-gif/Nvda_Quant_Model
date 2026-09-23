@@ -1,5 +1,8 @@
 # NVDA Multi-Factor Quant Model
 
+> **Historical module documentation — scope clarified 2026-09-23.** This page preserves the earlier exploratory workflow and its historical terminology. References below to a "current" or "production" baseline describe that legacy implementation, not a validated live strategy or the latest market data. Use the [current project overview](../README.md) for the registered v2 research path, dated evidence, and limitations.
+
+
 This package implements a walk-forward, multi-factor NVDA strategy research workflow:
 
 - yfinance OHLCV, macro proxies, sector ETF features, and optional best-effort NVDA fundamentals

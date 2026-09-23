@@ -10,7 +10,7 @@
 
 ## 2. 已核实的本地基础
 
-- 本地项目：/Users/yuangzuo/Documents/New project；核心模块为 nvda_quant_model/。
+- 本地项目：legacy_workspace；核心模块为 nvda_quant_model/。
 - 本地分支main，HEAD cc58b0c；公开仓库审查快照fb221e36。相关回测、指标、时点、模型与校准源码逐文件对照基本一致，不能仅凭HEAD不同判断算法已经更新。
 - 未提交的NVDA修改：ensemble_research.py增加新闻获取失败时的缓存回退；还有night_prices.py、vix_snapshot.py及相关未追踪测试，应先分类保留。根目录包含其他研究与个人工作，隔离工作只纳入相关范围。
 - 缓存618个CSV，约48.6MB；历史输出30,327个文件，约10,132MB。升级前登记并冻结关键输入/结果，采用清单与只读引用，避免无意义复制全部历史输出。
@@ -32,7 +32,7 @@ engine_calibration_latest/实际是另一份旧版59窗口代理分布结果，�
 
 ### 阶段0：隔离工作与冻结研究基线
 
-1. 建立codex/nvda-research-v2隔离分支/工作区，记录本地HEAD、相关工作区补丁和文件哈希；妥善保留现有新闻回退、夜盘和VIX模块。
+1. 建立isolated research branch隔离分支/工作区，记录本地HEAD、相关工作区补丁和文件哈希；妥善保留现有新闻回退、夜盘和VIX模块。
 2. 整理严格规则、默认模型、规则集成和分布引擎的入口、配置与结果对应关系。
 3. 建立run manifest：代码状态、数据版本/截至日期/哈希、配置及override、seed、依赖、模型ID、实验ID、训练和评估区间。
 4. 旧结果只读保存，新实验输出到独立运行目录；latest仅指向一个带明确manifest的运行。
@@ -133,7 +133,7 @@ engine_calibration_latest/实际是另一份旧版59窗口代理分布结果，�
 
 ## 6. 关键证据位置
 
-- 本地源码：/Users/yuangzuo/Documents/New project/nvda_quant_model/
+- 本地源码：legacy_workspace/nvda_quant_model/
 - 成交与费用：backtest/backtest_engine.py:49–134；backtest/metrics.py:43–55
 - 整帧预处理：data/data_validation.py:22–37；data/feature_engineering.py:428；pipeline.py:108–127
 - 事件标签：event_overlay/labels.py:17–29、77–82；event_overlay/validation.py:85–113；event_overlay/overlay_model.py:148–163

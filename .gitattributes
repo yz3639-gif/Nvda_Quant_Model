@@ -2,3 +2,4 @@
 research/results/** -text linguist-generated=true
 # Matplotlib uses harmless trailing blanks in SVG path coordinate lists.
 research/results/**/*.svg whitespace=-blank-at-eol
+docs/assets/*.svg whitespace=-blank-at-eol linguist-generated=true

@@ -51,7 +51,7 @@
     "source_hash_match": true
   },
   "numerical_tolerance": 1e-12,
-  "independent_second_run": "/Users/yuangzuo/Documents/\u6c42\u804c/nvda-research-v2/research/runs/frozen_repro_check",
+  "independent_second_run": "research/runs/frozen_repro_check",
   "artifact_integrity": "all3completedrunartifactmapsverified",
   "full_offline_tests": {
     "passed": 196,
@@ -73,5 +73,6 @@
     "closed_trades": 1347,
     "max_account_residual": 2.63e-10,
     "remote_ci_run": false
-  }
+  },
+  "scope": "Historical verification recorded for the original 2026-09-18 run before publication metadata normalization; current export checks are in PUBLICATION_PROVENANCE.json."
 }

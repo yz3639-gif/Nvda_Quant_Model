@@ -30,7 +30,7 @@ from urllib.parse import quote
 import requests
 
 
-USER_AGENT = "Codex research yuangzuo@example.com"
+USER_AGENT = "NVDA Research Platform yuangzuo@example.com"
 OPENFIGI_URL = "https://api.openfigi.com/v3/mapping"
 YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
 TICKER_OVERRIDES = {

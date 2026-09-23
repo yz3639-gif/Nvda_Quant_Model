@@ -1,5 +1,8 @@
 # NVDA 模型整改方案
 
+> **Historical module documentation — scope clarified 2026-09-23.** This page preserves the earlier exploratory workflow and its historical terminology. References below to a "current" or "production" baseline describe that legacy implementation, not a validated live strategy or the latest market data. Use the [current project overview](../README.md) for the registered v2 research path, dated evidence, and limitations.
+
+
 目标：提高模型精准度和及时反应能力，同时坚持所有改动必须经过回测验证。任何新模块不能只因为单段历史好看就进入主模型。
 
 ## 总原则
