@@ -1,0 +1,57 @@
+name: Offline research checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: research-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline:
+    name: Evidence, regression and synthetic pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NVDA_OFFLINE_TESTS: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      LOKY_MAX_CPU_COUNT: '2'
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: ${{ runner.temp }}/nvda-matplotlib
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13.9'
+          cache: pip
+          cache-dependency-path: research/environment.lock.txt
+      - name: Install pinned research environment
+        run: |
+          python -m pip install -r research/environment.lock.txt
+          python -m pip check
+      - name: Syntax checks
+        run: python -m compileall -q nvda_quant_model methods utils
+      - name: Published evidence integrity
+        run: python scripts/verify_publication.py
+      - name: Offline regression tests
+        run: python -m pytest -q -p no:cacheprovider
+      - name: Synthetic end-to-end smoke example
+        run: >-
+          python -m nvda_quant_model.research.runner
+          --synthetic --config research/configs/smoke.json
+          --output research/runs/ci-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Upload synthetic report and provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-research-${{ github.run_id }}-${{ github.run_attempt }}
+          path: research/runs/ci-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: error
+          retention-days: 14
