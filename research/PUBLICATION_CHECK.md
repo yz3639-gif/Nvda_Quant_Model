@@ -43,4 +43,4 @@ See [PUBLICATION_NOTES.md](PUBLICATION_NOTES.md) and [PUBLICATION_PROVENANCE.jso
 
 ## Remote verification
 
-The command-line GitHub credential cannot create Actions workflows. The [workflow template](ci/research.yml.example) is retained for activation through a connection with workflow permission. Local checks above passed; no remote CI pass is claimed. The repository's Actions history is the authoritative record of remote run status for a given published commit.
+At the September 23 publication, the command-line GitHub credential could not create Actions workflows, so only a [workflow template](ci/research.yml.example) was included. The September 28 portfolio update adds the [executable workflow](../.github/workflows/research.yml); see its [separate verification record](PORTFOLIO_CHECK_20260928.md). The historical local checks above do not claim a remote CI pass. The repository's [Actions history](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/workflows/research.yml) is the authoritative record of remote run status for a given published commit.
