@@ -35,4 +35,6 @@ Use a fresh output directory when repeating the synthetic run. The directory abo
 
 The [workflow](../.github/workflows/research.yml) installs the same lock on Ubuntu with Python 3.13.9, verifies the published evidence, runs the offline suite and generates the two-fold synthetic report. Synthetic outputs are uploaded for 14 days. Cross-platform image bytes are not compared to the macOS reference.
 
-Local passes do not imply a remote CI pass. The [Actions history](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/workflows/research.yml) is the status record for each published commit. Frozen historical reproduction remains documented in [REPRODUCTION_CHECK.json](REPRODUCTION_CHECK.json), separately from these checks.
+The [remote run for commit `69bebe0`](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/runs/36469543095) passed on September 28, 2026: pinned-environment installation, syntax checks, published-evidence integrity, offline regression tests, synthetic smoke generation and report upload all completed successfully. The synthetic artifact is named `synthetic-research-36469543095-1`; its scheduled expiry is October 12, 2026.
+
+That observation belongs to this exact branch commit. The README badge follows push runs on `main`, and the [Actions history](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/workflows/research.yml) is the status record for each later commit. Frozen historical reproduction remains documented in [REPRODUCTION_CHECK.json](REPRODUCTION_CHECK.json), separately from these checks.

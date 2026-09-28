@@ -2,6 +2,8 @@
 
 **YZ · Cornell · Quantitative Research & Options Risk**
 
+[![Offline research checks — main](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/workflows/research.yml/badge.svg?branch=main&event=push)](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/workflows/research.yml?query=branch%3Amain)
+
 A Python research workflow that tests daily NVDA signals, reconciles simulated fills to account equity, and measures sensitivity to execution rules and trading costs.
 
 **[18 walk-forward folds](research/results/frozen_20260918/folds.json) · [Fill-level accounting](tests/test_execution_v2.py) · [1× / 2× / 4× costs](research/results/frozen_20260918/cost_stress.csv)**
@@ -12,7 +14,7 @@ A Python research workflow that tests daily NVDA signals, reconciles simulated f
 
 **[Research](research/results/frozen_20260918/research_report.md) · [Code](nvda_quant_model/research) · [Reproduce](research/RUNBOOK.md)**
 
-[Technical walkthrough](research/TECHNICAL_BRIEF.md) · [Model card](research/MODEL_CARD.md) · [CI run history](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/workflows/research.yml)
+[Technical walkthrough](research/TECHNICAL_BRIEF.md) · [Model card](research/MODEL_CARD.md)
 
 The figure compares a frozen-signal execution replay with all 17 v2 strategy/control results. Its two panels are separate experiments. [Figure source](scripts/build_readme_figures.py) · [Replay CSV](research/results/frozen_20260918/historical_replay/historical_replay.csv) · [Strategy results](research/results/frozen_20260918/strategy_summary.csv)
 
@@ -26,7 +28,7 @@ The figure compares a frozen-signal execution replay with all 17 v2 strategy/con
 | Trading comparisons | **17 strategy and control variants**, with their losses, exposure and risk halts retained |
 | Cost sensitivity | **1×, 2× and 4×** baseline commission and slippage; **51** recorded comparisons |
 | Distribution research | **6 variants**, 5- and 21-session horizons, **5,000 simulated paths** per forecast |
-| Engineering checks | **196 offline tests passed** in the September 23, 2026 local publication check |
+| Engineering checks | **196 offline tests passed** in the [September 28 local portfolio check](research/PORTFOLIO_CHECK_20260928.md); [remote workflow](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/runs/36469543095) also passed |
 
 **Data freshness:** the main experiment was run on **September 18, 2026**, using inputs ending **May 22, 2026**. A separate default-strategy execution replay ends July 24, 2026. This publication updates the implementation and explanation; it does not add September market observations. These are historical development evaluations, with no untouched holdout or live performance record claimed.
 
