@@ -24,7 +24,7 @@ jobs:
       MKL_NUM_THREADS: '1'
       LOKY_MAX_CPU_COUNT: '2'
       MPLBACKEND: Agg
-      MPLCONFIGDIR: ${{ runner.temp }}/nvda-matplotlib
+      MPLCONFIGDIR: .mplconfig
       PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - uses: actions/checkout@v4
