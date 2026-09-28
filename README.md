@@ -1,12 +1,20 @@
-# NVDA Quant Research Lab
+# NVDA Research Lab
 
-**Daily signals · execution modeling · probability calibration · risk diagnostics**
+**YZ · Cornell · Quantitative Research & Options Risk**
 
-Built by **Antony Zuo**
+A Python research workflow that tests daily NVDA signals, reconciles simulated fills to account equity, and measures sensitivity to execution rules and trading costs.
 
-A Python research platform that follows a trading idea from daily market inputs to model predictions, simulated fills, reconciled P&L and a reproducible evidence report. It compares simple rules with machine learning and shows how costs, execution choices and risk controls change the conclusion.
+**[18 walk-forward folds](research/results/frozen_20260918/folds.json) · [Fill-level accounting](tests/test_execution_v2.py) · [1× / 2× / 4× costs](research/results/frozen_20260918/cost_stress.csv)**
 
-[Research report](research/results/frozen_20260918/research_report.md) · [Technical walkthrough](research/TECHNICAL_BRIEF.md) · [Reproduce the pipeline](research/RUNBOOK.md) · [Model card](research/MODEL_CARD.md)
+*Historical development evaluation · Main data through May 22, 2026 · No live or untouched-holdout performance claim.*
+
+[![Execution assumptions and all 17 strategy/control results from the frozen research run](docs/assets/research_evidence.png)](research/results/frozen_20260918/research_report.md)
+
+**[Research](research/results/frozen_20260918/research_report.md) · [Code](nvda_quant_model/research) · [Reproduce](research/RUNBOOK.md)**
+
+[Technical walkthrough](research/TECHNICAL_BRIEF.md) · [Model card](research/MODEL_CARD.md) · [CI run history](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/workflows/research.yml)
+
+The figure compares a frozen-signal execution replay with all 17 v2 strategy/control results. Its two panels are separate experiments. [Figure source](scripts/build_readme_figures.py) · [Replay CSV](research/results/frozen_20260918/historical_replay/historical_replay.csv) · [Strategy results](research/results/frozen_20260918/strategy_summary.csv)
 
 ## Research at a glance
 
@@ -44,10 +52,6 @@ flowchart LR
 ```
 
 ## What the results show
-
-![Execution assumptions and all 17 strategy/control results from the frozen research run](docs/assets/research_evidence.png)
-
-The figure separates two experiments: a replay of one historical signal stream under three execution/accounting definitions, and the complete set of 17 v2 strategy/control results. The panels are not a before/after comparison of the same model. [Figure source](scripts/build_readme_figures.py) · [Replay CSV](research/results/frozen_20260918/historical_replay/historical_replay.csv) · [All strategy results](research/results/frozen_20260918/strategy_summary.csv)
 
 **Execution assumptions matter.** The 60-month legacy result with Sharpe **1.24** is preserved with its original identity. The same saved signals produce different outcomes under changed assumptions:
 
@@ -93,6 +97,10 @@ MPLBACKEND=Agg MPLCONFIGDIR=.mplconfig OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 
 ```
 
 The reference environment is Python 3.13.9. Windows users should use the corresponding virtual-environment executable and shell environment-variable syntax. For historical market runs, provide an authorized CSV with `Date,Open,High,Low,Close,Volume`; the original full vendor cache is not bundled. A fresh download is a new data vintage, not automatically an exact reproduction. See the [runbook](research/RUNBOOK.md).
+
+## Automated verification
+
+The [offline research workflow](.github/workflows/research.yml) uses Python 3.13.9 and the pinned environment. Each push and pull request runs the publication hash checks, the socket-blocked regression suite, and a two-fold synthetic smoke example in a new output directory. Its uploaded synthetic report is a pipeline check, not market-performance evidence. The [Actions history](https://github.com/yz3639-gif/Nvda_Quant_Model/actions/workflows/research.yml) records the status for each commit; [dated local verification](research/PORTFOLIO_CHECK_20260928.md) is recorded separately.
 
 ## Review the implementation
 
